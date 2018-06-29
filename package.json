@@ -21,8 +21,10 @@
     "@angular/platform-browser-dynamic": "^6.0.0",
     "@angular/router": "^6.0.0",
     "core-js": "^2.5.4",
+    "ng-zorro-antd": "^1.1.0",
     "rxjs": "^6.2.1",
-    "zone.js": "^0.8.26"
+    "zone.js": "^0.8.26",
+    "less": "^2.7.3"
   },
   "devDependencies": {
     "@angular/compiler-cli": "^6.0.0",

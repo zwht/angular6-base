@@ -12,21 +12,23 @@ registerLocaleData(zh);
 import {ZwHttpInterceptor} from './services/ZwHttpInterceptor';
 import {HttpServer} from './services/HttpServer';
 import {OtherService} from './restServices/OtherService';
+import { NgZorroAntdModule } from 'ng-zorro-antd';
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        HttpClientModule
-
+        HttpClientModule,
+        NgZorroAntdModule
     ],
     declarations: [],
     exports: [
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        NgZorroAntdModule
     ],
     providers: [
         {
