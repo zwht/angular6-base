@@ -5,7 +5,6 @@ import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, tap} from 'rxjs/operators';
-import 'rxjs/Rx';
 @Injectable()
 export class ZwHttpInterceptor implements HttpInterceptor {
   status = {

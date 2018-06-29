@@ -2,12 +2,11 @@ import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { AppComponent } from './app.component';
+import { ShareModule } from './share/share.module';
+import { AdminModule } from './admin/admin.module';
+import { OtherModule } from './other/other.module';
 
-import { ShareModule } from '../share/share.module';
-import { OtherModule } from '../other/other.module';
-import { AdminModule } from '../admin/admin.module';
-
-import { AppComponent } from './components/app/app.component';
 
 @NgModule({
     declarations: [AppComponent],
@@ -15,7 +14,7 @@ import { AppComponent } from './components/app/app.component';
         NoopAnimationsModule,
         BrowserAnimationsModule,
         HttpModule,
-
+        
         ShareModule,
         RouterModule.forRoot([], { useHash: true }),
         AdminModule,
@@ -26,5 +25,5 @@ import { AppComponent } from './components/app/app.component';
     bootstrap: [AppComponent],
     entryComponents: []
 })
-export class MainModule {
+export class AppModule {
 }
