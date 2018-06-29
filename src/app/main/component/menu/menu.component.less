@@ -1,0 +1,128 @@
+@import "../../../../assets/css/themes/default";
+.menuCpl{ height: 100%;
+  >.header{ height: 60px; width: 100%;
+    /* background-image: linear-gradient(to right, #7BBFEA, #4BB2F4);*/
+    background: #7764CA;
+    margin: 0 auto;
+    line-height: 60px; color:lighten(@menuText,50%);
+    a{ color: lighten(@menuText,50%);}
+    .logo{ width: 260px; position: absolute; height: 60px;
+      left: 0; top:0; text-align: center;
+    }
+    .right{ position: absolute; right: 50px; top:0; line-height: 60px;
+      /deep/.el-dropdown{ color: lighten(@menuText,50%);}
+      /deep/.el-icon-caret-bottom{ display: none;}
+      /deep/.ant-dropdown-link span{ display: inline-block; width: 90px; vertical-align: middle;}
+      /deep/.ant-dropdown-link i{ vertical-align: middle;}
+      nz-tooltip{ font-size: 18px; width: 28px; display: inline-block;
+        line-height: 52px;
+        i{cursor: pointer; display: inline-block;};
+        .anticon-star{ color: @color10;}
+      }
+      .idEtl{ margin-right: 20px; cursor: pointer; opacity: 0.7;
+        float: left;
+        &:hover{ opacity:1;}
+      }
+    }
+    .topMenu{ padding: 0 130px 0 200px; height: 100%;}
+    >div{ width:100%; position: relative; height: 100%;}
+  }
+  .topMenu {
+    .leftUrl{ padding-left: 40px; height: 100%; overflow: inherit;
+      >li{ float: left; position: relative; height: 100%;
+        >.h2{ display: inline-block; line-height: 30px; padding: 0 16px;
+          margin: 0 10px; border-radius: 20px;
+          cursor: pointer; position: relative;
+          font-size: 14px; font-weight: normal;
+          &.hasC{ padding-right: 30px;}
+          .anticon{ display: none; position: absolute;
+            right: 10px; top:9px;
+          }
+          .anticon-down{ display: block;}
+          span{ display: block; width: 100%; height: 100%;
+            padding:0; text-align: center; font-weight: normal;
+            opacity: .7; 
+            color:rgba(255,255,255,1);
+            line-height:30px;
+          }
+        }
+
+        &.active .h2{
+          background: rgba(255,255,255,0.1);
+        };
+
+        .child{ position: absolute; top:44px;
+          left: 0; width: 100%;
+          background: #fff;
+          overflow: hidden; display: none;
+          z-index: 999; min-width: 1.5rem;  
+          box-shadow: 0 0 5px rgba(0,0,0,0.1);
+          border-radius: 4px;
+          color: #666;
+          li{cursor: pointer; height: 36px; line-height: 36px; 
+            padding-left: 10px;
+            span{ display: block; height: 100%;}
+          }
+          li.active,li:hover{
+             background: #f1f1f1;}
+        }
+        &:hover{
+          .h2 .anticon-down{ display: none;}
+          .h2 .anticon-up{ display: block;}
+          .child{ display: block;}
+        }
+
+      }
+    }
+    
+    nz-dropdown{ margin-left: 20px; width: 40px;
+      .dropSpan{ display: block; height: 49px; width: 24px;}
+      .ant-btn{ background: @color2; color: @white; border: none;
+        width: 24px; height:24px; font-size: 18px; font-weight: bold;
+        box-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+      }
+    }
+  }
+  .search{ position: absolute; right: 200px; top:0;
+    /deep/.ant-input-affix-wrapper{
+      width: 160px;
+      border: none;
+      border-radius: 20px;
+      background:rgba(255,255,255,0.1);
+      top:0;
+    }
+    /deep/.ant-input{ font-size: 12px;
+      height: 24px; line-height: 24px;
+      padding-left: 20px;
+      background:rgba(255,255,255,0.1);
+      border: none;border-radius:20px;
+      color: @white;
+    }
+    /deep/.anticon-search{ color: #fff;}
+  }
+
+  >.mainBox {
+    /*background: url(../../../../assets/images/sky-bg.jpg) no-repeat 50%;
+    background-size: cover;*/
+    //background: #F6F7FB;
+    height: 100%; /*写给不支持calc()的浏览器*/
+    height: -moz-calc(~"100% - 60px");
+    height: -webkit-calc(~"100% - 60px");
+    height: calc(~"100% - 60px");
+    width: 100%; /*写给不支持calc()的浏览器*/
+    width: -moz-calc(~"100% - 200px");
+    width: -webkit-calc(~"100% - 200px");
+    width: calc(~"100% - 200px");
+    overflow-y: auto;
+    background: #f3faff;
+  }
+  >.menuTopBox{
+    width: 100%; /*写给不支持calc()的浏览器*/
+    width: -moz-calc(~"100% - 0");
+    width: -webkit-calc(~"100% - 0px");
+    width: calc(~"100% - 0px");
+  }
+}
+
+
+

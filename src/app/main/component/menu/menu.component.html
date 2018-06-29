@@ -1,0 +1,50 @@
+<div class="menuCpl" id="menuCpl">
+  <div class="header">
+    <div>
+      <div class="logo" (click)="changMenu()">
+        <img style="height: 40px;" src="../../../../assets/images/logo/logo.png" alt="">
+      </div>
+      <div class="topMenu">
+        <ul class="leftUrl clear" *ngIf="menuLocation">
+          <li *ngFor="let item of menu let i=index" [ngClass]="{active:item.active,show:item.show,noChild:!item.children.length}">
+            <div class="h2" [class.hasC]="item.children.length" (click)="bigMenuTop(item)">
+              <span>{{item.name}}</span>
+              <i *ngIf="item.children.length" class="anticon anticon-up"></i>
+              <i *ngIf="item.children.length" class="anticon anticon-down"></i>
+            </div>
+            <ul class="child">
+              <li *ngFor="let child of item.children let j=index" (click)="goMenuTop(child)" [ngClass]="{active:child.active}">
+                <span>{{child.name}}</span>
+              </li>
+            </ul>
+          </li>
+        </ul>
+
+      </div>
+      <div class="search">
+        <!-- <nz-input-group nzSuffixIcon="anticon anticon-search">
+          <input type="text" nz-input placeholder="一键搜索">
+        </nz-input-group> -->
+      </div>
+      <div class="right">
+        <!-- <nz-dropdown [nzPlacement]="'bottomRight'">
+          <a class="ant-dropdown-link" nz-dropdown>
+            <span class="overflow" [title]='userName'>
+              {{userName}}
+            </span>
+            <i class="anticon anticon-down"></i>
+          </a>
+          <ul nz-menu>
+            <li *ngFor="let item of rightDown let i=index" nz-menu-item (click)="downChange(item)">
+              <span>{{item.label}}</span>
+            </li>
+
+          </ul>
+        </nz-dropdown> -->
+      </div>
+    </div>
+  </div>
+  <div class="mainBox" [ngClass]="{menuTopBox:menuLocation}">
+    <router-outlet></router-outlet>
+  </div>
+</div>
