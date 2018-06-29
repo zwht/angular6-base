@@ -1,11 +1,8 @@
 import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
 import {RouterModule, Routes} from '@angular/router';
-import {SharedModule} from '../common/shared.module';
 
 import { IndexComponent } from './index/index.component';
-
+import { ShareModule } from '../../share/share.module';
 
 export const routes: Routes = [
     {
@@ -27,9 +24,7 @@ export const routes: Routes = [
 ];
 @NgModule({
     imports: [
-        SharedModule,
-        CommonModule,
-        FormsModule,
+        ShareModule,
         RouterModule.forChild(routes)
     ],
     declarations: [IndexComponent],

@@ -9,9 +9,9 @@ import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
 registerLocaleData(zh);
 
-import {ZwHttpInterceptor} from './service/ZwHttpInterceptor';
-import {HttpServer} from './service/HttpServer';
-import {OtherService} from './restService/OtherService';
+import {ZwHttpInterceptor} from './services/ZwHttpInterceptor';
+import {HttpServer} from './services/HttpServer';
+import {OtherService} from './restServices/OtherService';
 
 @NgModule({
     imports: [
@@ -23,9 +23,10 @@ import {OtherService} from './restService/OtherService';
     ],
     declarations: [],
     exports: [
-        ReactiveFormsModule
-        
-
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule
     ],
     providers: [
         {
@@ -39,5 +40,5 @@ import {OtherService} from './restService/OtherService';
     ],
     entryComponents: []
 })
-export class SharedModule {
+export class ShareModule {
 }

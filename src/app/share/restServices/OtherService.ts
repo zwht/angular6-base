@@ -2,7 +2,7 @@
  * Created by zhaowei on 2017/10/16.
  */
 import {Injectable} from '@angular/core';
-import {HttpServer} from '../service/HttpServer';
+import {HttpServer} from '../services/HttpServer';
 
 @Injectable()
 export class OtherService {

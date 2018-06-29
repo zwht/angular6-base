@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import * as tool from '../../../tool/tool.module';
+import * as tool from '../../../module.tool/tool.module';
 import {Router} from '@angular/router';
 
 @Component({

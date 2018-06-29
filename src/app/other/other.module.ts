@@ -2,10 +2,11 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {RouterModule, Routes} from '@angular/router';
-import {SharedModule} from '../common/shared.module';
+import {ShareModule} from '../share/share.module';
 
 
 import {LoginComponent} from './login/login.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 export const routes: Routes = [
     {
@@ -14,17 +15,21 @@ export const routes: Routes = [
         data: {
             name: '用户登录'
         }
+    },
+    {
+        path: '**',
+        component: NotFoundComponent
     }
 ];
 
 @NgModule({
     imports: [
-        SharedModule,
+        ShareModule,
         CommonModule,
         FormsModule,
         RouterModule.forChild(routes)
     ],
-    declarations: [LoginComponent],
+    declarations: [LoginComponent,NotFoundComponent],
     providers: [],
 })
 export class OtherModule {
