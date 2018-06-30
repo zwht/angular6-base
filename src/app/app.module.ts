@@ -5,7 +5,6 @@ import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform
 import { AppComponent } from './app.component';
 import { ShareModule } from './share/share.module';
 import { AdminModule } from './admin/admin.module';
-import { OtherModule } from './other/other.module';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NZ_I18N, zh_CN, NgZorroAntdModule } from 'ng-zorro-antd';
@@ -23,9 +22,29 @@ registerLocaleData(zh);
         HttpModule,
 
         ShareModule,
-        RouterModule.forRoot([], { useHash: true }),
+        RouterModule.forRoot([
+            {
+                path: '',
+                loadChildren: './start/start.module#StartModule',
+                data: {
+                    name: '',
+                    // type: [1, 2],
+                    hideChild: true,
+                    menu: true
+                }
+            },
+            {
+                path: 'other',
+                loadChildren: './other/other.module#OtherModule',
+                data: {
+                    name: '',
+                    // type: [1, 2],
+                    hideChild: true,
+                    menu: true
+                }
+            }
+        ], { useHash: true }),
         AdminModule,
-        OtherModule,
         FormsModule,
         HttpClientModule,
         NgZorroAntdModule
