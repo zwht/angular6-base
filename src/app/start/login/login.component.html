@@ -1,10 +1,33 @@
-<div class="loginCmp">
-    <div class="login-box">
-        <i class="icon iconfont icon-shuaxin"></i>
-        <i class="anticon anticon-step-backward"></i>
-        <button nz-button nzType="primary">Primary</button>
-        <button nz-button nzType="default">Default</button>
-        <button nz-button nzType="dashed">Dashed</button>
-        <button nz-button nzType="danger">Danger</button>
+<div class="login_cmp">
+    <div class="login_box">
+        <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+            <nz-form-item>
+                <nz-form-control>
+                    <nz-input-group nzPrefixIcon="anticon anticon-user">
+                        <input type="text" nz-input formControlName="userName" placeholder="手机／邮箱／用户名">
+                    </nz-input-group>
+                    <nz-form-explain *ngIf="validateForm.get('userName').dirty && validateForm.get('userName').errors">请输入账号!</nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control>
+                    <nz-input-group nzPrefixIcon="anticon anticon-lock">
+                        <input type="password" nz-input formControlName="password" placeholder="密码">
+                    </nz-input-group>
+                    <nz-form-explain *ngIf="validateForm.get('password').dirty && validateForm.get('password').errors">请输入密码!</nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control>
+                    <label nz-checkbox formControlName="remember">
+                        <span>记住登录</span>
+                    </label>
+                    <a class="login-form-forgot" class="login-form-forgot">忘记密码</a>
+                    <button nz-button class="login-form-button" [nzType]="'primary'">登录</button>
+                    
+                    <a href="">注册!</a>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
     </div>
 </div>

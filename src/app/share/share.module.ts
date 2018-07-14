@@ -13,6 +13,7 @@ import {ZwHttpInterceptor} from './services/ZwHttpInterceptor';
 import {HttpServer} from './services/HttpServer';
 import {OtherService} from './restServices/OtherService';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { UserService } from './restServices/UserService';
 
 @NgModule({
     imports: [
@@ -38,7 +39,8 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
         },
         HttpServer,
         OtherService,
-        DatePipe
+        DatePipe,
+        UserService
     ],
     entryComponents: []
 })

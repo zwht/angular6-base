@@ -1,6 +1,16 @@
 
 @import "../../../themes/default/theme";
-.loginCmp { background: @primary-color;
-  
-  
+.login_cmp { display: flex; justify-content: center;
+  align-items: center; height: 100%;
+  .login_box{ width: 500px;
+    .login-form {
+      max-width: 300px;
+    }
+    .login-form-forgot {
+      float: right;
+    }
+    .login-form-button {
+      width: 100%;
+    }
+  }
 }
