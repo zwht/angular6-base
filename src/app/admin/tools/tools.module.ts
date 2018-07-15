@@ -1,14 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ShareModule } from '../share/share.module';
+import { ShareModule } from '../../share/share.module';
+
 import { IndexComponent } from './index/index.component';
+
 
 export const routes: Routes = [
     {
-        path: '',
+        path: 'index',
         component: IndexComponent,
         data: {
-            name: '用户登录'
+            name: '码表管理',
+            menu: true
         }
     }
 ];
@@ -22,4 +25,4 @@ export const routes: Routes = [
     declarations: [IndexComponent],
     providers: [],
 })
-export class OtherModule { }
+export class ToolsModule { }

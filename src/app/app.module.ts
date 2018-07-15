@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { ShareModule } from './share/share.module';
-import { AdminModule } from './admin/admin.module';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NZ_I18N, zh_CN, NgZorroAntdModule } from 'ng-zorro-antd';
@@ -24,16 +23,6 @@ registerLocaleData(zh);
         ShareModule,
         RouterModule.forRoot([
             {
-                path: '',
-                loadChildren: './start/start.module#StartModule',
-                data: {
-                    name: '',
-                    // type: [1, 2],
-                    hideChild: true,
-                    menu: true
-                }
-            },
-            {
                 path: 'other',
                 loadChildren: './other/other.module#OtherModule',
                 data: {
@@ -42,9 +31,28 @@ registerLocaleData(zh);
                     hideChild: true,
                     menu: true
                 }
+            },
+            {
+                path: 'admin',
+                loadChildren: './admin/admin.module#AdminModule',
+                data: {
+                    name: '',
+                    // type: [1, 2],
+                    hideChild: true,
+                    menu: true
+                }
+            },
+            {
+                path: '',
+                loadChildren: './start/start.module#StartModule',
+                data: {
+                    name: '',
+                    // type: [1, 2],
+                    hideChild: true,
+                    menu: true
+                }
             }
         ], { useHash: true }),
-        AdminModule,
         FormsModule,
         HttpClientModule,
         NgZorroAntdModule

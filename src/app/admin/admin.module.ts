@@ -7,26 +7,26 @@ import { MenuComponent } from './common/components/menu/menu.component';
 
 export const routes: Routes = [
   {
-    path: 'admin',
+    path: '',
     component: MenuComponent,
     children: [
       {
-        path: 'organization',
-        loadChildren: './module.organization/organization.module#OrganizationModule',
+        path: 'user',
+        loadChildren: './user/user.module#UserModule',
         data: {
-          name: '组织机构管理',
+          name: '用户',
           // type: [1, 2],
-          hideChild: true,
+          //hideChild: true,
           menu: true
         }
       },
       {
-        path: 'tool',
-        loadChildren: './module.tool/tool.module#ToolModule',
+        path: 'tools',
+        loadChildren: './tools/tools.module#ToolsModule',
         data: {
-          name: '工具模块',
+          name: '工具',
           // type: [1, 2],
-          hideChild: true,
+          //hideChild: true,
           menu: true
         }
       }

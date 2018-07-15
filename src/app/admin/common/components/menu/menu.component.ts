@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import * as tool from '../../../module.tool/tool.module';
+import * as tools from '../../../tools/tools.module';
 import {Router} from '@angular/router';
 
 @Component({
@@ -15,7 +15,12 @@ export class MenuComponent implements OnInit {
     collectKey = false;
     userName = localStorage.getItem('loginName');
     // 有子菜单的需要引入
-    routesMenu = [tool.routes[0]];
+    routesMenu = [
+        {
+            name:'工具',
+            children:tools.routes
+        }
+    ];
     rightDown = [
         {
             value: 'my',
@@ -35,7 +40,7 @@ export class MenuComponent implements OnInit {
         let adminList = {};
         this.router.config.forEach(item => {
             if (item.path === 'admin') {
-                adminList = item;
+                adminList = item['_loadedConfig'].routes[0];
             }
         });
         adminList['children'].every(item => {
@@ -58,7 +63,7 @@ export class MenuComponent implements OnInit {
                     children: [], data: item.data
                 };
                 this.routesMenu.forEach(subItem => {
-                    if ((item.data as any).name === subItem.data['name']) {
+                    if ((item.data as any).name === subItem['name']) {
                         (subItem  as any).children.forEach(subSubItem => {
                             if (subSubItem.data && subSubItem.data.menu) {
                                 if (subSubItem.data.type) {
@@ -85,18 +90,8 @@ export class MenuComponent implements OnInit {
             }
             return true;
         });
-        console.log(this.menu);
         this.setActiveMenu(this.router.url, '/admin/');
     }
-
-    init() {
-
-    }
-
-    goDw() {
-
-    }
-
     goCollect() {
         this.menu.forEach(item => {
             item.active = false;
@@ -176,9 +171,5 @@ export class MenuComponent implements OnInit {
         setTimeout(() => {
             this.childrenShowKey = true;
         }, 100);
-    }
-
-    changMenu() {
-
     }
 }
