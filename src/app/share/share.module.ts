@@ -14,6 +14,7 @@ import {HttpServer} from './services/HttpServer';
 import {OtherService} from './restServices/OtherService';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { UserService } from './restServices/UserService';
+import { RegExpService } from './services/reg-exp.service';
 
 @NgModule({
     imports: [
@@ -40,7 +41,8 @@ import { UserService } from './restServices/UserService';
         HttpServer,
         OtherService,
         DatePipe,
-        UserService
+        UserService,
+        RegExpService
     ],
     entryComponents: []
 })

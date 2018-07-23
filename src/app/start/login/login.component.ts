@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../share/restServices/UserService';
 import { NzMessageService } from '../../../../node_modules/ng-zorro-antd';
+import { RegExpService } from '../../share/services/reg-exp.service';
 
 @Component({
     selector: 'app-login',
@@ -16,6 +17,7 @@ export class LoginComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private _message: NzMessageService,
+        private regExpService: RegExpService,
         private userService: UserService) {
     }
 
@@ -32,12 +34,15 @@ export class LoginComponent implements OnInit {
             this.validateForm.controls[i].markAsDirty();
             this.validateForm.controls[i].updateValueAndValidity();
         }
+
+
         if (this.validateForm.valid) {
             this.loading = true;
             this.userService['login']({
                 data: {
-                    password: btoa(encodeURIComponent(this.validateForm.value.password)),
-                    loginName: this.validateForm.value.userName
+                    //password:  this.validateForm.value.password.replace(this.regExpService.listObj['前后空格'],''),
+                    password: btoa(encodeURIComponent(this.validateForm.value.password.replace(this.regExpService.listObj['前后空格'], ''))),
+                    loginName: this.validateForm.value.userName.replace(this.regExpService.listObj['前后空格'], '')
                 }
             })
                 .then(response => {

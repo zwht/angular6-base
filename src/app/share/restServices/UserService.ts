@@ -9,6 +9,12 @@ export class UserService {
 
     url = '/v1/user/:params1/:params2/:params3/:params4/:params5';
     urls = {
+        add: {
+            method: 'post',
+            params: {
+                params1: 'add'
+            }
+        },
         login: {
             method: 'post',
             params: {
