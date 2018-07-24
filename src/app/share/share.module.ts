@@ -33,6 +33,7 @@ import { RegExpService } from './services/reg-exp.service';
         NgZorroAntdModule
     ],
     providers: [
+        //{ provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptor, multi: true },
         {
             provide: HTTP_INTERCEPTORS,
             useClass: ZwHttpInterceptor,

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '../../../share/restServices/UserService';
 
 @Component({
   selector: 'app-index',
@@ -7,9 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IndexComponent implements OnInit {
 
-  constructor() { }
+  list=[]
+  constructor(
+    private userService: UserService
+  ) { }
 
   ngOnInit() {
+    this.getList();
   }
 
+  getList() {
+    this.userService['list']({})
+      .then(response => {
+        if(response.code==200){
+          this.list=response.data.pageData;
+        }
+      })
+  }
 }

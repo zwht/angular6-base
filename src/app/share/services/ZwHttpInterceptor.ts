@@ -28,7 +28,7 @@ export class ZwHttpInterceptor implements HttpInterceptor {
     'status.501': '未实现。服务器不识别该请求方法，或者服务器没有能力完成请求。',
     'status.503': '服务不可用。服务器当前不可用(过载或故障)。'
   };
-  debugger;
+ 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
     let fromList = [
       'v1/file/upload',
@@ -86,6 +86,8 @@ export class ZwHttpInterceptor implements HttpInterceptor {
     )
   }
   responseSet(data) {
-
+    if (data.body.code === 401) {
+      window.location.href = '/';
+    }
   }
 }

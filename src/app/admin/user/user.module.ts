@@ -8,7 +8,7 @@ import { AddComponent } from './add/add.component';
 
 export const routes: Routes = [
     {
-        path: 'index',
+        path: '',
         component: IndexComponent,
         data: {
             name: '用户'

@@ -15,6 +15,12 @@ export class UserService {
                 params1: 'add'
             }
         },
+        list: {
+            method: 'post',
+            params: {
+                params1: 'list'
+            }
+        },
         login: {
             method: 'post',
             params: {

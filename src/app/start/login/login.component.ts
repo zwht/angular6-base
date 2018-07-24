@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../share/restServices/UserService';
 import { NzMessageService } from '../../../../node_modules/ng-zorro-antd';
 import { RegExpService } from '../../share/services/reg-exp.service';
+import { Router } from '../../../../node_modules/@angular/router';
 
 @Component({
     selector: 'app-login',
@@ -16,6 +17,7 @@ export class LoginComponent implements OnInit {
     loading = false;
     constructor(
         private fb: FormBuilder,
+        private router: Router,
         private _message: NzMessageService,
         private regExpService: RegExpService,
         private userService: UserService) {
@@ -48,7 +50,8 @@ export class LoginComponent implements OnInit {
                 .then(response => {
                     this.loading = false;
                     if (response.code === 200) {
-                        localStorage.setItem('photo', response.data.photo);
+                        localStorage.setItem('token',response.data.token)
+                        this.router.navigateByUrl('/admin/user');
                     } else {
                         this._message.create('error', response.msg, { nzDuration: 4000 });
                     }
