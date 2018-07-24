@@ -67,7 +67,7 @@ export class ZwHttpInterceptor implements HttpInterceptor {
             url: err.url
           });
           if (err.status === 401) {
-            window.location.href = '/';
+            window.location.href = '/#/';
           }
           return of(res);
           //return Observable.empty();
@@ -87,7 +87,7 @@ export class ZwHttpInterceptor implements HttpInterceptor {
   }
   responseSet(data) {
     if (data.body.code === 401) {
-      window.location.href = '/';
+      window.location.href = '/#/';
     }
   }
 }
