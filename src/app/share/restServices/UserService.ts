@@ -26,7 +26,25 @@ export class UserService {
             params: {
                 params1: 'login'
             }
-        }
+        },
+        del: {
+            method: 'get',
+            params: {
+                params1: 'del'
+            }
+        },
+        update: {
+            method: 'post',
+            params: {
+                params1: 'update'
+            }
+        },
+        getById: {
+            method: 'get',
+            params: {
+                params1: 'getById'
+            }
+        },
     };
 
     constructor(httpServer: HttpServer) {

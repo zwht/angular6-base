@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../share/restServices/UserService';
+import { DateRangePickerComponent } from 'ng-zorro-antd/src/date-picker/date-range-picker.component';
+import { routes } from '../user.module';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-index',
@@ -31,12 +34,29 @@ export class IndexComponent implements OnInit {
         params2:this.pageSize,
         params3:this.pageNum
       },
-      data:{}
+      data:{
+        name:"zw"
+      }
     })
       .then(response => {
         if(response.code==200){
           this.list=response.data.pageData;
           this.totalCount=response.data.totalCount;
+        }
+      })
+  }
+  cancel(){}
+
+  deldeldel(id){
+    this.userService['del']({
+      params:{
+        params2:id
+      },
+      data:{}
+    })
+      .then(response => {
+        if(response.code==200){
+          this.getList()
         }
       })
   }

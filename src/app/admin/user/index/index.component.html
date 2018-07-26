@@ -30,10 +30,11 @@
           (nzPageIndexChange)="getList($event)">
           <thead>
             <tr>
-              <th>loginName</th>
-              <th>name</th>
-              <th>phone</th>
-              <th>email</th>
+              <th>登录名</th>
+              <th>姓名</th>
+              <th>电话</th>
+              <th>邮箱</th>
+              <th>操作</th>
             </tr>
           </thead>
           <tbody>
@@ -42,6 +43,10 @@
               <td>{{data.name}}</td>
               <td>{{data.phone}}</td>
               <td>{{data.email}}</td>
+              <td>
+                <button nz-button [routerLink]="['./update',data.id]">编辑</button>
+                <button nz-popconfirm nz-button nzTitle="您确定要删除吗?" (nzOnConfirm)="deldeldel(data.id)" (nzOnCancel)="cancel()">删除</button>
+              </td>
             </tr>
           </tbody>
         </nz-table>

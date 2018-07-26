@@ -1,0 +1,61 @@
+<div class="user-add-cpp">
+    <div class="Breadcrumb">
+      <div>
+        <nz-breadcrumb>
+          <nz-breadcrumb-item>
+            <a [routerLink]="['/admin/user']">用户列表</a>
+          </nz-breadcrumb-item>
+          <nz-breadcrumb-item>
+            <span class="span">编辑用户</span>
+          </nz-breadcrumb-item>
+        </nz-breadcrumb>
+      </div>
+    </div>
+    <div class="shangkuang">
+        <span>编辑用户</span>
+    </div>
+    <div class="waikuang">
+      <div class="user-add">
+        <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="loginName" nzRequired>登录名</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <input nz-input id="loginName" formControlName="loginName" placeholder="loginName">
+              <nz-form-explain *ngIf="validateForm.get('loginName').dirty && validateForm.get('loginName').errors">Please input loginName!</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">邮箱</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <input nz-input formControlName="email" id="email">
+              <nz-form-explain *ngIf="validateForm.get('email').dirty && validateForm.get('email').errors">The input is not valid E-mail!</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="name" nzRequired>
+              <span>
+                姓名
+              </span>
+            </nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24">
+              <input nz-input id="name" formControlName="name">
+              <nz-form-explain *ngIf="validateForm.get('name').dirty && validateForm.get('name').errors">Please input your name!</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="phone" nzRequired>手机号</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" [nzValidateStatus]="validateForm.controls['phone']">
+              <input formControlName="phone" id="'phone'" nz-input>
+              <nz-form-explain *ngIf="validateForm.get('phone').dirty && validateForm.get('phone').errors">Please input your phone number!</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item nz-row style="margin-bottom:8px;">
+            <nz-form-control [nzSpan]="14" [nzOffset]="6">
+              <button nz-button nzType="primary">保存</button>
+            </nz-form-control>
+          </nz-form-item>
+        </form>
+      </div>
+    </div>
+  </div>
