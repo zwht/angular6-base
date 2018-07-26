@@ -1,5 +1,38 @@
-<div class="user-index-cpt">
-    <nz-table #basicTable [nzData]="list">
+<div class="div111">
+  <table class="chazhao">
+    <tr>
+      <th class="tr11">
+        <span class="span1">姓名</span>
+        <input class="input1" nz-input placeholder="请输入姓名" [(ngModel)]="name">
+      </th>
+      <th class="tr11">
+        <span class="span1">角色</span>
+        <input class="input1" nz-input placeholder="请输入角色" [(ngModel)]="juese">
+      </th>
+      <th class="tr11">
+        <span class="span1">状态</span>
+        <input class="input1" nz-input placeholder="请输入状态" [(ngModel)]="zhungtai">
+      </th>
+      <th class="tr11">
+        <button nz-button nzType="chaxun">查询</button>
+      </th>
+    </tr>
+  </table>
+</div>
+<div>
+  &nbsp;
+</div>
+<div class="shangkuang">
+  <span class="span2">用户列表</span>
+  <button nz-button nzType="tianjia" class="anniu1" routerLink="./add">添加用户</button>
+</div>
+<div class="waikuang" id="waikuang">
+  <div class="neikuang">
+    <div class="user-index-cpt">
+      <nz-table #basicTable [nzData]="list" [nzFrontPagination]="false"
+       [nzPageIndex]="pageNum" [nzTotal]="totalCount" [nzPageSize]="pageSize"
+       (nzPageIndexChange)="getList($event)"
+       >
         <thead>
           <tr>
             <th>loginName</th>
@@ -17,4 +50,6 @@
           </tr>
         </tbody>
       </nz-table>
+    </div>
+  </div>
 </div>

@@ -15,6 +15,7 @@ import { Router } from '../../../../node_modules/@angular/router';
 export class LoginComponent implements OnInit {
     validateForm: FormGroup;
     loading = false;
+    panduan1: boolean = false;
     constructor(
         private fb: FormBuilder,
         private router: Router,
@@ -24,11 +25,37 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.validateForm = this.fb.group({
-            userName: [null, [Validators.required]],
-            password: [null, [Validators.required]],
-            remember: [true]
-        });
+        this.panduan()
+    }
+    panduan(): void {
+        if (localStorage.getItem('remember') == 'true') {
+            this.validateForm = this.fb.group({
+                userName: [localStorage.getItem('username'), [Validators.required]],
+                password: [localStorage.getItem('password'), [Validators.required]],
+                remember: [true],
+                panduan1: true
+            });
+        } else {
+            this.validateForm = this.fb.group({
+                userName: [null, [Validators.required]],
+                password: [null, [Validators.required]],
+                remember: [false],
+                panduan1: false,
+            });
+        }
+    }
+
+    panduan2(): void {
+        if (this.validateForm.value.remember == true) {
+            if (this.panduan1 == false) {
+                localStorage.setItem('username', this.validateForm.value.userName)
+                localStorage.setItem('password', this.validateForm.value.password)
+            } else {
+                localStorage.setItem('username', this.validateForm.value.userName)
+                localStorage.setItem('password', btoa(encodeURIComponent(this.validateForm.value.password.replace(this.regExpService.listObj['前后空格'], ''))), )
+            }
+        }
+        localStorage.setItem('remember', this.validateForm.value.remember)
     }
 
     submitForm(): void {
@@ -43,14 +70,15 @@ export class LoginComponent implements OnInit {
             this.userService['login']({
                 data: {
                     //password:  this.validateForm.value.password.replace(this.regExpService.listObj['前后空格'],''),
-                    password: btoa(encodeURIComponent(this.validateForm.value.password.replace(this.regExpService.listObj['前后空格'], ''))),
+                    password: this.panduan1 ? btoa(encodeURIComponent(this.validateForm.value.password.replace(this.regExpService.listObj['前后空格'], ''))) : this.validateForm.value.password,
                     loginName: this.validateForm.value.userName.replace(this.regExpService.listObj['前后空格'], '')
                 }
             })
                 .then(response => {
                     this.loading = false;
                     if (response.code === 200) {
-                        localStorage.setItem('token',response.data.token)
+                        this.panduan2();
+                        localStorage.setItem('token', response.data.token);
                         this.router.navigateByUrl('/admin/user');
                     } else {
                         this._message.create('error', response.msg, { nzDuration: 4000 });
