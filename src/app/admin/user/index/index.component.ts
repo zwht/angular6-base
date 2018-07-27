@@ -11,6 +11,9 @@ import { RouterLink } from '@angular/router';
 })
 export class IndexComponent implements OnInit {
 
+  name = null
+  juese = null
+  zhungtai = null
   pageSize = 10
   pageNum = 1
   totalCount = null
