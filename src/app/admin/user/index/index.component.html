@@ -31,7 +31,7 @@
     <div class="neikuang">
       <div class="user-index-cpt">
         <nz-table #basicTable [nzData]="list" [nzFrontPagination]="false" [nzPageIndex]="pageNum" [nzTotal]="totalCount" [nzPageSize]="pageSize"
-          (nzPageIndexChange)="getList($event)">
+          (nzPageIndexChange)="buchaxun(loginName,name,juese,zhungtai,$event)">
           <thead>
             <tr>
               <th>登录名</th>

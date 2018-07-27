@@ -23,7 +23,7 @@
     <div class="neikuang">
       <div class="user-index-cpt">
         <nz-table #basicTable [nzData]="list" [nzFrontPagination]="false" [nzPageIndex]="pageNum" [nzTotal]="totalCount" [nzPageSize]="pageSize"
-          (nzPageIndexChange)="getList($event)">
+          (nzPageIndexChange)="buchaxun(name,ID,$event)">
           <thead>
             <tr>
               <th>ID</th>
