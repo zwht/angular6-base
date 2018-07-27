@@ -74,4 +74,18 @@ export class IndexComponent implements OnInit {
       })
   }
 
+  deldeldel(id) {
+    this.CodeService['del']({
+      params: {
+        params2: id
+      },
+      data: {}
+    })
+      .then(response => {
+        if (response.code == 200) {
+          this.getList()
+        }
+      })
+  }
+
 }

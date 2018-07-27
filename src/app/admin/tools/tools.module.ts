@@ -4,6 +4,7 @@ import { ShareModule } from '../../share/share.module';
 
 import { IndexComponent } from './index/index.component';
 import { AddComponent } from './add/add.component';
+import { UpdateComponent } from './update/update.component';
 
 
 export const routes: Routes = [
@@ -21,6 +22,13 @@ export const routes: Routes = [
             name: '添加码表',
         }
     },
+    {
+        path: 'update/:id',
+        component: UpdateComponent,
+        data: {
+            name: '编辑码表',
+        }
+    },
 ];
 
 
@@ -29,7 +37,7 @@ export const routes: Routes = [
         ShareModule,
         RouterModule.forChild(routes)
     ],
-    declarations: [IndexComponent, AddComponent],
+    declarations: [IndexComponent, UpdateComponent, AddComponent],
     providers: [],
 })
 export class ToolsModule { }
