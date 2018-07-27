@@ -11,6 +11,8 @@ import { RouterLink } from '@angular/router';
 })
 export class IndexComponent implements OnInit {
 
+  name = null
+  ID = null
   pageSize = 10
   pageNum = 1
   totalCount = null
@@ -44,5 +46,32 @@ export class IndexComponent implements OnInit {
       })
   }
 
+  buchaxun(name?,ID?,num?) {
+    if (num) {
+      this.pageNum = num
+    }
+    if (name) {
+      this.name = name
+    }
+    if (ID) {
+      this.ID = ID
+    }
+    this.CodeService['list']({
+      params: {
+        params2: this.pageSize,
+        params3: this.pageNum
+      },
+      data: {
+        name: name,
+        id: ID
+      }
+    })
+      .then(response => {
+        if (response.code == 200) {
+          this.list = response.data.pageData;
+          this.totalCount = response.data.totalCount;
+        }
+      })
+  }
 
 }

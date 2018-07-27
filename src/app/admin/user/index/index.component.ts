@@ -11,6 +11,7 @@ import { RouterLink } from '@angular/router';
 })
 export class IndexComponent implements OnInit {
 
+  loginName = null
   name = null
   juese = null
   zhungtai = null
@@ -19,7 +20,7 @@ export class IndexComponent implements OnInit {
   totalCount = null
   DATA = []
 
-  list=[]
+  list = []
   constructor(
     private userService: UserService
   ) { }
@@ -29,38 +30,75 @@ export class IndexComponent implements OnInit {
   }
 
   getList(num?) {
-    if(num){
-    this.pageNum = num
-  }
+    if (num) {
+      this.pageNum = num
+    }
     this.userService['list']({
-      params:{
-        params2:this.pageSize,
-        params3:this.pageNum
+      params: {
+        params2: this.pageSize,
+        params3: this.pageNum
       },
-      data:{
-        name:"zw"
+      data: {
+
       }
     })
       .then(response => {
-        if(response.code==200){
-          this.list=response.data.pageData;
-          this.totalCount=response.data.totalCount;
+        if (response.code == 200) {
+          this.list = response.data.pageData;
+          this.totalCount = response.data.totalCount;
         }
       })
   }
-  cancel(){}
+  cancel() { }
 
-  deldeldel(id){
+  deldeldel(id) {
     this.userService['del']({
-      params:{
-        params2:id
+      params: {
+        params2: id
       },
-      data:{}
+      data: {}
     })
       .then(response => {
-        if(response.code==200){
+        if (response.code == 200) {
           this.getList()
         }
       })
   }
+
+  buchaxun(loginName?,name?, juese?, zhungtai?, num?) {
+    if (num) {
+      this.pageNum = num
+    }
+    if (loginName) {
+      this.loginName = loginName
+    }
+    if (name) {
+      this.name = name
+    }
+    if (juese) {
+      this.juese = juese
+    }
+    if (zhungtai) {
+      this.zhungtai = zhungtai
+    }
+    this.userService['list']({
+      params: {
+        params2: this.pageSize,
+        params3: this.pageNum
+      },
+      data: {
+        loginName : loginName,
+        name: name,
+        phone: juese ,
+        email: zhungtai
+      }
+    })
+      .then(response => {
+        if (response.code == 200) {
+          this.list = response.data.pageData;
+          this.totalCount = response.data.totalCount;
+        }
+      })
+  }
+
 }
