@@ -1,0 +1,54 @@
+<div class="user-add-cpp">
+  <div class="Breadcrumb">
+    <div>
+      <nz-breadcrumb>
+        <nz-breadcrumb-item>
+          <a [routerLink]="['../']">码表管理</a>
+        </nz-breadcrumb-item>
+        <nz-breadcrumb-item>
+          <span class="span">添加码表</span>
+        </nz-breadcrumb-item>
+      </nz-breadcrumb>
+    </div>
+  </div>
+  <div class="shangkuang">
+      <span>添加用户</span>
+  </div>
+  <div class="waikuang">
+    <div class="user-add">
+      <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="ID" nzRequired>ID</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input nz-input id="ID" formControlName="ID" placeholder="ID">
+            <nz-form-explain *ngIf="validateForm.get('ID').dirty && validateForm.get('ID').errors">Please input ID!</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="name" nzRequired>
+            <span>
+              姓名
+            </span>
+          </nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input nz-input id="name" formControlName="name">
+            <nz-form-explain *ngIf="validateForm.get('name').dirty && validateForm.get('name').errors">Please input your name!</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="description">描述</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input nz-input formControlName="description" id="description">
+            <nz-form-explain *ngIf="validateForm.get('description').dirty && validateForm.get('description').errors">The input is not valid description!</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item nz-row style="margin-bottom:8px;">
+          <nz-form-control [nzSpan]="14" [nzOffset]="6">
+            <button nz-button nzType="primary">保存</button>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </div>
+  </div>
+</div>

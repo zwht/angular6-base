@@ -3,17 +3,24 @@ import { RouterModule, Routes } from '@angular/router';
 import { ShareModule } from '../../share/share.module';
 
 import { IndexComponent } from './index/index.component';
+import { AddComponent } from './add/add.component';
 
 
 export const routes: Routes = [
     {
-        path: 'index',
+        path: '',
         component: IndexComponent,
         data: {
             name: '码表管理',
-            menu: true
         }
-    }
+    },   
+    {
+        path: 'add',
+        component: AddComponent,
+        data: {
+            name: '添加码表',
+        }
+    },
 ];
 
 
@@ -22,7 +29,7 @@ export const routes: Routes = [
         ShareModule,
         RouterModule.forChild(routes)
     ],
-    declarations: [IndexComponent],
+    declarations: [IndexComponent, AddComponent],
     providers: [],
 })
 export class ToolsModule { }
