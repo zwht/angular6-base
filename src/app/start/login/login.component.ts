@@ -4,6 +4,7 @@ import { UserService } from '../../share/restServices/UserService';
 import { NzMessageService } from '../../../../node_modules/ng-zorro-antd';
 import { RegExpService } from '../../share/services/reg-exp.service';
 import { Router } from '../../../../node_modules/@angular/router';
+import { CodeDataService } from '../../share/services/code-data.service';
 
 @Component({
     selector: 'app-login',
@@ -17,6 +18,7 @@ export class LoginComponent implements OnInit {
     loading = false;
     panduan1: boolean = false;
     constructor(
+        private codeDataService:CodeDataService,
         private fb: FormBuilder,
         private router: Router,
         private _message: NzMessageService,
@@ -26,6 +28,7 @@ export class LoginComponent implements OnInit {
 
     ngOnInit(): void {
         this.panduan()
+        this.codeDataService.getData();
     }
     panduan(): void {
         if (localStorage.getItem('remember') == 'true') {

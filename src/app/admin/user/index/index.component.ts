@@ -35,8 +35,8 @@ export class IndexComponent implements OnInit {
     }
     this.userService['list']({
       params: {
-        params2: this.pageSize,
-        params3: this.pageNum
+        params2: this.pageNum,
+        params3: this.pageSize
       },
       data: {
 

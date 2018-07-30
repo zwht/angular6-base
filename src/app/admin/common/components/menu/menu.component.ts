@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as tools from '../../../tools/tools.module';
 import { Router } from '@angular/router';
+import { CodeDataService } from '../../../../share/services/code-data.service';
 
 @Component({
     selector: 'app-menu',
@@ -32,10 +33,14 @@ export class MenuComponent implements OnInit {
         }
     ];
 
-    constructor(private router: Router) {
+    constructor(
+        private router: Router,
+        private codeDataService: CodeDataService) {
     }
 
     ngOnInit() {
+        
+        //this.codeDataService.getDataLocalStorage();
         const userType = JSON.parse(localStorage.getItem('roleIds'));
         let adminList = {};
         this.router.config.forEach(item => {
@@ -167,8 +172,8 @@ export class MenuComponent implements OnInit {
             item1.show = false;
         });
         this.setActiveMenu(item.path, '');
-        if (item.path.charAt(item.path.length - 1)=='/') {
-            item.path=item.path.substr(0, item.path.length - 1)
+        if (item.path.charAt(item.path.length - 1) == '/') {
+            item.path = item.path.substr(0, item.path.length - 1)
         }
         this.router.navigateByUrl('/admin/' + item.path);
         setTimeout(() => {
