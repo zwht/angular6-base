@@ -46,6 +46,7 @@ export class AddComponent implements OnInit {
           code: this.regExpService.replace('前后空格',this.validateForm.value.code, ''),
           name: this.regExpService.replace('前后空格',this.validateForm.value.name, ''),
           description: this.regExpService.replace('前后空格',this.validateForm.value.description, ''),
+          roles:'[1,2]'
         }
       })
         .then(response => {
