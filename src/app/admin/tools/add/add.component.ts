@@ -27,9 +27,10 @@ export class AddComponent implements OnInit {
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
-      description: [null, [Validators.required]],
+      description: [null, []],
       name: [null, [Validators.required]],
-      ID: [null, [Validators.required]],
+      code: [null, [Validators.required]],
+      groups: [null, [Validators.required]],
     });
   }
   submitForm(): void {
@@ -41,9 +42,10 @@ export class AddComponent implements OnInit {
       this.loading = true;
       this.CodeService['add']({
         data: {
-          id: this.validateForm.value.ID.replace(this.regExpService.listObj['前后空格'], ''),
-          name: this.validateForm.value.name.replace(this.regExpService.listObj['前后空格'], ''),
-          description: this.validateForm.value.description.replace(this.regExpService.listObj['前后空格'], ''),
+          groups: this.regExpService.replace('前后空格',this.validateForm.value.groups, ''),
+          code: this.regExpService.replace('前后空格',this.validateForm.value.code, ''),
+          name: this.regExpService.replace('前后空格',this.validateForm.value.name, ''),
+          description: this.regExpService.replace('前后空格',this.validateForm.value.description, ''),
         }
       })
         .then(response => {

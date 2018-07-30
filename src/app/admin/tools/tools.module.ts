@@ -13,8 +13,9 @@ export const routes: Routes = [
         component: IndexComponent,
         data: {
             name: '码表管理',
+            menu: true
         }
-    },   
+    },
     {
         path: 'add',
         component: AddComponent,

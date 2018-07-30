@@ -12,22 +12,29 @@
     </div>
   </div>
   <div class="shangkuang">
-      <span>添加用户</span>
+    <span>添加用户</span>
   </div>
   <div class="waikuang">
     <div class="user-add">
       <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
         <nz-form-item>
-          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="ID" nzRequired>ID</nz-form-label>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="groups" nzRequired>分组</nz-form-label>
           <nz-form-control [nzSm]="14" [nzXs]="24">
-            <input nz-input id="ID" formControlName="ID" placeholder="ID">
-            <nz-form-explain *ngIf="validateForm.get('ID').dirty && validateForm.get('ID').errors">Please input ID!</nz-form-explain>
+            <input nz-input id="groups" formControlName="groups" placeholder="groups">
+            <nz-form-explain *ngIf="validateForm.get('groups').dirty && validateForm.get('groups').errors">填写分组</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="code" nzRequired>码值</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input nz-input id="cdoe" formControlName="code" placeholder="code">
+            <nz-form-explain *ngIf="validateForm.get('code').dirty && validateForm.get('code').errors">Please input id!</nz-form-explain>
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="name" nzRequired>
             <span>
-              姓名
+              吗名
             </span>
           </nz-form-label>
           <nz-form-control [nzSm]="14" [nzXs]="24">
@@ -36,7 +43,7 @@
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="description">描述</nz-form-label>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="description">描述</nz-form-label>
           <nz-form-control [nzSm]="14" [nzXs]="24">
             <input nz-input formControlName="description" id="description">
             <nz-form-explain *ngIf="validateForm.get('description').dirty && validateForm.get('description').errors">The input is not valid description!</nz-form-explain>

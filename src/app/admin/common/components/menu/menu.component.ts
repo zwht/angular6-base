@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as tools from '../../../tools/tools.module';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-menu',
@@ -17,8 +17,8 @@ export class MenuComponent implements OnInit {
     // 有子菜单的需要引入
     routesMenu = [
         {
-            name:'工具',
-            children:tools.routes
+            name: '工具',
+            children: tools.routes
         }
     ];
     rightDown = [
@@ -64,7 +64,7 @@ export class MenuComponent implements OnInit {
                 };
                 this.routesMenu.forEach(subItem => {
                     if ((item.data as any).name === subItem['name']) {
-                        (subItem  as any).children.forEach(subSubItem => {
+                        (subItem as any).children.forEach(subSubItem => {
                             if (subSubItem.data && subSubItem.data.menu) {
                                 if (subSubItem.data.type) {
                                     let key = false;
@@ -167,6 +167,9 @@ export class MenuComponent implements OnInit {
             item1.show = false;
         });
         this.setActiveMenu(item.path, '');
+        if (item.path.charAt(item.path.length - 1)=='/') {
+            item.path=item.path.substr(0, item.path.length - 1)
+        }
         this.router.navigateByUrl('/admin/' + item.path);
         setTimeout(() => {
             this.childrenShowKey = true;

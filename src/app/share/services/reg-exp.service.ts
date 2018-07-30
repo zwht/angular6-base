@@ -27,5 +27,11 @@ export class RegExpService {
   test(strValue,item){
     return  this.listObj[item].test(strValue);  
   }
+  replace(name,str,key){
+    if(str!==""&&str!==null&&str!==undefined){
+      str=str.replace(this.listObj[name], key) 
+    }
+    return str;
+  }
 
 }

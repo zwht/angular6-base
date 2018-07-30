@@ -1,6 +1,6 @@
 {
   "/v1": {
-    "target": "http://192.168.111.13:8888",
+    "target": "http://localhost:8888",
     "secure": false
   }
 }

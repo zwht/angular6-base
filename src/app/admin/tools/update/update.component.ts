@@ -33,9 +33,10 @@ export class UpdateComponent implements OnInit {
     this.getById(this.id)
 
     this.validateForm = this.fb.group({
-      description: [null, [Validators.required]],
+      description: [null, []],
       name: [null, [Validators.required]],
-      ID: [null, [Validators.required]],
+      code: [null, [Validators.required]],
+      groups: [null, [Validators.required]],
     });
 
   }
@@ -48,9 +49,11 @@ export class UpdateComponent implements OnInit {
       this.loading = true;
       this.CodeService['update']({
         data: {
-          id: this.validateForm.value.ID.replace(this.regExpService.listObj['前后空格'], ''),
-          name: this.validateForm.value.name.replace(this.regExpService.listObj['前后空格'], ''),
-          description: this.validateForm.value.description.replace(this.regExpService.listObj['前后空格'], ''),
+          id:this.id,
+          groups: this.regExpService.replace('前后空格',this.validateForm.value.groups, ''),
+          code: this.regExpService.replace('前后空格',this.validateForm.value.code, ''),
+          name: this.regExpService.replace('前后空格',this.validateForm.value.name, ''),
+          description: this.regExpService.replace('前后空格',this.validateForm.value.description, ''),
         }
       })
         .then(response => {
@@ -73,9 +76,10 @@ export class UpdateComponent implements OnInit {
       .then(response => {
         if(response.code==200){
           this.validateForm = this.fb.group({
-            description: [response.data.description, [Validators.required]],
+            description: [response.data.description, []],
             name: [response.data.name, [Validators.required]],
-            ID: [response.data.id, [Validators.required]],
+            code: [response.data.code, [Validators.required]],
+            groups: [response.data.groups, [Validators.required]],
           });
         }
       })
