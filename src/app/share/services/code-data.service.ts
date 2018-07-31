@@ -40,9 +40,15 @@ export class CodeDataService {
           this.codeList.forEach(item=>{
             this.codeObj[item.code]=item.name
             if(this.codeObjList[item.groups]){
-              this.codeObjList[item.groups].push(item);
+              this.codeObjList[item.groups].push(Object.assign({
+                value:item.code,
+                label:item.name
+              },item));
             }else{
-              this.codeObjList[item.groups]=[item]
+              this.codeObjList[item.groups]=[Object.assign({
+                value:item.code,
+                label:item.name
+              },item)]
             }
           })
           localStorage.setItem("codeObjList",JSON.stringify(this.codeObjList))

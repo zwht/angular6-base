@@ -8,6 +8,8 @@ import {
 import { CodeService } from '../../../share/restServices/CodeService';
 import { NzMessageService } from '../../../../../node_modules/ng-zorro-antd';
 import { RegExpService } from '../../../share/services/reg-exp.service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
@@ -21,7 +23,8 @@ export class AddComponent implements OnInit {
     private _message: NzMessageService,
     private regExpService: RegExpService,
     private fb: FormBuilder,
-    private CodeService: CodeService
+    private CodeService: CodeService,
+    private router: Router,
   ) {
   }
 
@@ -52,7 +55,7 @@ export class AddComponent implements OnInit {
         .then(response => {
           this.loading = false;
           if (response.code === 200) {
-            alert("添加成功")
+            this.router.navigate(['/admin/tools'])
           } else {
             this._message.create('error', response.msg, { nzDuration: 4000 });
           }

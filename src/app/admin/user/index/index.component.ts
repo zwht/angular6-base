@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../share/restServices/UserService';
+import { CodeDataService } from '../../../share/services/code-data.service';
 import { DateRangePickerComponent } from 'ng-zorro-antd/src/date-picker/date-range-picker.component';
 import { routes } from '../user.module';
 import { RouterLink } from '@angular/router';
@@ -20,15 +21,20 @@ export class IndexComponent implements OnInit {
   totalCount = null
   DATA = []
 
+  codeList=[]
+  codeObjList={}
+  codeObj={}
+
   list = []
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private codeDataService:CodeDataService,
   ) { }
 
   ngOnInit() {
+    this.codeObj = this.codeDataService.codeObj
     this.getList();
   }
-
   getList(num?) {
     if (num) {
       this.pageNum = num
@@ -39,11 +45,17 @@ export class IndexComponent implements OnInit {
         params3: this.pageSize
       },
       data: {
-
+        loginName : this.loginName,
+        name: this.name,
+        phone: this.juese ,
+        email: this.zhungtai
       }
     })
       .then(response => {
         if (response.code == 200) {
+          response.data.pageData.forEach(aaa=>{
+            aaa.roles = aaa.roles.split(",")
+          })
           this.list = response.data.pageData;
           this.totalCount = response.data.totalCount;
         }
@@ -65,40 +77,7 @@ export class IndexComponent implements OnInit {
       })
   }
 
-  buchaxun(loginName?,name?, juese?, zhungtai?, num?) {
-    if (num) {
-      this.pageNum = num
-    }
-    if (loginName) {
-      this.loginName = loginName
-    }
-    if (name) {
-      this.name = name
-    }
-    if (juese) {
-      this.juese = juese
-    }
-    if (zhungtai) {
-      this.zhungtai = zhungtai
-    }
-    this.userService['list']({
-      params: {
-        params2: this.pageSize,
-        params3: this.pageNum
-      },
-      data: {
-        loginName : loginName,
-        name: name,
-        phone: juese ,
-        email: zhungtai
-      }
-    })
-      .then(response => {
-        if (response.code == 200) {
-          this.list = response.data.pageData;
-          this.totalCount = response.data.totalCount;
-        }
-      })
-  }
+  fanyi(){
 
+  }
 }

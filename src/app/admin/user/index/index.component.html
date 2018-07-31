@@ -3,22 +3,22 @@
     <div>
       <div class="chaxun">
         <span>登录名</span>
-        <input nz-input placeholder="请输入登录名" [(ngModel)]="loginName" (keyup.enter)="buchaxun(loginName,name,juese,zhungtai)">
+        <input nz-input placeholder="请输入登录名" [(ngModel)]="loginName" (keyup.enter)="getList()">
       </div>
       <div class="chaxun">
         <span>姓名</span>
-        <input nz-input placeholder="请输入姓名" [(ngModel)]="name" (keyup.enter)="buchaxun(loginName,name,juese,zhungtai)">
+        <input nz-input placeholder="请输入姓名" [(ngModel)]="name" (keyup.enter)="getList()">
       </div>
       <div class="chaxun">
         <span>电话</span>
-        <input nz-input placeholder="请输入电话" [(ngModel)]="juese" (keyup.enter)="buchaxun(loginName,name,juese,zhungtai)">
+        <input nz-input placeholder="请输入电话" [(ngModel)]="juese" (keyup.enter)="getList()">
       </div>
       <div class="chaxun">
         <span>邮箱</span>
-        <input nz-input placeholder="请输入邮箱" [(ngModel)]="zhungtai" (keyup.enter)="buchaxun(loginName,name,juese,zhungtai)">
+        <input nz-input placeholder="请输入邮箱" [(ngModel)]="zhungtai" (keyup.enter)="getList()">
       </div>
       <div class="chaxun">
-        <button nz-button nzType="chaxun" (click)="buchaxun(loginName,name,juese,zhungtai)">查询</button>
+        <button nz-button nzType="chaxun" (click)="getList()">查询</button>
       </div>
     </div>
   </div>
@@ -36,6 +36,7 @@
             <tr>
               <th>登录名</th>
               <th>姓名</th>
+              <th>类型</th>
               <th>电话</th>
               <th>邮箱</th>
               <th>操作</th>
@@ -45,10 +46,17 @@
             <tr *ngFor="let data of list">
               <td>{{data.loginName}}</td>
               <td>{{data.name}}</td>
+              <td>
+                <span *ngFor="let item of data.roles let i=index">
+                  {{codeObj[item]}}
+                  <span *ngIf="i<data.roles.length-1">，</span>
+                </span>
+              </td>
               <td>{{data.phone}}</td>
               <td>{{data.email}}</td>
               <td>
                 <button nz-button [routerLink]="['./update',data.id]">编辑</button>
+                &nbsp;&nbsp;
                 <button nz-popconfirm nz-button nzTitle="您确定要删除吗?" (nzOnConfirm)="deldeldel(data.id)" (nzOnCancel)="cancel()">删除</button>
               </td>
             </tr>
@@ -57,5 +65,4 @@
       </div>
     </div>
   </div>
-
 </div>

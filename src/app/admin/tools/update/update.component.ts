@@ -9,6 +9,8 @@ import {
 import { CodeService } from '../../../share/restServices/CodeService';
 import { NzMessageService } from '../../../../../node_modules/ng-zorro-antd';
 import { RegExpService } from '../../../share/services/reg-exp.service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-update',
   templateUrl: './update.component.html',
@@ -24,7 +26,9 @@ export class UpdateComponent implements OnInit {
     private regExpService: RegExpService,
     private fb: FormBuilder,
     private CodeService: CodeService,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    private router: Router,
+
   ) {
   }
 
@@ -59,7 +63,7 @@ export class UpdateComponent implements OnInit {
         .then(response => {
           this.loading = false;
           if (response.code === 200) {
-            alert("保存成功")
+            this.router.navigate(['/admin/tools'])
           } else {
             this._message.create('error', response.msg, { nzDuration: 4000 });
           }

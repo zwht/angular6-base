@@ -8,6 +8,9 @@ import {
 import { UserService } from '../../../share/restServices/UserService';
 import { NzMessageService } from '../../../../../node_modules/ng-zorro-antd';
 import { RegExpService } from '../../../share/services/reg-exp.service';
+import { CodeDataService } from '../../../share/services/code-data.service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
@@ -16,16 +19,20 @@ import { RegExpService } from '../../../share/services/reg-exp.service';
 export class AddComponent implements OnInit {
   validateForm: FormGroup;
   loading = false;
+  checkOptionsOne=[];
 
   constructor(
+    private codeDataService: CodeDataService,
     private _message: NzMessageService,
     private regExpService: RegExpService,
     private fb: FormBuilder,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router,
   ) {
   }
 
   ngOnInit(): void {
+    this.checkOptionsOne = JSON.parse(JSON.stringify(this.codeDataService.codeObjList['10']))
     this.validateForm = this.fb.group({
       email: [null, [Validators.email]],
       password: [null, [Validators.required]],
@@ -33,7 +40,7 @@ export class AddComponent implements OnInit {
       name: [null, [Validators.required]],
       phone: [null, [Validators.required]],
       loginName: [null, [Validators.required]],
-      captcha: [null, [Validators.required]]
+      lcode: [null, [Validators.required]]
     });
   }
   submitForm(): void {
@@ -41,8 +48,16 @@ export class AddComponent implements OnInit {
       this.validateForm.controls[i].markAsDirty();
       this.validateForm.controls[i].updateValueAndValidity();
     }
+    
     if (this.validateForm.valid) {
       this.loading = true;
+
+      let roles=this.checkOptionsOne.filter(item=>{
+        if(item.checked) return true
+      }).map(item=>{
+        return item.code
+      })
+      
       this.userService['add']({
         data: {
           loginName: this.validateForm.value.loginName.replace(this.regExpService.listObj['前后空格'], ''),
@@ -50,12 +65,16 @@ export class AddComponent implements OnInit {
           password: btoa(encodeURIComponent(this.validateForm.value.password.replace(this.regExpService.listObj['前后空格'], ''))),
           phone: this.validateForm.value.phone.replace(this.regExpService.listObj['前后空格'], ''),
           email: this.validateForm.value.email.replace(this.regExpService.listObj['前后空格'], ''),
+          roles:this.fanyi(roles)
         }
       })
         .then(response => {
           this.loading = false;
           if (response.code === 200) {
-            
+            this.checkOptionsOne.forEach(bbb=>{
+              bbb.checked = false
+            })
+            this.router.navigate(['/admin/user'])
           } else {
             this._message.create('error', response.msg, { nzDuration: 4000 });
           }
@@ -77,8 +96,16 @@ export class AddComponent implements OnInit {
     }
   }
 
-  getCaptcha(e: MouseEvent): void {
-    e.preventDefault();
+  fanyi(roles){
+    let miao = ''  
+    roles.forEach(aaa=>{
+      miao = miao + "," + aaa
+    })
+    miao=miao.substr(1);
+    return miao
   }
-
+  
+  log(checkOptionsOne){
+    console.log(checkOptionsOne);
+  }
 }
