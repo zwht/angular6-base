@@ -33,7 +33,10 @@ export class CodeDataService {
     })
       .then(response => {
         if (response.code == 200) {
+          this.codeObjList={}
+          this.codeObj={}
           this.codeList = response.data.pageData;
+          
           this.codeList.forEach(item=>{
             this.codeObj[item.code]=item.name
             if(this.codeObjList[item.groups]){
