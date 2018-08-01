@@ -12,7 +12,7 @@
     </div>
   </div>
   <div class="shangkuang">
-      <span>添加用户</span>
+    <span>添加用户</span>
   </div>
   <div class="waikuang">
     <div class="user-add">
@@ -28,6 +28,7 @@
           <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">邮箱</nz-form-label>
           <nz-form-control [nzSm]="14" [nzXs]="24">
             <input nz-input formControlName="email" id="email">
+            
             <nz-form-explain *ngIf="validateForm.get('email').dirty && validateForm.get('email').errors">The input is not valid E-mail!</nz-form-explain>
           </nz-form-control>
         </nz-form-item>
@@ -74,7 +75,8 @@
         <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="lcode" nzRequired>用户类型</nz-form-label>
           <nz-form-control [nzSm]="14" [nzXs]="24">
-              <nz-checkbox-group (ngModelChange)="log(checkOptionsOne)" formControlName='lcode' [(ngModel)]="checkOptionsOne"></nz-checkbox-group>
+            <nz-checkbox-group  formControlName='lcode' [(ngModel)]="checkOptionsOne"></nz-checkbox-group>
+            <nz-form-explain *ngIf="validateForm.get('lcode').dirty && validateForm.get('lcode').errors">{{validateForm.getError('lcode', 'lcode')?.info}}</nz-form-explain>
           </nz-form-control>
         </nz-form-item>
 

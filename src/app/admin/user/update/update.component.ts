@@ -42,13 +42,6 @@ export class UpdateComponent implements OnInit {
     this.id = this.route.snapshot.params['id'];
     this.getById(this.id)
     this.checkOptionsOne = JSON.parse(JSON.stringify(this.codeDataService.codeObjList['10']))
-    this.validateForm = this.fb.group({
-      email: [null, [Validators.email]],
-      name: [null, [Validators.required]],
-      phone: [null, [Validators.required]],
-      loginName: [null, [Validators.required]],
-      lcode: [null, [Validators.required]],
-    });
   }
 
   submitForm(): void {
@@ -107,7 +100,15 @@ export class UpdateComponent implements OnInit {
             name: [response.data.name, [Validators.required]],
             phone: [response.data.phone, [Validators.required]],
             loginName: [response.data.loginName, [Validators.required]],
-            lcode: [this.checkOptionsOne, [Validators.required]],
+            lcode: [this.checkOptionsOne, [Validators.required, function (control: FormControl) {
+              let isPass = false;
+              if (control.value) {
+                control.value.forEach(item => {
+                  if (item.checked) isPass = true;
+                })
+              }
+              return isPass ? null : { lcode: { info: '类型不能为空' } }
+            }]]
           });
         }
       })

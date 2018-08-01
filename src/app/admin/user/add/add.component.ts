@@ -19,7 +19,7 @@ import { Router } from '@angular/router';
 export class AddComponent implements OnInit {
   validateForm: FormGroup;
   loading = false;
-  checkOptionsOne=[];
+  checkOptionsOne = [];
 
   constructor(
     private codeDataService: CodeDataService,
@@ -33,6 +33,7 @@ export class AddComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkOptionsOne = JSON.parse(JSON.stringify(this.codeDataService.codeObjList['10']))
+    this.checkOptionsOne[0].checked = true
     this.validateForm = this.fb.group({
       email: [null, [Validators.email]],
       password: [null, [Validators.required]],
@@ -40,24 +41,34 @@ export class AddComponent implements OnInit {
       name: [null, [Validators.required]],
       phone: [null, [Validators.required]],
       loginName: [null, [Validators.required]],
-      lcode: [null, [Validators.required]]
+      lcode: [null, [Validators.required, function (control: FormControl) {
+        let isPass = false;
+        if (control.value) {
+          control.value.forEach(item => {
+            if (item.checked) isPass = true;
+          })
+        }
+        return isPass ? null : { lcode: { info: '类型不能为空' } }
+      }]]
     });
   }
   submitForm(): void {
+
     for (const i in this.validateForm.controls) {
       this.validateForm.controls[i].markAsDirty();
       this.validateForm.controls[i].updateValueAndValidity();
     }
-    
+
+
+
     if (this.validateForm.valid) {
       this.loading = true;
 
-      let roles=this.checkOptionsOne.filter(item=>{
-        if(item.checked) return true
-      }).map(item=>{
+      let roles = this.checkOptionsOne.filter(item => {
+        if (item.checked) return true
+      }).map(item => {
         return item.code
       })
-      
       this.userService['add']({
         data: {
           loginName: this.validateForm.value.loginName.replace(this.regExpService.listObj['前后空格'], ''),
@@ -65,13 +76,13 @@ export class AddComponent implements OnInit {
           password: btoa(encodeURIComponent(this.validateForm.value.password.replace(this.regExpService.listObj['前后空格'], ''))),
           phone: this.validateForm.value.phone.replace(this.regExpService.listObj['前后空格'], ''),
           email: this.validateForm.value.email.replace(this.regExpService.listObj['前后空格'], ''),
-          roles:this.fanyi(roles)
+          roles: this.fanyi(roles)
         }
       })
         .then(response => {
           this.loading = false;
           if (response.code === 200) {
-            this.checkOptionsOne.forEach(bbb=>{
+            this.checkOptionsOne.forEach(bbb => {
               bbb.checked = false
             })
             this.router.navigate(['/admin/user'])
@@ -80,7 +91,6 @@ export class AddComponent implements OnInit {
           }
         });
     }
-
   }
 
   updateConfirmValidator(): void {
@@ -96,16 +106,12 @@ export class AddComponent implements OnInit {
     }
   }
 
-  fanyi(roles){
-    let miao = ''  
-    roles.forEach(aaa=>{
+  fanyi(roles) {
+    let miao = ''
+    roles.forEach(aaa => {
       miao = miao + "," + aaa
     })
-    miao=miao.substr(1);
+    miao = miao.substr(1);
     return miao
-  }
-  
-  log(checkOptionsOne){
-    console.log(checkOptionsOne);
   }
 }
