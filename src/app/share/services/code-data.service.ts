@@ -54,7 +54,6 @@ export class CodeDataService {
           localStorage.setItem("codeObjList",JSON.stringify(this.codeObjList))
           localStorage.setItem("codeList",JSON.stringify(this.codeList))
           localStorage.setItem("codeObj",JSON.stringify(this.codeObj))
-          debugger
         }
       })
   }

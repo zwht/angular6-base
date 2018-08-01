@@ -41,6 +41,15 @@ export class UpdateComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
     this.getById(this.id)
+
+    this.validateForm = this.fb.group({
+      email: [null, [Validators.email]],
+      name: [null, [Validators.required]],
+      phone: [null, [Validators.required]],
+      loginName: [null, [Validators.required]],
+      lcode: [null, [Validators.required]]
+    });
+
     this.checkOptionsOne = JSON.parse(JSON.stringify(this.codeDataService.codeObjList['10']))
   }
 
