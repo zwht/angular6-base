@@ -44,7 +44,14 @@ export class UserService {
             params: {
                 params1: 'getById'
             }
+        },        
+        updateState: {
+            method: 'get',
+            params: {
+                params1: 'updateState'
+            }
         },
+
     };
 
     constructor(httpServer: HttpServer) {

@@ -77,6 +77,37 @@ export class IndexComponent implements OnInit {
       })
   }
 
+  StateOK(id) {
+    this.userService['updateState']({
+      params: {
+        id: id,
+        state: true
+      },
+      data: {}
+    })
+      .then(response => {
+        if (response.code == 200) {
+          this.getList()
+        }
+      })
+  }
+
+  StateNO(id) {
+    this.userService['updateState']({
+      params: {
+        id: id,
+        state: false
+
+      },
+      data: {}
+    })
+      .then(response => {
+        if (response.code == 200) {
+          this.getList()
+        }
+      })
+  }
+
   fanyi(){
 
   }

@@ -39,6 +39,7 @@
               <th>类型</th>
               <th>电话</th>
               <th>邮箱</th>
+              <th>启用</th>
               <th>操作</th>
             </tr>
           </thead>
@@ -54,10 +55,15 @@
               </td>
               <td>{{data.phone}}</td>
               <td>{{data.email}}</td>
+              <td class="tdqiyong" *ngIf="data.state">已启用</td>
+              <td class="tdnoqiyong" *ngIf="!data.state">未启用</td>
               <td>
                 <button nz-button [routerLink]="['./update',data.id]">编辑</button>
                 &nbsp;&nbsp;
                 <button nz-popconfirm nz-button nzTitle="您确定要删除吗?" (nzOnConfirm)="deldeldel(data.id)" (nzOnCancel)="cancel()">删除</button>
+                &nbsp;&nbsp;
+                <button *ngIf="!data.state" nz-popconfirm nz-button nzTitle="您确定要启用吗?" (nzOnConfirm)="StateOK(data.id)" (nzOnCancel)="cancel()">启用</button>              
+                <button *ngIf="data.state" nz-popconfirm nz-button nzTitle="您确定要禁用吗?" (nzOnConfirm)="StateNO(data.id)" (nzOnCancel)="cancel()">禁用</button>              
               </td>
             </tr>
           </tbody>
