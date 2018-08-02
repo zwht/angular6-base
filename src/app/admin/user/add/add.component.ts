@@ -33,6 +33,9 @@ export class AddComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkOptionsOne = JSON.parse(JSON.stringify(this.codeDataService.codeObjList['10']))
+    this.checkOptionsOne =this.checkOptionsOne.filter(item=>{
+      return item.code!=1001;
+    })
     this.checkOptionsOne[0].checked = true
     this.validateForm = this.fb.group({
       email: [null, [Validators.email]],

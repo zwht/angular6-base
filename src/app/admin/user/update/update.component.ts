@@ -49,8 +49,10 @@ export class UpdateComponent implements OnInit {
       loginName: [null, [Validators.required]],
       lcode: [null, [Validators.required]]
     });
-
     this.checkOptionsOne = JSON.parse(JSON.stringify(this.codeDataService.codeObjList['10']))
+    this.checkOptionsOne =this.checkOptionsOne.filter(item=>{
+      return item.code!=1001;
+    })
   }
 
   submitForm(): void {

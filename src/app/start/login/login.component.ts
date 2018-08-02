@@ -87,7 +87,16 @@ export class LoginComponent implements OnInit {
                         this.sessionService.setItem('token', response.data.token, "2h");
                         this.sessionService.setItem('roles', response.data.roles);
                         this.sessionService.setItem('id', response.data.id);
-                        this.router.navigateByUrl('/admin/user');
+                        if(response.data.roles.indexOf('1001')!=-1){
+                            this.router.navigateByUrl('/admin/user');
+                        }else if(response.data.roles.indexOf('1002')!=-1){
+                            this.router.navigateByUrl('/admin/self');
+                        }else if(response.data.roles.indexOf('1003')!=-1){
+                            this.router.navigateByUrl('/admin/self');
+                        }else{
+                            this.router.navigateByUrl('/admin/self');
+                        }
+                        
                     } else {
                         this._message.create('error', response.msg, { nzDuration: 4000 });
                     }
