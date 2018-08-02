@@ -5,8 +5,13 @@ import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, tap} from 'rxjs/operators';
+import { SessionService } from './SessionService';
+
 @Injectable()
 export class ZwHttpInterceptor implements HttpInterceptor {
+  constructor(
+    private sessionService: SessionService
+  ) { }
   status = {
     'status.400': '错误的请求。由于语法错误，该请求无法完成。',
     'status.401': '未经授权。服务器拒绝响应。',
@@ -42,14 +47,14 @@ export class ZwHttpInterceptor implements HttpInterceptor {
     });
     let authReq = req.clone({
       setHeaders: {
-        Authorization: localStorage.getItem('token') || '',
+        Authorization: this.sessionService.getItem('token') || '',
         'Content-Type': 'application/json; charset=utf-8'
       }
     });
     if (key) {
       authReq = req.clone({
         setHeaders: {
-          Authorization: 'Bearer ' + localStorage.getItem('token') || ''
+          Authorization: 'Bearer ' + this.sessionService.getItem('token') || ''
         }
       });
     }

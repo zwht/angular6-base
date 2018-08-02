@@ -12,6 +12,7 @@ import { RegExpService } from '../../../share/services/reg-exp.service';
 import { CodeDataService } from '../../../share/services/code-data.service';
 import { forEach } from '@angular/router/src/utils/collection';
 import { Router } from '@angular/router';
+import { SessionService } from '../../../share/services/SessionService';
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
@@ -35,18 +36,15 @@ export class IndexComponent implements OnInit {
   checkOptionsOne = [];
   constructor(
     private codeDataService: CodeDataService,
-    private _message: NzMessageService,
-    private regExpService: RegExpService,
-    private fb: FormBuilder,
     private userService: UserService,
     public route: ActivatedRoute,
-    private router: Router,
+    private sessionService: SessionService
 
   ) { }
 
   ngOnInit(): void {
     this.codeObj = this.codeDataService.codeObj
-    this.id = localStorage.getItem('id')
+    this.id = this.sessionService.getItem('id')
     this.getById(this.id)
   }
 

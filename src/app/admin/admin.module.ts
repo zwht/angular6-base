@@ -4,6 +4,7 @@ import { ShareModule } from '../share/share.module';
 
 
 import { MenuComponent } from './common/components/menu/menu.component';
+import { PermissionGuard } from '../share/services/PermissionGuard';
 
 export const routes: Routes = [
   {
@@ -15,29 +16,27 @@ export const routes: Routes = [
         loadChildren: './user/user.module#UserModule',
         data: {
           name: '用户',
-          // type: [1, 2],
-          //hideChild: true,
+          roles:[1001],
           menu: true
-        }
+        },
+        canActivate:[PermissionGuard]
       },
       {
         path: 'tools',
         loadChildren: './tools/tools.module#ToolsModule',
         data: {
           name: '工具',
-          // type: [1, 2],
+          roles:[1001],
           //hideChild: true,
           menu: true
-        }
+        },
+        canActivate:[PermissionGuard]
       },
       {
         path: 'self',
         loadChildren: './self/self.module#SelfModule',
         data: {
-          name: '个人中心',
-          // type: [1, 2],
-          // hideChild: true,
-          // menu: true
+          name: '个人中心'
         }
       },
     ]

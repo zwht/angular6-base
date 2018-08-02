@@ -16,6 +16,8 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { UserService } from './restServices/UserService';
 import { CodeService } from './restServices/CodeService';
 import { RegExpService } from './services/reg-exp.service';
+import { SessionService } from './services/SessionService';
+import { PermissionGuard } from './services/PermissionGuard';
 
 @NgModule({
     imports: [
@@ -45,7 +47,9 @@ import { RegExpService } from './services/reg-exp.service';
         DatePipe,
         UserService,
         CodeService,
-        RegExpService
+        RegExpService,
+        SessionService,
+        PermissionGuard
     ],
     entryComponents: []
 })

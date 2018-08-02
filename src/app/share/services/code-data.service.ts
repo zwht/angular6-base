@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CodeService } from '../restServices/CodeService';
+import { SessionService } from './SessionService';
 
 @Injectable({
   providedIn: 'root'
@@ -9,18 +10,19 @@ export class CodeDataService {
   codeObjList={}
   codeObj={}
 
-  constructor(private codeService:CodeService) { 
+  constructor(private codeService:CodeService,
+  private sessionService:SessionService) { 
     this.getDataLocalStorage()
   }
   getDataLocalStorage(){
-    if(localStorage.getItem('codeObjList')){
-      this.codeObjList=JSON.parse(localStorage.getItem('codeObjList'))
+    if(this.sessionService.getItem('codeObjList')){
+      this.codeObjList=JSON.parse(this.sessionService.getItem('codeObjList'))
     }
-    if(localStorage.getItem('codeObj')){
-      this.codeObj=JSON.parse(localStorage.getItem('codeObj'))
+    if(this.sessionService.getItem('codeObj')){
+      this.codeObj=JSON.parse(this.sessionService.getItem('codeObj'))
     }
-    if(localStorage.getItem('codeList')){
-      this.codeList=JSON.parse(localStorage.getItem('codeList'))
+    if(this.sessionService.getItem('codeList')){
+      this.codeList=JSON.parse(this.sessionService.getItem('codeList'))
     }
   }
   getData(){
@@ -51,9 +53,9 @@ export class CodeDataService {
               },item)]
             }
           })
-          localStorage.setItem("codeObjList",JSON.stringify(this.codeObjList))
-          localStorage.setItem("codeList",JSON.stringify(this.codeList))
-          localStorage.setItem("codeObj",JSON.stringify(this.codeObj))
+          this.sessionService.setItem("codeObjList",JSON.stringify(this.codeObjList))
+          this.sessionService.setItem("codeList",JSON.stringify(this.codeList))
+          this.sessionService.setItem("codeObj",JSON.stringify(this.codeObj))
         }
       })
   }

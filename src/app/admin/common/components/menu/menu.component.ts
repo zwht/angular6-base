@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as tools from '../../../tools/tools.module';
 import { Router } from '@angular/router';
 import { CodeDataService } from '../../../../share/services/code-data.service';
+import { SessionService } from '../../../../share/services/SessionService';
 
 @Component({
     selector: 'app-menu',
@@ -14,7 +15,7 @@ export class MenuComponent implements OnInit {
     childrenShowKey = true;
     menu = [];
     collectKey = false;
-    userName = localStorage.getItem('username');
+    userName = this.sessionService.getItem('username');
     // 有子菜单的需要引入
     routesMenu = [
         {
@@ -35,12 +36,19 @@ export class MenuComponent implements OnInit {
 
     constructor(
         private router: Router,
+        private sessionService: SessionService,
         private codeDataService: CodeDataService) {
     }
 
     ngOnInit() {
-        //this.codeDataService.getDataLocalStorage();
-        const userType = JSON.parse(localStorage.getItem('roleIds'));
+        let userType;
+        //如果没有用户类型，说明没有登录，直接跳转登录页面
+        if(!this.sessionService.getItem('roles')){
+            this.router.navigate(['/']);
+            return
+        }else{
+            userType=this.sessionService.getItem('roles').split(',')
+        }
         let adminList = {};
         this.router.config.forEach(item => {
             if (item.path === 'admin') {
@@ -48,9 +56,9 @@ export class MenuComponent implements OnInit {
             }
         });
         adminList['children'].every(item => {
-            if (item.data.type) {
+            if (item.data.roles&&item.data.roles.length) {
                 let key = false;
-                item.data.type.forEach(ob1 => {
+                item.data.roles.forEach(ob1 => {
                     userType.forEach(ob2 => {
                         if (ob1 == ob2) {
                             key = true;
@@ -70,9 +78,9 @@ export class MenuComponent implements OnInit {
                     if ((item.data as any).name === subItem['name']) {
                         (subItem as any).children.forEach(subSubItem => {
                             if (subSubItem.data && subSubItem.data.menu) {
-                                if (subSubItem.data.type) {
+                                if (subSubItem.data.roles&&subSubItem.data.roles.length) {
                                     let key = false;
-                                    subSubItem.data.type.forEach(ob1 => {
+                                    subSubItem.data.roles.forEach(ob1 => {
                                         if (ob1 == userType) {
                                             key = true;
                                         }
@@ -111,11 +119,12 @@ export class MenuComponent implements OnInit {
                 break;
             }
             case 'exit': {
-                localStorage.removeItem('token');
-                localStorage.removeItem('username');
-                localStorage.removeItem('remember');
-                localStorage.removeItem('password');
-                localStorage.removeItem('id');
+                this.sessionService.removeItem('token');
+                this.sessionService.removeItem('username');
+                this.sessionService.removeItem('remember');
+                this.sessionService.removeItem('password');
+                this.sessionService.removeItem('id');
+                this.sessionService.removeItem('roles');
                 this.router.navigate(['/']);
                 break;
             }

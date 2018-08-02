@@ -5,6 +5,7 @@ import { NzMessageService } from '../../../../node_modules/ng-zorro-antd';
 import { RegExpService } from '../../share/services/reg-exp.service';
 import { Router } from '../../../../node_modules/@angular/router';
 import { CodeDataService } from '../../share/services/code-data.service';
+import { SessionService } from '../../share/services/SessionService';
 
 @Component({
     selector: 'app-login',
@@ -18,6 +19,7 @@ export class LoginComponent implements OnInit {
     loading = false;
     panduan1: boolean = false;
     constructor(
+        private sessionService:SessionService,
         private codeDataService:CodeDataService,
         private fb: FormBuilder,
         private router: Router,
@@ -31,10 +33,10 @@ export class LoginComponent implements OnInit {
         this.codeDataService.getData();
     }
     panduan(): void {
-        if (localStorage.getItem('remember') == 'true') {
+        if (this.sessionService.getItem('remember') == 'true') {
             this.validateForm = this.fb.group({
-                userName: [localStorage.getItem('username'), [Validators.required]],
-                password: [localStorage.getItem('password'), [Validators.required]],
+                userName: [this.sessionService.getItem('username'), [Validators.required]],
+                password: [this.sessionService.getItem('password'), [Validators.required]],
                 remember: [true],
                 panduan1: true
             });
@@ -51,15 +53,15 @@ export class LoginComponent implements OnInit {
     panduan2(): void {
         if (this.validateForm.value.remember == true) {
             if (this.panduan1 == false) {
-                localStorage.setItem('username', this.validateForm.value.userName)
-                localStorage.setItem('password', this.validateForm.value.password)
+                this.sessionService.setItem('username', this.validateForm.value.userName)
+                this.sessionService.setItem('password', this.validateForm.value.password)
             } else {
-                localStorage.setItem('username', this.validateForm.value.userName)
-                localStorage.setItem('password', btoa(encodeURIComponent(this.validateForm.value.password.replace(this.regExpService.listObj['前后空格'], ''))), )
+                this.sessionService.setItem('username', this.validateForm.value.userName)
+                this.sessionService.setItem('password', btoa(encodeURIComponent(this.validateForm.value.password.replace(this.regExpService.listObj['前后空格'], ''))), )
             }
         }
-        localStorage.setItem('username', this.validateForm.value.userName)
-        localStorage.setItem('remember', this.validateForm.value.remember)
+        this.sessionService.setItem('username', this.validateForm.value.userName)
+        this.sessionService.setItem('remember', this.validateForm.value.remember)
     }
 
     submitForm(): void {
@@ -82,8 +84,9 @@ export class LoginComponent implements OnInit {
                     this.loading = false;
                     if (response.code === 200) {
                         this.panduan2();
-                        localStorage.setItem('id', response.data.id)
-                        localStorage.setItem('token', response.data.token);
+                        this.sessionService.setItem('token', response.data.token, "1m");
+                        this.sessionService.setItem('roles', response.data.roles);
+                        this.sessionService.setItem('id', response.data.id);
                         this.router.navigateByUrl('/admin/user');
                     } else {
                         this._message.create('error', response.msg, { nzDuration: 4000 });
