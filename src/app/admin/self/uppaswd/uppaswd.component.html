@@ -22,7 +22,7 @@
         <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="ypassword" nzRequired>原密码</nz-form-label>
           <nz-form-control [nzSm]="14" [nzXs]="24">
-            <input nz-input type="ypassword" id="ypassword" formControlName="ypassword" (ngModelChange)="updateConfirmValidator()">
+            <input nz-input type="password" id="ypassword" formControlName="ypassword">
             <nz-form-explain *ngIf="validateForm.get('ypassword').dirty && validateForm.get('ypassword').errors">Please input your ypassword!</nz-form-explain>
           </nz-form-control>
         </nz-form-item>

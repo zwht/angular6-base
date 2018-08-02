@@ -21,6 +21,7 @@ export class UppaswdComponent implements OnInit {
   loading = false;
   checkOptionsOne = [];
 
+
   constructor(
     private codeDataService: CodeDataService,
     private _message: NzMessageService,
@@ -45,5 +46,33 @@ export class UppaswdComponent implements OnInit {
       return { confirm: true, error: true };
     }
   }
+  updateConfirmValidator(): void {
+    /** wait for refresh value */
+    Promise.resolve().then(() => this.validateForm.controls.checkPassword.updateValueAndValidity());
+  }
 
+  submitForm(): void {
+    for (const i in this.validateForm.controls) {
+      this.validateForm.controls[i].markAsDirty();
+      this.validateForm.controls[i].updateValueAndValidity();
+    }
+    if (this.validateForm.valid) {
+      this.loading = true;
+      this.userService['updatePassword']({
+        params: {
+          oldPassword: btoa(encodeURIComponent(this.validateForm.value.ypassword.replace(this.regExpService.listObj['前后空格'], ''))),
+          password: btoa(encodeURIComponent(this.validateForm.value.password.replace(this.regExpService.listObj['前后空格'], ''))),
+        },
+        data: {}
+      })
+        .then(response => {
+          this.loading = false;
+          if (response.code === 200) {
+            // this.router.navigate(['/admin/self'])
+          } else {
+            this._message.create('error', response.msg, { nzDuration: 4000 });
+          }
+        });
+    }
+  }
 }

@@ -51,6 +51,12 @@ export class UserService {
                 params1: 'updateState'
             }
         },
+        updatePassword: {
+            method: 'get',
+            params: {
+                params1: 'updatePassword'
+            }
+        },
 
     };
 
