@@ -23,7 +23,7 @@ export class UpdateComponent implements OnInit {
   validateForm: FormGroup;
   loading = false;
   id = 0;
-  checkOptionsOne=[];
+  checkOptionsOne = [];
 
 
   constructor(
@@ -61,20 +61,20 @@ export class UpdateComponent implements OnInit {
     if (this.validateForm.valid) {
       this.loading = true;
 
-      let roles=this.checkOptionsOne.filter(item=>{
-        if(item.checked) return true
-      }).map(item=>{
+      let roles = this.checkOptionsOne.filter(item => {
+        if (item.checked) return true
+      }).map(item => {
         return item.code
       })
 
       this.userService['update']({
         data: {
-          id:this.id,
+          id: this.id,
           loginName: this.validateForm.value.loginName.replace(this.regExpService.listObj['前后空格'], ''),
           name: this.validateForm.value.name.replace(this.regExpService.listObj['前后空格'], ''),
           phone: this.validateForm.value.phone.replace(this.regExpService.listObj['前后空格'], ''),
           email: this.validateForm.value.email.replace(this.regExpService.listObj['前后空格'], ''),
-          roles:this.fanyi(roles)
+          roles: this.fanyi(roles)
         }
       })
         .then(response => {
@@ -87,20 +87,20 @@ export class UpdateComponent implements OnInit {
         });
     }
   }
-  getById(id){
+  getById(id) {
     this.userService['getById']({
-      params:{
-        params2:id
+      params: {
+        params2: id
       },
-      data:{}
+      data: {}
     })
       .then(response => {
-        if(response.code==200){
-          if(response.data.roles != ""){
-            let aaa =response.data.roles.split(',')
-            this.checkOptionsOne.forEach(item=>{
-              aaa.forEach(obj=>{
-                if(item.code==obj) item.checked = true
+        if (response.code == 200) {
+          if (response.data.roles != "") {
+            let aaa = response.data.roles.split(',')
+            this.checkOptionsOne.forEach(item => {
+              aaa.forEach(obj => {
+                if (item.code == obj) item.checked = true
               })
             })
           }
@@ -123,13 +123,13 @@ export class UpdateComponent implements OnInit {
       })
   }
 
-  fanyi(roles){
-    let miao = ''  
-    roles.forEach(aaa=>{
+  fanyi(roles) {
+    let miao = ''
+    roles.forEach(aaa => {
       miao = miao + "," + aaa
     })
-    miao=miao.substr(1);
+    miao = miao.substr(1);
     return miao
   }
-  
+
 }

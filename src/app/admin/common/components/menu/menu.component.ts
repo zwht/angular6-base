@@ -14,7 +14,7 @@ export class MenuComponent implements OnInit {
     childrenShowKey = true;
     menu = [];
     collectKey = false;
-    userName = localStorage.getItem('loginName');
+    userName = localStorage.getItem('username');
     // 有子菜单的需要引入
     routesMenu = [
         {
@@ -39,7 +39,6 @@ export class MenuComponent implements OnInit {
     }
 
     ngOnInit() {
-        
         //this.codeDataService.getDataLocalStorage();
         const userType = JSON.parse(localStorage.getItem('roleIds'));
         let adminList = {};
@@ -108,12 +107,15 @@ export class MenuComponent implements OnInit {
     downChange(data) {
         switch (data.value) {
             case 'my': {
-                this.router.navigate(['/admin/user/detail']);
+                this.router.navigate(['/admin/self']);
                 break;
             }
             case 'exit': {
                 localStorage.removeItem('token');
-                localStorage.removeItem('userName');
+                localStorage.removeItem('username');
+                localStorage.removeItem('remember');
+                localStorage.removeItem('password');
+                localStorage.removeItem('id');
                 this.router.navigate(['/']);
                 break;
             }

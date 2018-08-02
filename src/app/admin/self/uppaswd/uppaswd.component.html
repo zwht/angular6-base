@@ -1,0 +1,61 @@
+<div class="user-add-cpp">
+  <div class="Breadcrumb">
+    <div>
+      <nz-breadcrumb>
+        <nz-breadcrumb-item>
+          <a [routerLink]="['../']">个人中心</a>
+        </nz-breadcrumb-item>
+        <nz-breadcrumb-item>
+          <span class="span">修改密码</span>
+        </nz-breadcrumb-item>
+      </nz-breadcrumb>
+    </div>
+  </div>
+
+  <div class="shangkuang">
+    <span>修改密码</span>
+  </div>
+
+  <div class="waikuang">
+    <div class="user-add">
+      <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="ypassword" nzRequired>原密码</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input nz-input type="ypassword" id="ypassword" formControlName="ypassword" (ngModelChange)="updateConfirmValidator()">
+            <nz-form-explain *ngIf="validateForm.get('ypassword').dirty && validateForm.get('ypassword').errors">Please input your ypassword!</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="password" nzRequired>新密码</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input nz-input type="password" id="password" formControlName="password" (ngModelChange)="updateConfirmValidator()">
+            <nz-form-explain *ngIf="validateForm.get('password').dirty && validateForm.get('password').errors">Please input your password!</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="checkPassword" nzRequired>重复新密码</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input nz-input type="password" formControlName="checkPassword" id="checkPassword">
+            <nz-form-explain *ngIf="validateForm.get('checkPassword').dirty && validateForm.get('checkPassword').errors">
+              <ng-container *ngIf="validateForm.get('checkPassword').hasError('required')">
+                Please confirm your password!
+              </ng-container>
+              <ng-container *ngIf="validateForm.get('checkPassword').hasError('confirm')">
+                Two passwords that you enter is inconsistent!
+              </ng-container>
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item nz-row style="margin-bottom:8px;">
+          <nz-form-control [nzSpan]="14" [nzOffset]="6">
+            <button nz-button nzType="primary">确认</button>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </div>
+  </div>
+</div>

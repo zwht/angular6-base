@@ -58,6 +58,7 @@ export class LoginComponent implements OnInit {
                 localStorage.setItem('password', btoa(encodeURIComponent(this.validateForm.value.password.replace(this.regExpService.listObj['前后空格'], ''))), )
             }
         }
+        localStorage.setItem('username', this.validateForm.value.userName)
         localStorage.setItem('remember', this.validateForm.value.remember)
     }
 
@@ -81,6 +82,7 @@ export class LoginComponent implements OnInit {
                     this.loading = false;
                     if (response.code === 200) {
                         this.panduan2();
+                        localStorage.setItem('id', response.data.id)
                         localStorage.setItem('token', response.data.token);
                         this.router.navigateByUrl('/admin/user');
                     } else {

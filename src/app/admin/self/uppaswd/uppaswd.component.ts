@@ -1,0 +1,49 @@
+import { Component, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators
+} from '@angular/forms';
+import { UserService } from '../../../share/restServices/UserService';
+import { NzMessageService } from '../../../../../node_modules/ng-zorro-antd';
+import { RegExpService } from '../../../share/services/reg-exp.service';
+import { CodeDataService } from '../../../share/services/code-data.service';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-uppaswd',
+  templateUrl: './uppaswd.component.html',
+  styleUrls: ['./uppaswd.component.less']
+})
+export class UppaswdComponent implements OnInit {
+  validateForm: FormGroup;
+  loading = false;
+  checkOptionsOne = [];
+
+  constructor(
+    private codeDataService: CodeDataService,
+    private _message: NzMessageService,
+    private regExpService: RegExpService,
+    private fb: FormBuilder,
+    private userService: UserService,
+    private router: Router,
+  ) {}
+
+  ngOnInit() {
+    this.validateForm = this.fb.group({
+      ypassword: [null, [Validators.required]],
+      password: [null, [Validators.required]],
+      checkPassword: [null, [Validators.required, this.confirmationValidator]],
+    });
+  }
+
+  confirmationValidator = (control: FormControl): { [s: string]: boolean } => {
+    if (!control.value) {
+      return { required: true };
+    } else if (control.value !== this.validateForm.controls.password.value) {
+      return { confirm: true, error: true };
+    }
+  }
+
+}

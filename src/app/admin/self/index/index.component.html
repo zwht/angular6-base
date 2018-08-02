@@ -1,0 +1,44 @@
+<div class="user-add-cpp">
+  <div class="Breadcrumb">
+
+  </div>
+  <div class="shangkuang">
+    <span>个人中心</span>
+  </div>
+  <div class="waikuang">
+    <div class="user-add">
+      <div nz-row>
+        <span nz-col nzSpan="4">登录名:</span>
+        <span nz-col nzSpan="20">{{loginName}}</span>
+      </div>
+      <div nz-row>
+        <span nz-col nzSpan="4">名字:</span>
+        <span nz-col nzSpan="20">{{name}}</span>
+      </div>
+      <div nz-row>
+        <span nz-col nzSpan="4">电话:</span>
+        <span nz-col nzSpan="20">{{phone}}</span>
+      </div>
+      <div nz-row>
+        <span nz-col nzSpan="4">电子邮件:</span>
+        <span nz-col nzSpan="20">{{email}}</span>
+      </div>
+      <div nz-row>
+        <span nz-col nzSpan="4">用户类型</span>
+        <span *ngFor="let item of roles let i=index" nz-col nzSpan="20">
+          {{codeObj[item]}}
+          <span *ngIf="i<roles.length-1">,</span>
+        </span>
+      </div>
+      <div nz-row>
+        <span nz-col nzSpan="4">是否启用:</span>
+        <span nz-col nzSpan="20" *ngIf="state">已启用</span>
+        <span nz-col nzSpan="20" *ngIf="!state">未启用</span>
+      </div>
+      <div class="div11">
+        <button nz-button nzType="primary" [routerLink]="['./uppaswd']">修改密码</button>
+      </div>
+
+    </div>
+  </div>
+</div>

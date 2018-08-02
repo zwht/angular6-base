@@ -3,8 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ShareModule } from '../../share/share.module';
 
 import { IndexComponent } from './index/index.component';
-import { AddComponent } from './add/add.component';
-import { UpdateComponent } from './update/update.component';
+import { UppaswdComponent } from './uppaswd/uppaswd.component';
 
 
 export const routes: Routes = [
@@ -12,23 +11,14 @@ export const routes: Routes = [
         path: '',
         component: IndexComponent,
         data: {
-            name: '码表管理',
-            menu: true
-
+            name: '个人中心',
         }
     },
     {
-        path: 'add',
-        component: AddComponent,
+        path: 'uppaswd',
+        component: UppaswdComponent,
         data: {
-            name: '添加码表',
-        }
-    },
-    {
-        path: 'update/:id',
-        component: UpdateComponent,
-        data: {
-            name: '编辑码表',
+            name: '修改密码',
         }
     },
 ];
@@ -39,7 +29,7 @@ export const routes: Routes = [
         ShareModule,
         RouterModule.forChild(routes)
     ],
-    declarations: [IndexComponent, UpdateComponent, AddComponent],
+    declarations: [IndexComponent, UppaswdComponent],
     providers: [],
 })
-export class ToolsModule { }
+export class SelfModule { }

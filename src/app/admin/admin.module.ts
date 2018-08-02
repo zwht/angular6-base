@@ -29,7 +29,17 @@ export const routes: Routes = [
           //hideChild: true,
           menu: true
         }
-      }
+      },
+      {
+        path: 'self',
+        loadChildren: './self/self.module#SelfModule',
+        data: {
+          name: '个人中心',
+          // type: [1, 2],
+          // hideChild: true,
+          // menu: true
+        }
+      },
     ]
   }
 ];
@@ -40,7 +50,7 @@ export const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   declarations: [
-    MenuComponent
+    MenuComponent,
   ]
 })
 export class AdminModule { }
