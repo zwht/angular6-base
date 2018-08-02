@@ -84,7 +84,7 @@ export class LoginComponent implements OnInit {
                     this.loading = false;
                     if (response.code === 200) {
                         this.panduan2();
-                        this.sessionService.setItem('token', response.data.token, "1m");
+                        this.sessionService.setItem('token', response.data.token, "2h");
                         this.sessionService.setItem('roles', response.data.roles);
                         this.sessionService.setItem('id', response.data.id);
                         this.router.navigateByUrl('/admin/user');
