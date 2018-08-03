@@ -39,6 +39,15 @@ export const routes: Routes = [
           name: '个人中心'
         }
       },
+      {
+        path: 'news',
+        loadChildren: './news/news.module#NewsModule',
+        data: {
+          name: '新闻',
+          menu: true
+        },
+        canActivate:[PermissionGuard]
+      },
     ]
   }
 ];

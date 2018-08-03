@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as tools from '../../../tools/tools.module';
+import * as news from '../../../news/news.module';
 import { Router } from '@angular/router';
 import { CodeDataService } from '../../../../share/services/code-data.service';
 import { SessionService } from '../../../../share/services/SessionService';
@@ -21,6 +22,10 @@ export class MenuComponent implements OnInit {
         {
             name: '工具',
             children: tools.routes
+        },
+        {
+            name: '新闻',
+            children: news.routes
         }
     ];
     rightDown = [

@@ -28,9 +28,12 @@
             ],
             "styles": [
               "src/themes/themeEnter.less",
-              "src/styles.less"
+              "src/styles.less",
+              "node_modules/wangeditor/release/wangEditor.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/wangeditor/release/wangEditor.min.js"
+            ]
           },
           "configurations": {
             "production": {

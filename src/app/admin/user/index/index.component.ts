@@ -25,6 +25,8 @@ export class IndexComponent implements OnInit {
   codeObjList={}
   codeObj={}
 
+
+
   list = []
   constructor(
     private userService: UserService,
@@ -35,6 +37,7 @@ export class IndexComponent implements OnInit {
     this.codeObj = this.codeDataService.codeObj
     this.getList();
   }
+
   getList(num?) {
     if (num) {
       this.pageNum = num

@@ -1,15 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { CodeService } from '../../../share/restServices/CodeService';
-import { DateRangePickerComponent } from 'ng-zorro-antd/src/date-picker/date-range-picker.component';
-import { routes } from '../tools.module';
-import { RouterLink } from '@angular/router';
+import {NewsService} from '../../../share/restServices/NewsService'
 
 @Component({
-  selector: 'app-index',
-  templateUrl: './index.component.html',
-  styleUrls: ['./index.component.less']
+  selector: 'app-guanli',
+  templateUrl: './guanli.component.html',
+  styleUrls: ['./guanli.component.less']
 })
-export class IndexComponent implements OnInit {
+export class GuanliComponent implements OnInit {
 
   name = null
   ID = null
@@ -18,9 +15,8 @@ export class IndexComponent implements OnInit {
   totalCount = null
   DATA = []
   list = []
-
   constructor(
-    private CodeService: CodeService
+    private NewsService:NewsService
   ) { }
 
   ngOnInit() {
@@ -31,7 +27,7 @@ export class IndexComponent implements OnInit {
     if (num) {
       this.pageNum = num
     }
-    this.CodeService['list']({
+    this.NewsService['list']({
       params: {
         params2: this.pageNum,
         params3: this.pageSize
@@ -56,7 +52,7 @@ export class IndexComponent implements OnInit {
     if (ID) {
       this.ID = ID
     }
-    this.CodeService['list']({
+    this.NewsService['list']({
       params: {
         params2: this.pageNum,
         params3: this.pageSize
@@ -75,7 +71,7 @@ export class IndexComponent implements OnInit {
   }
 
   deldeldel(id) {
-    this.CodeService['del']({
+    this.NewsService['del']({
       params: {
         params2: id
       },

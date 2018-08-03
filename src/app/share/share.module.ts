@@ -15,6 +15,7 @@ import {OtherService} from './restServices/OtherService';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { UserService } from './restServices/UserService';
 import { CodeService } from './restServices/CodeService';
+import { NewsService } from './restServices/NewsService';
 import { RegExpService } from './services/reg-exp.service';
 import { SessionService } from './services/SessionService';
 import { PermissionGuard } from './services/PermissionGuard';
@@ -47,6 +48,7 @@ import { PermissionGuard } from './services/PermissionGuard';
         DatePipe,
         UserService,
         CodeService,
+        NewsService,
         RegExpService,
         SessionService,
         PermissionGuard

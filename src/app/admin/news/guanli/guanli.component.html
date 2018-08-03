@@ -1,0 +1,55 @@
+<div class="user-index-cpt">
+  <div class="div111 clear">
+    <div>
+      <div class="chaxun">
+        <span>姓名</span>
+        <input nz-input placeholder="请输入姓名" [(ngModel)]="name" (keyup.enter)="buchaxun(name,ID)">
+      </div>
+      <div class="chaxun">
+        <span>ID</span>
+        <input nz-input placeholder="请输入ID" [(ngModel)]="ID" (keyup.enter)="buchaxun(name,ID)">
+      </div>
+      <div class="chaxun">
+        <button nz-button nzType="chaxun" (click)="buchaxun(name,ID)">查询</button>
+      </div>
+    </div>
+  </div>
+  <div class="shangkuang">
+    <span class="span2">新闻管理</span>
+    <button nz-button nzType="tianjia" class="anniu1" routerLink="./add">添加新闻</button>
+  </div>
+
+  <div class="waikuang" id="waikuang">
+    <div class="neikuang">
+        <div class="user-index-cpt">
+            <nz-table #basicTable [nzData]="list" [nzFrontPagination]="false" [nzPageIndex]="pageNum" [nzTotal]="totalCount" [nzPageSize]="pageSize"
+              (nzPageIndexChange)="buchaxun(name,ID,$event)">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>ParentId</th>
+                  <th>Index</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of list">
+                  <td>{{data.id}}</td>
+                  <td>{{data.name}}</td>
+                  <td>{{data.description}}</td>
+                  <td>{{data.parentId}}</td>
+                  <td>{{data.index}}</td>
+                  <td>
+                    <button nz-button [routerLink]="['./update',data.id]">编辑</button>
+                    &nbsp;&nbsp;
+                    <button nz-popconfirm nz-button nzTitle="您确定要删除吗?" (nzOnConfirm)="deldeldel(data.id)" (nzOnCancel)="cancel()">删除</button>
+                  </td>
+                </tr>
+              </tbody>
+            </nz-table>
+          </div>
+    </div>
+  </div>
+</div>
