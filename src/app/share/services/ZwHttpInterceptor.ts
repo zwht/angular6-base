@@ -7,7 +7,9 @@ import { Observable, of, throwError } from 'rxjs';
 import { catchError, tap} from 'rxjs/operators';
 import { SessionService } from './SessionService';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class ZwHttpInterceptor implements HttpInterceptor {
   constructor(
     private sessionService: SessionService

@@ -15,22 +15,31 @@ export const routes: Routes = [
         path: 'user',
         loadChildren: './user/user.module#UserModule',
         data: {
-          name: '用户',
-          roles:[1001],
+          name: '用户管理',
+          //hideChild: true,
+          roles: [1001],
           menu: true
         },
-        canActivate:[PermissionGuard]
+        canActivate: [PermissionGuard]
       },
       {
         path: 'tools',
         loadChildren: './tools/tools.module#ToolsModule',
         data: {
-          name: '工具',
-          roles:[1001],
-          //hideChild: true,
+          name: '基础数据',
+          roles: [1001],
           menu: true
         },
-        canActivate:[PermissionGuard]
+        canActivate: [PermissionGuard]
+      },
+      {
+        path: 'news',
+        loadChildren: './news/news.module#NewsModule',
+        data: {
+          name: '文案管理',
+          menu: true
+        },
+        canActivate: [PermissionGuard]
       },
       {
         path: 'self',
@@ -38,15 +47,6 @@ export const routes: Routes = [
         data: {
           name: '个人中心'
         }
-      },
-      {
-        path: 'news',
-        loadChildren: './news/news.module#NewsModule',
-        data: {
-          name: '新闻',
-          menu: true
-        },
-        canActivate:[PermissionGuard]
       },
     ]
   }

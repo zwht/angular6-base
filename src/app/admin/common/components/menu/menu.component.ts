@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as tools from '../../../tools/tools.module';
 import * as news from '../../../news/news.module';
+import * as user from '../../../user/user.module';
 import { Router } from '@angular/router';
 import { CodeDataService } from '../../../../share/services/code-data.service';
 import { SessionService } from '../../../../share/services/SessionService';
@@ -20,12 +21,16 @@ export class MenuComponent implements OnInit {
     // 有子菜单的需要引入
     routesMenu = [
         {
-            name: '工具',
+            name: '基础数据',
             children: tools.routes
         },
         {
-            name: '新闻',
+            name: '文案管理',
             children: news.routes
+        },
+        {
+            name: '用户管理',
+            children: user.routes
         }
     ];
     rightDown = [

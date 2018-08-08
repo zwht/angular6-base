@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
-
-
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+})
 export class SessionService {
     private timeRegx = /(([0-9]+)(s|m|h|d|w))/g;
     private getTime(v, type) {
@@ -23,7 +23,7 @@ export class SessionService {
         if (typeof (v) === "number") {
             time = Math.floor(v);
         } else if (typeof (v) == "string") {
-            let a=this.timeRegx.test(v)
+            let a = this.timeRegx.test(v)
             v.replace(this.timeRegx, (r, s, value, type) => {
                 time += this.getTime(value, type)
                 return "";
@@ -68,7 +68,7 @@ export class SessionService {
      */
     //获取storage中找到值，如果设置了过期时间，与当前时间匹配，如果超时返回空，并删除localstorage中的值
     public getItem(name) {
-        var value=sessionStorage[name]||localStorage[name];
+        var value = sessionStorage[name] || localStorage[name];
         if (value && (value + "").indexOf("#%#") > 0) {
             var splits = (value + "").split("#%#");
             var time = splits[0];
@@ -82,7 +82,7 @@ export class SessionService {
         }
         return value && decodeURIComponent(value);
     }
- 
+
     /**
     * 删除session中存储的值 
     *

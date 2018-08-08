@@ -5,7 +5,9 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { SessionService } from './SessionService';
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class PermissionGuard implements CanActivate {
   constructor(
     private sessionService: SessionService,

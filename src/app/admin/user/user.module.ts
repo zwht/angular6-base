@@ -14,7 +14,8 @@ export const routes: Routes = [
         component: IndexComponent,
         data: {
             name: '用户',
-            roles:[1001]
+            roles:[1001],
+            menu: true
         },
         canActivate:[PermissionGuard]
     },
@@ -35,7 +36,8 @@ export const routes: Routes = [
             roles:[1001]
         },
         canActivate:[PermissionGuard]
-    }
+    },
+    
 ];
 
 

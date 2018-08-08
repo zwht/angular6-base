@@ -1,10 +1,12 @@
 /**
  * Created by zhaowei on 2017/10/16.
  */
-import {Injectable} from '@angular/core';
-import {HttpServer} from '../services/HttpServer';
+import { Injectable } from '@angular/core';
+import { HttpServer } from '../services/HttpServer';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+})
 export class OtherService {
 
     url = '/v1/:params1/:params2/:params3/:params4/:params5';
