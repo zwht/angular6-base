@@ -10,18 +10,21 @@ import { NzMessageService } from '../../../../../node_modules/ng-zorro-antd';
 import { RegExpService } from '../../../share/services/reg-exp.service';
 import { CodeDataService } from '../../../share/services/code-data.service';
 import { Router } from '@angular/router';
+import { GroupService } from '../../../share/restServices/GroupService';
 
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
-  styleUrls: ['./add.component.less']
+  styleUrls: ['../../common/style/add.less', './add.component.less']
 })
 export class AddComponent implements OnInit {
   validateForm: FormGroup;
   loading = false;
   checkOptionsOne = [];
+  parentIdList = []
 
   constructor(
+    private groupService:GroupService,
     private codeDataService: CodeDataService,
     private _message: NzMessageService,
     private regExpService: RegExpService,
@@ -33,11 +36,12 @@ export class AddComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkOptionsOne = JSON.parse(JSON.stringify(this.codeDataService.codeObjList['10']))
-    this.checkOptionsOne =this.checkOptionsOne.filter(item=>{
-      return item.code!=1001;
+    this.checkOptionsOne = this.checkOptionsOne.filter(item => {
+      return item.code != 1001;
     })
     this.checkOptionsOne[0].checked = true
     this.validateForm = this.fb.group({
+      parentId: [null, [Validators.required]],
       email: [null, [Validators.email]],
       password: [null, [Validators.required]],
       checkPassword: [null, [Validators.required, this.confirmationValidator]],
@@ -54,6 +58,7 @@ export class AddComponent implements OnInit {
         return isPass ? null : { lcode: { info: '类型不能为空' } }
       }]]
     });
+    this.getList();
   }
   submitForm(): void {
 
@@ -61,8 +66,6 @@ export class AddComponent implements OnInit {
       this.validateForm.controls[i].markAsDirty();
       this.validateForm.controls[i].updateValueAndValidity();
     }
-
-
 
     if (this.validateForm.valid) {
       this.loading = true;
@@ -79,7 +82,8 @@ export class AddComponent implements OnInit {
           password: btoa(encodeURIComponent(this.validateForm.value.password.replace(this.regExpService.listObj['前后空格'], ''))),
           phone: this.validateForm.value.phone.replace(this.regExpService.listObj['前后空格'], ''),
           email: this.validateForm.value.email.replace(this.regExpService.listObj['前后空格'], ''),
-          roles: this.fanyi(roles)
+          roles: this.setRoles(roles),
+          parentId: this.validateForm.value.parentId
         }
       })
         .then(response => {
@@ -109,7 +113,7 @@ export class AddComponent implements OnInit {
     }
   }
 
-  fanyi(roles) {
+  setRoles(roles) {
     let miao = ''
     roles.forEach(aaa => {
       miao = miao + "," + aaa
@@ -117,4 +121,24 @@ export class AddComponent implements OnInit {
     miao = miao.substr(1);
     return miao
   }
+  getList() {
+
+    this.groupService['list']({
+      params: {
+        params2: 1,
+        params3: 1000
+      },
+      data: {
+
+      }
+    })
+      .then(response => {
+        if (response.code == 200) {
+          this.parentIdList = response.data.pageData;
+
+        }
+      })
+  }
+
+
 }
