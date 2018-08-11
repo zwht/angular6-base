@@ -6,6 +6,7 @@ import { IndexComponent } from './index/index.component';
 import { PermissionGuard } from '../../share/services/PermissionGuard';
 import { VpsComponent } from './vps/vps.component';
 import { VpsAddComponent } from './vps-add/vps-add.component';
+import { VpnAddComponent } from './vpn-add/vpn-add.component';
 
 
 export const routes: Routes = [
@@ -16,6 +17,15 @@ export const routes: Routes = [
             name: 'vpn',
             roles:[1001],
             menu: true
+        },
+        canActivate:[PermissionGuard]
+    },
+    {
+        path: 'add',
+        component: VpnAddComponent,
+        data: {
+            name: 'vpn添加',
+            roles:[1001]
         },
         canActivate:[PermissionGuard]
     },
@@ -47,7 +57,7 @@ export const routes: Routes = [
         ShareModule,
         RouterModule.forChild(routes)
     ],
-    declarations: [IndexComponent, VpsComponent, VpsAddComponent],
+    declarations: [IndexComponent, VpsComponent, VpsAddComponent, VpnAddComponent],
     providers: [],
 })
 export class VpnModule { }

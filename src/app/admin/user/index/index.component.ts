@@ -8,7 +8,7 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
-  styleUrls: ['./index.component.less']
+  styleUrls: ['../../common/style/list.less','./index.component.less']
 })
 export class IndexComponent implements OnInit {
 
