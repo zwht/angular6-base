@@ -19,20 +19,26 @@
         <thead>
           <tr>
             <th>序号</th>
-            <th>vpn</th>
+            <th>ip</th>
+            <th>登录名</th>
+            <th>密码</th>
             <th>创建时间</th>
             <th>过期时间</th>
+            <th>是否可用</th>
             <th>操作</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let data of userVpnList let i= index">
             <td>{{i+1}}</td>
-            <td>{{data.vpnId}}</td>
+            <td>{{data.ip}}</td>
+            <td>{{data.loginName}}</td>
+            <td>{{data.password}}</td>
             <td>{{data.createTime | date :'yyyy-MM-dd hh:mm:ss'}}</td>
             <td>{{data.overdueTime | date :'yyyy-MM-dd hh:mm:ss'}}</td>
+            <td>{{data.state==2102?"不可以":"可用"}}</td>
             <td>
-              <button nz-popconfirm nz-button nzTitle="您确定要删除吗?" (nzOnConfirm)="del(data.id)" (nzOnCancel)="cancel()">取消关联</button>
+              <button *ngIf="data.state==2101" nz-popconfirm nz-button nzTitle="您确定要删除吗?" (nzOnConfirm)="del(data)" (nzOnCancel)="cancel()">取消关联</button>
             </td>
           </tr>
         </tbody>

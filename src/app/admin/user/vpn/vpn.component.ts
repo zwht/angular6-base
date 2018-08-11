@@ -28,8 +28,22 @@ export class VpnComponent implements OnInit {
     this.getVpnList();
     this.getRelationByUserId();
   }
-  del(id){
-    debugger
+  del(item) {
+    this.vpnRelationService['updateState']({
+      params: {
+        id: item.relationId,
+        vpnId: item.vpnId,
+        state: 2102
+      },
+      data: {
+      }
+    })
+      .then(response => {
+        if (response.code == 200) {
+          this.getVpnList();
+          this.getRelationByUserId();
+        }
+      })
   }
   getRelationByUserId() {
     this.vpnRelationService['getListByUserId']({
@@ -45,6 +59,7 @@ export class VpnComponent implements OnInit {
       })
   }
 
+
   getVpnList() {
     this.vpnService['list']({
       params: {
@@ -52,6 +67,7 @@ export class VpnComponent implements OnInit {
         params3: 1000
       },
       data: {
+        state: 2001
       }
     })
       .then(response => {
@@ -72,6 +88,7 @@ export class VpnComponent implements OnInit {
     })
       .then(response => {
         this.loading = false;
+        this.getVpnList();
         this.getRelationByUserId();
       });
   }

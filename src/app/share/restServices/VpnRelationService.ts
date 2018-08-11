@@ -35,6 +35,12 @@ export class VpnRelationService {
                 params1: 'update'
             }
         },
+        updateState: {
+            method: 'get',
+            params: {
+                params1: 'updateState'
+            }
+        },
         getById: {
             method: 'get',
             params: {

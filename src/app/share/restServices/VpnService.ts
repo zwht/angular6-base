@@ -35,6 +35,7 @@ export class VpnService {
                 params1: 'update'
             }
         },
+     
         getById: {
             method: 'get',
             params: {
