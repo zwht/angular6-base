@@ -12,6 +12,17 @@ export const routes: Routes = [
     component: MenuComponent,
     children: [
       {
+        path: 'vpn',
+        loadChildren: './vpn/vpn.module#VpnModule',
+        data: {
+          name: 'vpn',
+          //hideChild: true,
+          roles: [1001],
+          menu: true
+        },
+        canActivate: [PermissionGuard]
+      },
+      {
         path: 'user',
         loadChildren: './user/user.module#UserModule',
         data: {

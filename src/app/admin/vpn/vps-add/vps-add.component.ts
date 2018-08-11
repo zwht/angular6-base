@@ -1,32 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzMessageService } from '../../../../../node_modules/ng-zorro-antd';
 import { RegExpService } from '../../../share/services/reg-exp.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { GroupService } from '../../../share/restServices/GroupService';
 import { of } from 'rxjs'
 import { map } from 'rxjs/operators'
+import { VpsService } from '../../../share/restServices/VpsService';
+
 @Component({
-  selector: 'app-group-add',
-  templateUrl: './group-add.component.html',
-  styleUrls: ['../../common/style/add.less', './group-add.component.less']
+  selector: 'app-vps-add',
+  templateUrl: './vps-add.component.html',
+  styleUrls: ['../../common/style/add.less', './vps-add.component.less']
 })
-export class GroupAddComponent implements OnInit {
+export class VpsAddComponent implements OnInit {
   validateForm: FormGroup;
   loading = false;
   id;
-  title = "添加公司"
+  title = "添加vps"
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private _message: NzMessageService,
     private regExpService: RegExpService,
     private fb: FormBuilder,
-    private GroupService: GroupService,
+    private vpsService: VpsService,
     private router: Router,
   ) {
   }
@@ -34,12 +31,15 @@ export class GroupAddComponent implements OnInit {
   ngOnInit(): void {
     this.validateForm = this.fb.group({
       description: [null, []],
+      ip: [null, []],
+      overdueTime: [null, []],
+      address: [null, []],
       name: [null, [Validators.required]]
     });
     this.activatedRoute.queryParams.subscribe(params => {
       this.id = params['id'];
       if (this.id) {
-        this.title = "编辑公司"
+        this.title = "编辑vps"
         this.getDetail()
       }
     });
@@ -55,7 +55,11 @@ export class GroupAddComponent implements OnInit {
         .pipe(
           map(d => {
             for (let i in d) {
-              d[i] = this.regExpService.replace('前后空格', d[i], '')
+              if (i == 'overdueTime') {
+                d[i] = new Date(d[i]).getTime();
+              } else {
+                d[i] = this.regExpService.replace('前后空格', d[i], '')
+              }
             }
             return d;
           })
@@ -70,43 +74,47 @@ export class GroupAddComponent implements OnInit {
     }
   }
   add(d) {
-    this.GroupService['add']({
+    this.vpsService['add']({
       data: d
     })
       .then(response => {
         this.loading = false;
         if (response.code === 200) {
-          this.router.navigate(['/admin/tools/group'])
+          this.router.navigate(['/admin/vpn/vps'])
         } else {
           this._message.create('error', response.msg, { nzDuration: 4000 });
         }
       });
   }
   edit(d) {
-    this.GroupService['update']({
-      data: Object.assign({id: this.id},d)
+    this.vpsService['update']({
+      data: Object.assign({ id: this.id }, d)
     })
       .then(response => {
         this.loading = false;
         if (response.code === 200) {
-          this.router.navigate(['/admin/tools/group'])
+          this.router.navigate(['/admin/vpn/vps'])
         } else {
           this._message.create('error', response.msg, { nzDuration: 4000 });
         }
       });
   }
   getDetail() {
-    this.GroupService['getById']({
+    this.vpsService['getById']({
       params: { params2: this.id }
     })
       .then(response => {
         if (response.code == 200) {
           this.validateForm = this.fb.group({
+            ip: [response.data.ip, []],
+            overdueTime: [new Date(response.data.overdueTime), []],
+            address: [response.data.address, []],
             description: [response.data.description, []],
             name: [response.data.name, [Validators.required]]
           });
         }
       })
   }
+
 
 }
