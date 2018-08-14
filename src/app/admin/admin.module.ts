@@ -48,6 +48,7 @@ export const routes: Routes = [
         loadChildren: './news/news.module#NewsModule',
         data: {
           name: '文案管理',
+          roles: [1001],
           menu: true
         },
         canActivate: [PermissionGuard]

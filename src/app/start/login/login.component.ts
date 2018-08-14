@@ -93,6 +93,7 @@ export class LoginComponent implements OnInit {
                         }else if(response.data.roles.indexOf('1003')!=-1){
                             this.router.navigateByUrl('/admin/self');
                         }else{
+                            debugger
                             this.router.navigateByUrl('/admin/self');
                         }
                         

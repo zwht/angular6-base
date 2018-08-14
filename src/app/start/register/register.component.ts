@@ -6,6 +6,8 @@ import { RegExpService } from '../../share/services/reg-exp.service';
 import { Router } from '@angular/router';
 import { CodeDataService } from '../../share/services/code-data.service';
 import { SessionService } from '../../share/services/SessionService';
+import { of } from '../../../../node_modules/rxjs';
+import { map } from 'rxjs/operators'
 
 @Component({
   selector: 'app-register',
@@ -14,7 +16,9 @@ import { SessionService } from '../../share/services/SessionService';
 })
 export class RegisterComponent implements OnInit {
   validateForm: FormGroup;
-  loading=false;
+  loading = false;
+  captchaLoading = false;
+  timeK = 60;
   constructor(
     private fb: FormBuilder,
     private regExpService: RegExpService,
@@ -30,23 +34,36 @@ export class RegisterComponent implements OnInit {
     }
     if (this.validateForm.valid) {
       this.loading = true;
-      this.userService['register']({
-        params:{captcha:this.validateForm.value.captcha},
-        data: {
-          loginName: this.validateForm.value.name.replace(this.regExpService.listObj['前后空格'], ''),
-          password: btoa(encodeURIComponent(this.validateForm.value.password.replace(this.regExpService.listObj['前后空格'], ''))),
-          phone: this.validateForm.value.phone.replace(this.regExpService.listObj['前后空格'], ''),
-          email: this.validateForm.value.email.replace(this.regExpService.listObj['前后空格'], ''),
-        }
+
+      let data = of(this.validateForm.value)
+        .pipe(
+          map(d => {
+            for (let i in d) {
+              if (d[i] && typeof (d[i]) == 'string') {
+                d[i] = this.regExpService.replace('前后空格', d[i], '')
+              }
+              if (i == 'password') {
+                d[i] = btoa(encodeURIComponent(d[i]))
+              }
+            }
+            return d;
+          })
+        )
+      data.subscribe(d => {
+        this.userService['register']({
+          params: { captcha: this.validateForm.value.captcha },
+          data: d
+        })
+          .then(response => {
+            this.loading = false;
+            if (response.code === 200) {
+              this.router.navigate(['/'])
+            } else {
+              this._message.create('error', response.msg, { nzDuration: 4000 });
+            }
+          });
       })
-        .then(response => {
-          this.loading = false;
-          if (response.code === 200) {
-            this.router.navigate(['/'])
-          } else {
-            this._message.create('error', response.msg, { nzDuration: 4000 });
-          }
-        });
+
     }
   }
 
@@ -64,15 +81,17 @@ export class RegisterComponent implements OnInit {
   }
 
   getCaptcha(e: MouseEvent): void {
+
     e.preventDefault();
     this.validateForm.controls['email'].markAsDirty();
     this.validateForm.controls['email'].updateValueAndValidity();
     let dirty = this.validateForm.get('email').dirty;
     let errors = this.validateForm.get('email').errors;
-    if(dirty&&errors){
+    if (dirty && errors) {
       this._message.create('error', '输入正确email!', { nzDuration: 4000 });
       return;
     }
+    this.captchaLoading = true;
     this.userService['getCaptchaEmail']({
       params: {
         email: this.validateForm.value.email
@@ -80,13 +99,25 @@ export class RegisterComponent implements OnInit {
       data: {}
     })
       .then(response => {
+        this.captchaLoading = false;
         if (response.code == 200) {
-          
+          this.setTi();
+        } else {
+          this._message.create('error', response.msg, { nzDuration: 4000 });
         }
       })
-
   }
 
+  setTi() {
+    this.timeK--;
+    if (this.timeK > 0) {
+      setTimeout(() => {
+        this.setTi()
+      }, 1000)
+    } else {
+      this.timeK = 60;
+    }
+  }
 
 
   ngOnInit(): void {
@@ -94,7 +125,7 @@ export class RegisterComponent implements OnInit {
       email: [null, [Validators.email, Validators.required]],
       password: [null, [Validators.required]],
       checkPassword: [null, [Validators.required, this.confirmationValidator]],
-      name: [null, [Validators.required]],
+      loginName: [null, [Validators.required]],
       phonePrefix: ['+86'],
       phone: [null, []],
       captcha: [null, [Validators.required]],
