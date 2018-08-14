@@ -14,11 +14,39 @@ import { SessionService } from '../../share/services/SessionService';
 })
 export class RegisterComponent implements OnInit {
   validateForm: FormGroup;
+  loading=false;
+  constructor(
+    private fb: FormBuilder,
+    private regExpService: RegExpService,
+    private _message: NzMessageService,
+    private router: Router,
+    private userService: UserService) {
+  }
 
   submitForm(): void {
     for (const i in this.validateForm.controls) {
       this.validateForm.controls[i].markAsDirty();
       this.validateForm.controls[i].updateValueAndValidity();
+    }
+    if (this.validateForm.valid) {
+      this.loading = true;
+      this.userService['register']({
+        params:{captcha:this.validateForm.value.captcha},
+        data: {
+          loginName: this.validateForm.value.name.replace(this.regExpService.listObj['前后空格'], ''),
+          password: btoa(encodeURIComponent(this.validateForm.value.password.replace(this.regExpService.listObj['前后空格'], ''))),
+          phone: this.validateForm.value.phone.replace(this.regExpService.listObj['前后空格'], ''),
+          email: this.validateForm.value.email.replace(this.regExpService.listObj['前后空格'], ''),
+        }
+      })
+        .then(response => {
+          this.loading = false;
+          if (response.code === 200) {
+            this.router.navigate(['/'])
+          } else {
+            this._message.create('error', response.msg, { nzDuration: 4000 });
+          }
+        });
     }
   }
 
@@ -37,14 +65,33 @@ export class RegisterComponent implements OnInit {
 
   getCaptcha(e: MouseEvent): void {
     e.preventDefault();
+    this.validateForm.controls['email'].markAsDirty();
+    this.validateForm.controls['email'].updateValueAndValidity();
+    let dirty = this.validateForm.get('email').dirty;
+    let errors = this.validateForm.get('email').errors;
+    if(dirty&&errors){
+      this._message.create('error', '输入正确email!', { nzDuration: 4000 });
+      return;
+    }
+    this.userService['getCaptchaEmail']({
+      params: {
+        email: this.validateForm.value.email
+      },
+      data: {}
+    })
+      .then(response => {
+        if (response.code == 200) {
+          
+        }
+      })
+
   }
 
-  constructor(private fb: FormBuilder) {
-  }
+
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
-      email: [null, [Validators.email]],
+      email: [null, [Validators.email, Validators.required]],
       password: [null, [Validators.required]],
       checkPassword: [null, [Validators.required, this.confirmationValidator]],
       name: [null, [Validators.required]],

@@ -11,6 +11,12 @@ export class UserService {
 
     url = '/v1/user/:params1/:params2/:params3/:params4/:params5';
     urls = {
+        register: {
+            method: 'post',
+            params: {
+                params1: 'register'
+            }
+        },
         add: {
             method: 'post',
             params: {
@@ -59,6 +65,13 @@ export class UserService {
                 params1: 'updatePassword'
             }
         },
+        getCaptchaEmail: {
+            method: 'get',
+            params: {
+                params1: 'captcha',
+                params2: 'email'
+            }
+        }
 
     };
 
