@@ -3,50 +3,49 @@ import { RouterModule, Routes } from '@angular/router';
 import { ShareModule } from '../../share/share.module';
 
 import { IndexComponent } from './index/index.component';
-import { GuanliComponent } from './guanli/guanli.component';
-import { AddComponent } from './add/add.component';
-import { UpdateComponent } from './update/update.component';
+import { NewsTypeComponent } from './news-type/news-type.component';
+import { NewsTypeAddComponent } from './news-type-add/news-type-add.component';
+import { NewsAddComponent } from './news-add/news-add.component';
 
 export const routes: Routes = [
     {
         path: '',
         component: IndexComponent,
         data: {
-            name: '个人中心',
-        }
-    },
-    {
-        path: 'guanli',
-        component: GuanliComponent,
-        data: {
-            name: '新闻管理',
+            name: '新闻',
             menu: true
         }
     },
     {
-        path: 'guanli/add',
-        component: AddComponent,
+        path: 'add',
+        component: NewsAddComponent,
         data: {
-            name: '添加新闻',
-        }
-    },    
-    {
-        path: 'guanli/update/:id',
-        component: UpdateComponent,
-        data: {
-            name: '添加新闻',
+            name: '新闻',
         }
     },
-    
+    {
+        path: 'type',
+        component: NewsTypeComponent,
+        data: {
+            name: '新闻类型',
+            menu: true
+        }
+    },
+    {
+        path: 'type/add',
+        component: NewsTypeAddComponent,
+        data: {
+            name: '新闻类型',
+        }
+    },
+
 ];
-
-
 @NgModule({
     imports: [
         ShareModule,
         RouterModule.forChild(routes)
     ],
-    declarations: [IndexComponent, AddComponent,GuanliComponent, UpdateComponent],
+    declarations: [IndexComponent, NewsTypeComponent, NewsTypeAddComponent, NewsAddComponent],
     providers: [],
 })
 export class NewsModule { }

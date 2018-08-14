@@ -18,7 +18,7 @@ export class MenuComponent implements OnInit {
     childrenShowKey = true;
     menu = [];
     collectKey = false;
-    userName = this.sessionService.getItem('username');
+    userName = this.sessionService.getItem('userName');
     // 有子菜单的需要引入
     routesMenu = [
         {

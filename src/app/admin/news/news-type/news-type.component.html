@@ -22,26 +22,26 @@
       <button nz-button nzType="tianjia" routerLink="./add">添加新闻类型</button>
     </div>
   </div>
+
   <div class="table-box">
     <nz-table #basicTable [nzData]="list" [nzFrontPagination]="false" [nzPageIndex]="pageNum" [nzTotal]="totalCount" [nzPageSize]="pageSize"
       (nzPageIndexChange)="getList($event)">
       <thead>
         <tr>
           <th>序号</th>
-          <th>标题</th>
-          <th>类型</th>
-          <th>作者</th>
-          <th>状态</th>
+          <th>名称</th>
+          <th>描述</th>
+          <th>父级</th>
           <th>操作</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let data of list let i= index">
           <td>{{pageSize*(pageNum-1)+i+1}}</td>
-          <td>{{data.title}}</td>
-          <td>{{data.typeId}}</td>
-          <td>{{data.author}}</td>
-          <td>{{data.state}}</td>
+          <td>{{data.name}}</td>
+          <td>{{data.description}}</td>
+          <td>{{data.parentId}}</td>
+          
           <td>
             <button nz-button (click)="goAdd(data.id)">编辑</button>
             &nbsp;&nbsp;

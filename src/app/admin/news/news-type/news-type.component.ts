@@ -3,14 +3,13 @@ import { Router } from '@angular/router';
 import { VpsService } from '../../../share/restServices/VpsService';
 import { VpnService } from '../../../share/restServices/VpnService';
 import { NewsTypeService } from '../../../share/restServices/NewsTypeService';
-import { NewsService } from '../../../share/restServices/NewsService';
 
 @Component({
-  selector: 'app-new-index',
-  templateUrl: './index.component.html',
-  styleUrls: ['../../common/style/list.less','./index.component.less']
+  selector: 'app-new-type',
+  templateUrl: './news-type.component.html',
+  styleUrls: ['../../common/style/list.less','./news-type.component.less']
 })
-export class IndexComponent implements OnInit {
+export class NewsTypeComponent implements OnInit {
   pageSize = 10
   pageNum = 1
   totalCount = null
@@ -22,7 +21,7 @@ export class IndexComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private newsService: NewsService
+    private newsTypeService: NewsTypeService
   ) { }
 
   ngOnInit() {
@@ -31,7 +30,7 @@ export class IndexComponent implements OnInit {
 
   getList(num?) {
     this.pageNum = num ? num : 1
-    this.newsService['list']({
+    this.newsTypeService['list']({
       params: {
         params2: this.pageNum,
         params3: this.pageSize
@@ -50,7 +49,7 @@ export class IndexComponent implements OnInit {
   }
 
   del(id) {
-    this.newsService['del']({
+    this.newsTypeService['del']({
       params: {
         params2: id
       },
@@ -63,7 +62,7 @@ export class IndexComponent implements OnInit {
       })
   }
   goAdd(id) {
-    this.router.navigate(['/admin/news/add'], { queryParams: { id: id } });
+    this.router.navigate(['/admin/news/type/add'], { queryParams: { id: id } });
   }
 
 

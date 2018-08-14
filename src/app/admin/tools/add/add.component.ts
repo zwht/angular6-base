@@ -6,7 +6,7 @@ import {
   Validators
 } from '@angular/forms';
 import { CodeService } from '../../../share/restServices/CodeService';
-import { NzMessageService } from '../../../../../node_modules/ng-zorro-antd';
+import { NzMessageService } from 'ng-zorro-antd';
 import { RegExpService } from '../../../share/services/reg-exp.service';
 import { Router } from '@angular/router';
 

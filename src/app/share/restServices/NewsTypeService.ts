@@ -7,9 +7,9 @@ import { HttpServer } from '../services/HttpServer';
 @Injectable({
     providedIn: 'root',
 })
-export class NewsService {
+export class NewsTypeService {
 
-    url = '/v1/news/:params1/:params2/:params3/:params4/:params5';
+    url = '/v1/news/type/:params1/:params2/:params3/:params4/:params5';
     urls = {
         add: {
             method: 'post',

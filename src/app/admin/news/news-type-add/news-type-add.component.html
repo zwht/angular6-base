@@ -1,0 +1,46 @@
+<div class="add-box">
+  <div class="heard">
+    <div>
+      <nz-breadcrumb>
+        <nz-breadcrumb-item>
+          <a [routerLink]="['../']">新闻类型</a>
+        </nz-breadcrumb-item>
+        <nz-breadcrumb-item>
+          <span class="span">{{title}}</span>
+        </nz-breadcrumb-item>
+      </nz-breadcrumb>
+    </div>
+  </div>
+  <div class="form-box">
+    <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="parentId" nzRequired>父亲级类型</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-select id="parentId" formControlName="parentId" placeholder="parentId" nzAllowClear>
+            <nz-option *ngFor="let item of vpsList" [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="validateForm.get('parentId').dirty && validateForm.get('parentId').errors">Please input id!</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="name" nzRequired>名称</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input id="name" formControlName="name" placeholder="name">
+          <nz-form-explain *ngIf="validateForm.get('name').dirty && validateForm.get('name').errors">填写分组</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="description" nzRequired>描述</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input id="description" formControlName="description" placeholder="description">
+          <nz-form-explain *ngIf="validateForm.get('description').dirty && validateForm.get('description').errors">填写分组</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item nz-row style="margin-bottom:8px;">
+        <nz-form-control [nzSpan]="14" [nzOffset]="6">
+          <button nz-button nzType="primary">保存</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
