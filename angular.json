@@ -29,10 +29,12 @@
             "styles": [
               "src/themes/themeEnter.less",
               "src/styles.less",
-              "node_modules/wangeditor/release/wangEditor.min.css"
+              "node_modules/wangeditor/release/wangEditor.min.css",
+              "node_modules/cropperjs/dist/cropper.css"
             ],
             "scripts": [
-              "node_modules/wangeditor/release/wangEditor.min.js"
+              "node_modules/wangeditor/release/wangEditor.min.js",
+              "node_modules/cropperjs/dist/cropper.min.js"
             ]
           },
           "configurations": {

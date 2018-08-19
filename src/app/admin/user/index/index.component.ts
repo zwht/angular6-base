@@ -1,46 +1,44 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../share/restServices/UserService';
 import { CodeDataService } from '../../../share/services/code-data.service';
-import { DateRangePickerComponent } from 'ng-zorro-antd/src/date-picker/date-range-picker.component';
-import { routes } from '../user.module';
-import { RouterLink } from '@angular/router';
+
 
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
-  styleUrls: ['../../common/style/list.less','./index.component.less']
+  styleUrls: ['../../common/style/list.less', './index.component.less']
 })
 export class IndexComponent implements OnInit {
 
-  loginName = null
-  name = null
-  juese = null
-  zhungtai = null
-  pageSize = 10
-  pageNum = 1
-  totalCount = null
-  DATA = []
+  loginName = null;
+  name = null;
+  juese = null;
+  zhungtai = null;
+  pageSize = 10;
+  pageNum = 1;
+  totalCount = null;
+  DATA = [];
 
-  codeList=[]
-  codeObjList={}
-  codeObj={}
+  codeList = [];
+  codeObjList = {};
+  codeObj = {};
 
+  fileUrl = '';
 
-
-  list = []
+  list = [];
   constructor(
     private userService: UserService,
-    private codeDataService:CodeDataService,
+    private codeDataService: CodeDataService
   ) { }
 
   ngOnInit() {
-    this.codeObj = this.codeDataService.codeObj
+    this.codeObj = this.codeDataService.codeObj;
     this.getList();
   }
 
   getList(num?) {
     if (num) {
-      this.pageNum = num
+      this.pageNum = num;
     }
     this.userService['list']({
       params: {
@@ -48,21 +46,21 @@ export class IndexComponent implements OnInit {
         params3: this.pageSize
       },
       data: {
-        loginName : this.loginName,
+        loginName: this.loginName,
         name: this.name,
-        phone: this.juese ,
+        phone: this.juese,
         email: this.zhungtai
       }
     })
       .then(response => {
-        if (response.code == 200) {
-          response.data.pageData.forEach(aaa=>{
-            aaa.roles = aaa.roles.split(",")
-          })
+        if (response.code === 200) {
+          response.data.pageData.forEach(aaa => {
+            aaa.roles = aaa.roles.split(',');
+          });
           this.list = response.data.pageData;
           this.totalCount = response.data.totalCount;
         }
-      })
+      });
   }
   cancel() { }
 
@@ -74,10 +72,10 @@ export class IndexComponent implements OnInit {
       data: {}
     })
       .then(response => {
-        if (response.code == 200) {
-          this.getList()
+        if (response.code === 200) {
+          this.getList();
         }
-      })
+      });
   }
 
   StateOK(id) {
@@ -89,10 +87,10 @@ export class IndexComponent implements OnInit {
       data: {}
     })
       .then(response => {
-        if (response.code == 200) {
-          this.getList()
+        if (response.code === 200) {
+          this.getList();
         }
-      })
+      });
   }
 
   StateNO(id) {
@@ -105,13 +103,13 @@ export class IndexComponent implements OnInit {
       data: {}
     })
       .then(response => {
-        if (response.code == 200) {
-          this.getList()
+        if (response.code === 200) {
+          this.getList();
         }
-      })
+      });
   }
 
-  fanyi(){
+  fanyi() {
 
   }
 }

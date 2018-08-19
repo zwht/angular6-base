@@ -11,6 +11,8 @@ registerLocaleData(zh);
 
 import {ZwHttpInterceptor} from './services/ZwHttpInterceptor';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { CropperImgComponent } from './components/cropper-img/cropper-img.component';
+import { CropperImgModalComponent } from './components/cropper-img-modal/cropper-img-modal.component';
 
 
 @NgModule({
@@ -21,13 +23,17 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
         HttpClientModule,
         NgZorroAntdModule
     ],
-    declarations: [],
+    declarations: [
+        CropperImgComponent,
+        CropperImgModalComponent,
+    ],
     exports: [
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
-        NgZorroAntdModule
+        NgZorroAntdModule,
+        CropperImgComponent
     ],
     providers: [
         {
@@ -36,7 +42,9 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
             multi: true,
         },
     ],
-    entryComponents: []
+    entryComponents: [
+        CropperImgModalComponent
+    ]
 })
 export class ShareModule {
 }

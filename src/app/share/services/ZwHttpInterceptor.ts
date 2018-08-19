@@ -4,7 +4,7 @@
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
-import { catchError, tap} from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { SessionService } from './SessionService';
 
 @Injectable({
@@ -35,9 +35,9 @@ export class ZwHttpInterceptor implements HttpInterceptor {
     'status.501': '未实现。服务器不识别该请求方法，或者服务器没有能力完成请求。',
     'status.503': '服务不可用。服务器当前不可用(过载或故障)。'
   };
- 
+
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
-    let fromList = [
+    const fromList = [
       'v1/file/upload',
       'v1/file/uploadUserHeader'
     ];
@@ -56,41 +56,41 @@ export class ZwHttpInterceptor implements HttpInterceptor {
     if (key) {
       authReq = req.clone({
         setHeaders: {
-          Authorization: 'Bearer ' + this.sessionService.getItem('token') || ''
+          Authorization: this.sessionService.getItem('token') || ''
         }
       });
     }
     const started = Date.now();
     return next.handle(authReq)
-    .pipe(
-      catchError((err, source) => {
-        if (err.status <= 200 || err.status >= 300) {
-          // alert('网络错误:' + err.status + ' - ' + this.status['status.' + err.status]);
-          const res = new HttpResponse({
-            body: err.error.text ? err.error.text : '',
-            headers: err.headers,
-            status: err.status,
-            statusText: err.statusText,
-            url: err.url
-          });
-          if (err.status === 401) {
-            window.location.href = '/#/';
+      .pipe(
+        catchError((err, source) => {
+          if (err.status <= 200 || err.status >= 300) {
+            // alert('网络错误:' + err.status + ' - ' + this.status['status.' + err.status]);
+            const res = new HttpResponse({
+              body: err.error.text ? err.error.text : '',
+              headers: err.headers,
+              status: err.status,
+              statusText: err.statusText,
+              url: err.url
+            });
+            if (err.status === 401) {
+              window.location.href = '/#/';
+            }
+            return of(res);
+            // return Observable.empty();
+          } else {
+            return throwError(err);
           }
-          return of(res);
-          //return Observable.empty();
-        } else {
-          return throwError(err);
-        }
-      }),
-      tap(data => {
-         // 打印请求时间，和请求返回内容处理
-        if (data instanceof HttpResponse) {
-          this.responseSet(data);
-          const elapsed = Date.now() - started;
-          //console.log(`Request for ${req.urlWithParams} took ${elapsed} ms.`);
-        }
-      })
-    )
+        }),
+        tap(data => {
+          // 打印请求时间，和请求返回内容处理
+          if (data instanceof HttpResponse) {
+            this.responseSet(data);
+            const elapsed = Date.now() - started;
+            // console.log(`Request for ${req.urlWithParams} took ${elapsed} ms.`);
+          }
+        })
+      );
   }
   responseSet(data) {
     if (data.body.code === 401) {
