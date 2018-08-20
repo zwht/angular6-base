@@ -72,7 +72,8 @@
         <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="phone" nzRequired>手机号</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24" [nzValidateStatus]="validateForm.controls['phone']">
           <input formControlName="phone" id="'phone'" nz-input>
-          <nz-form-explain *ngIf="validateForm.get('phone').dirty && validateForm.get('phone').errors">Please input your phone number!</nz-form-explain>
+          <nz-form-explain *ngIf="validateForm.get('phone').dirty && validateForm.get('phone').errors">Please input your
+            phone number!</nz-form-explain>
         </nz-form-control>
       </nz-form-item>
 
@@ -80,10 +81,18 @@
         <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="lcode" nzRequired>用户类型</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24">
           <nz-checkbox-group formControlName='lcode' [(ngModel)]="checkOptionsOne"></nz-checkbox-group>
-          <nz-form-explain *ngIf="validateForm.get('lcode').dirty && validateForm.get('lcode').errors">{{validateForm.getError('lcode', 'lcode')?.info}}</nz-form-explain>
+          <nz-form-explain *ngIf="validateForm.get('lcode').dirty && validateForm.get('lcode').errors">{{validateForm.getError('lcode',
+            'lcode')?.info}}</nz-form-explain>
         </nz-form-control>
       </nz-form-item>
-
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="img" nzRequired>头像</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <app-cropper-img formControlName='img' [(ngModel)]="img" [boxStyle]="{width:100,height:100}">
+          </app-cropper-img>
+          <nz-form-explain *ngIf="validateForm.get('img').dirty && validateForm.get('img').errors">请添加头像</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
       <nz-form-item nz-row style="margin-bottom:8px;">
         <nz-form-control [nzSpan]="14" [nzOffset]="6">
           <button nz-button nzType="primary">保存</button>

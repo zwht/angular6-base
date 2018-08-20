@@ -18,6 +18,7 @@ export class MenuComponent implements OnInit {
     childrenShowKey = true;
     menu = [];
     collectKey = false;
+    hardImg = '';
     userName = this.sessionService.getItem('userName');
     // 有子菜单的需要引入
     routesMenu = [
@@ -57,12 +58,15 @@ export class MenuComponent implements OnInit {
 
     ngOnInit() {
         let userType;
-        //如果没有用户类型，说明没有登录，直接跳转登录页面
-        if(!this.sessionService.getItem('roles')){
+        // 如果没有用户类型，说明没有登录，直接跳转登录页面
+        if (!this.sessionService.getItem('roles')) {
             this.router.navigate(['/']);
-            return
-        }else{
-            userType=this.sessionService.getItem('roles').split(',')
+            return;
+        } else {
+            this.hardImg = this.sessionService.getItem('hardImg');
+            userType = this.sessionService.getItem('roles').split(',').map(item=>{
+                return Number(item);
+            });
         }
         let adminList = {};
         this.router.config.forEach(item => {
@@ -71,11 +75,11 @@ export class MenuComponent implements OnInit {
             }
         });
         adminList['children'].every(item => {
-            if (item.data.roles&&item.data.roles.length) {
+            if (item.data.roles && item.data.roles.length) {
                 let key = false;
                 item.data.roles.forEach(ob1 => {
                     userType.forEach(ob2 => {
-                        if (ob1 == ob2) {
+                        if (ob1 === ob2) {
                             key = true;
                         }
                     });
@@ -93,10 +97,10 @@ export class MenuComponent implements OnInit {
                     if ((item.data as any).name === subItem['name']) {
                         (subItem as any).children.forEach(subSubItem => {
                             if (subSubItem.data && subSubItem.data.menu) {
-                                if (subSubItem.data.roles&&subSubItem.data.roles.length) {
+                                if (subSubItem.data.roles && subSubItem.data.roles.length) {
                                     let key = false;
                                     subSubItem.data.roles.forEach(ob1 => {
-                                        if (ob1 == userType) {
+                                        if (ob1 === userType) {
                                             key = true;
                                         }
                                     });
@@ -198,8 +202,8 @@ export class MenuComponent implements OnInit {
             item1.show = false;
         });
         this.setActiveMenu(item.path, '');
-        if (item.path.charAt(item.path.length - 1) == '/') {
-            item.path = item.path.substr(0, item.path.length - 1)
+        if (item.path.charAt(item.path.length - 1) === '/') {
+            item.path = item.path.substr(0, item.path.length - 1);
         }
         this.router.navigateByUrl('/admin/' + item.path);
         setTimeout(() => {

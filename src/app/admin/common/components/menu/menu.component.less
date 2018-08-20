@@ -12,7 +12,14 @@
     .right{ position: absolute; right: 50px; top:0; line-height: 60px;
       /deep/.el-dropdown{ color: lighten(@menuText,50%);}
       /deep/.el-icon-caret-bottom{ display: none;}
-      /deep/.ant-dropdown-link span{line-height:50px; text-align:center;vertical-align: middle;display: inline-block; color:white; border-radius:25px;background-color:rgb(139, 119, 224);height: 50px;width: 50px;}
+      /deep/.ant-dropdown-link span{line-height:50px; text-align:center;vertical-align: middle;
+        display: inline-block; color:white; border-radius:25px; position: relative;
+        background-color:rgb(139, 119, 224);height: 50px;width: 50px;}
+      /deep/ .ant-dropdown-link img{ width: 50px; border-radius:25px;}
+      /deep/.ant-dropdown-link b{ position: absolute; top:0; left: 0px; width: 100%; 
+        text-align: center; border-radius:25px; 
+        background-color:rgba(0, 0, 0,.3);height: 50px;width: 50px;}
+      /deep/.ant-dropdown-link span:hover b{ display: none;}
       /deep/.ant-dropdown-link i{color: white; vertical-align: middle;}
       nz-tooltip{ font-size: 18px; width: 28px; display: inline-block;
         line-height: 52px;

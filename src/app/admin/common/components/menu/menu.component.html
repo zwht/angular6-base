@@ -24,7 +24,8 @@
         <nz-dropdown [nzPlacement]="'bottomRight'">
           <a class="ant-dropdown-link" nz-dropdown>
             <span class="overflow" [title]='userName'>
-              {{userName}}
+              <img class="hardImg" [src]="'/v1/file/img/'+hardImg" alt="">
+              <b> {{userName}}</b>
             </span>
             <i class="anticon anticon-down"></i>
           </a>

@@ -40,35 +40,39 @@ export class UpdateComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
-    this.getById(this.id)
+    this.getById(this.id);
 
     this.validateForm = this.fb.group({
       email: [null, [Validators.email]],
       name: [null, [Validators.required]],
       phone: [null, [Validators.required]],
       loginName: [null, [Validators.required]],
-      lcode: [null, [Validators.required]]
+      lcode: [null, [Validators.required]],
+      img: [null, [Validators.required]],
     });
     this.checkOptionsOne = JSON.parse(JSON.stringify(this.codeDataService.codeObjList['10']))
-    this.checkOptionsOne =this.checkOptionsOne.filter(item=>{
-      return item.code!=1001;
-    })
+    this.checkOptionsOne = this.checkOptionsOne.filter(item => {
+      return item.code !== 1001;
+    });
   }
 
   submitForm(): void {
     for (const i in this.validateForm.controls) {
-      this.validateForm.controls[i].markAsDirty();
-      this.validateForm.controls[i].updateValueAndValidity();
+      if ((this.validateForm as any).controls[i]) {
+        this.validateForm.controls[i].markAsDirty();
+        this.validateForm.controls[i].updateValueAndValidity();
+      }
     }
     if (this.validateForm.valid) {
       this.loading = true;
 
-      let roles = this.checkOptionsOne.filter(item => {
-        if (item.checked) return true
+      const roles = this.checkOptionsOne.filter(item => {
+        if (item.checked) {
+          return true;
+        }
       }).map(item => {
-        return item.code
-      })
-
+        return item.code;
+      });
       this.userService['update']({
         data: {
           id: this.id,
@@ -76,13 +80,14 @@ export class UpdateComponent implements OnInit {
           name: this.validateForm.value.name.replace(this.regExpService.listObj['前后空格'], ''),
           phone: this.validateForm.value.phone.replace(this.regExpService.listObj['前后空格'], ''),
           email: this.validateForm.value.email.replace(this.regExpService.listObj['前后空格'], ''),
-          roles: this.fanyi(roles)
+          roles: this.fanyi(roles),
+          img: this.validateForm.value.img
         }
       })
         .then(response => {
           this.loading = false;
           if (response.code === 200) {
-            this.router.navigate(['/admin/user'])
+            this.router.navigate(['/admin/user']);
           } else {
             this._message.create('error', response.msg, { nzDuration: 4000 });
           }
@@ -97,14 +102,14 @@ export class UpdateComponent implements OnInit {
       data: {}
     })
       .then(response => {
-        if (response.code == 200) {
-          if (response.data.roles != "") {
-            let aaa = response.data.roles.split(',')
+        if (response.code === 200) {
+          if (response.data.roles !== '') {
+            const aaa = response.data.roles.split(',');
             this.checkOptionsOne.forEach(item => {
               aaa.forEach(obj => {
-                if (item.code == obj) item.checked = true
-              })
-            })
+                if (item.code === obj) { item.checked = true; }
+              });
+            });
           }
           this.validateForm = this.fb.group({
             email: [response.data.email, [Validators.email]],
@@ -115,23 +120,25 @@ export class UpdateComponent implements OnInit {
               let isPass = false;
               if (control.value) {
                 control.value.forEach(item => {
-                  if (item.checked) isPass = true;
-                })
+                  if (item.checked) {
+                    isPass = true;
+                  }
+                });
               }
-              return isPass ? null : { lcode: { info: '类型不能为空' } }
-            }]]
+              return isPass ? null : { lcode: { info: '类型不能为空' } };
+            }]],
+            img: [response.data.img, [Validators.required]],
           });
         }
-      })
+      });
   }
 
   fanyi(roles) {
-    let miao = ''
+    let miao = '';
     roles.forEach(aaa => {
-      miao = miao + "," + aaa
-    })
+      miao = miao + ',' + aaa;
+    });
     miao = miao.substr(1);
-    return miao
+    return miao;
   }
-
 }
