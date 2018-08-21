@@ -7,14 +7,14 @@ import { Router } from '@angular/router';
 import { CodeDataService } from '../../share/services/code-data.service';
 import { SessionService } from '../../share/services/SessionService';
 import { of } from '../../../../node_modules/rxjs';
-import { map } from 'rxjs/operators'
+import { map } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.less']
+  selector: 'app-register-phone',
+  templateUrl: './registerPhone.component.html',
+  styleUrls: ['./registerPhone.component.less']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterPhoneComponent implements OnInit {
   validateForm: FormGroup;
   loading = false;
   captchaLoading = false;
@@ -25,16 +25,6 @@ export class RegisterComponent implements OnInit {
     private _message: NzMessageService,
     private router: Router,
     private userService: UserService) {
-  }
-  ngOnInit(): void {
-    this.validateForm = this.fb.group({
-      email: [null, [Validators.email, Validators.required]],
-      password: [null, [Validators.required]],
-      checkPassword: [null, [Validators.required, this.confirmationValidator]],
-      loginName: [null, [Validators.required]],
-      captcha: [null, [Validators.required]],
-      img: [null, [Validators.required]],
-    });
   }
 
   submitForm(): void {
@@ -64,7 +54,7 @@ export class RegisterComponent implements OnInit {
           })
         );
       data.subscribe(d => {
-        this.userService['registerEmail']({
+        this.userService['register']({
           params: { captcha: this.validateForm.value.captcha },
           data: d
         })
@@ -132,7 +122,16 @@ export class RegisterComponent implements OnInit {
       this.timeK = 60;
     }
   }
-
-
-  
+  ngOnInit(): void {
+    this.validateForm = this.fb.group({
+      email: [null, [Validators.email, Validators.required]],
+      password: [null, [Validators.required]],
+      checkPassword: [null, [Validators.required, this.confirmationValidator]],
+      loginName: [null, [Validators.required]],
+      phonePrefix: ['+86'],
+      phone: [null, []],
+      captcha: [null, [Validators.required]],
+      agree: [false]
+    });
+  }
 }

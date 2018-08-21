@@ -11,10 +11,16 @@ export class UserService {
 
     url = '/v1/user/:params1/:params2/:params3/:params4/:params5';
     urls = {
-        register: {
+        registerEmail: {
             method: 'post',
             params: {
-                params1: 'register'
+                params1: 'register/email'
+            }
+        },
+        registerPhone: {
+            method: 'post',
+            params: {
+                params1: 'register/phone'
             }
         },
         add: {

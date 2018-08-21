@@ -5,6 +5,7 @@ import { ShareModule } from '../share/share.module';
 import { LoginComponent } from './login/login.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { RegisterComponent } from './register/register.component';
+import { RegisterPhoneComponent } from './registerPhone/registerPhone.component';
 
 export const routes: Routes = [
     {
@@ -18,7 +19,14 @@ export const routes: Routes = [
         path: 'register',
         component: RegisterComponent,
         data: {
-            name: '用户注册'
+            name: '邮箱注册'
+        }
+    },
+    {
+        path: 'register/phone',
+        component: RegisterPhoneComponent,
+        data: {
+            name: '手机号注册'
         }
     },
     {
@@ -36,7 +44,8 @@ export const routes: Routes = [
         ShareModule,
         RouterModule.forChild(routes)
     ],
-    declarations: [LoginComponent, NotFoundComponent, RegisterComponent],
+    declarations: [LoginComponent, NotFoundComponent,
+        RegisterComponent, RegisterPhoneComponent],
     providers: [],
 })
 export class StartModule { }
