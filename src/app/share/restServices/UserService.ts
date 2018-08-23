@@ -77,6 +77,13 @@ export class UserService {
                 params1: 'captcha',
                 params2: 'email'
             }
+        },
+        getCaptchaPhone: {
+            method: 'get',
+            params: {
+                params1: 'captcha',
+                params2: 'phone'
+            }
         }
 
     };

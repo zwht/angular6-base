@@ -16,7 +16,7 @@ export const routes: Routes = [
         }
     },
     {
-        path: 'register',
+        path: 'register/email',
         component: RegisterComponent,
         data: {
             name: '邮箱注册'

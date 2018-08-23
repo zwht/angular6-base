@@ -26,7 +26,17 @@ export class RegisterPhoneComponent implements OnInit {
     private router: Router,
     private userService: UserService) {
   }
-
+  ngOnInit(): void {
+    this.validateForm = this.fb.group({
+      password: [null, [Validators.required]],
+      checkPassword: [null, [Validators.required, this.confirmationValidator]],
+      loginName: [null, [Validators.required]],
+      phonePrefix: ['+86'],
+      phone: [null, []],
+      captcha: [null, [Validators.required]],
+      img: [null, [Validators.required]]
+    });
+  }
   submitForm(): void {
     for (const i in this.validateForm.controls) {
       if ((this.validateForm as any).controls[i]) {
@@ -36,7 +46,6 @@ export class RegisterPhoneComponent implements OnInit {
     }
     if (this.validateForm.valid) {
       this.loading = true;
-
       const data = of(this.validateForm.value)
         .pipe(
           map(d => {
@@ -54,7 +63,7 @@ export class RegisterPhoneComponent implements OnInit {
           })
         );
       data.subscribe(d => {
-        this.userService['register']({
+        this.userService['registerPhone']({
           params: { captcha: this.validateForm.value.captcha },
           data: d
         })
@@ -67,7 +76,6 @@ export class RegisterPhoneComponent implements OnInit {
             }
           });
       });
-
     }
   }
 
@@ -87,18 +95,18 @@ export class RegisterPhoneComponent implements OnInit {
   getCaptcha(e: MouseEvent): void {
 
     e.preventDefault();
-    this.validateForm.controls['email'].markAsDirty();
-    this.validateForm.controls['email'].updateValueAndValidity();
-    const dirty = this.validateForm.get('email').dirty;
-    const errors = this.validateForm.get('email').errors;
+    this.validateForm.controls['phone'].markAsDirty();
+    this.validateForm.controls['phone'].updateValueAndValidity();
+    const dirty = this.validateForm.get('phone').dirty;
+    const errors = this.validateForm.get('phone').errors;
     if (dirty && errors) {
-      this._message.create('error', '输入正确email!', { nzDuration: 4000 });
+      this._message.create('error', '输入正确phone!', { nzDuration: 4000 });
       return;
     }
     this.captchaLoading = true;
-    this.userService['getCaptchaEmail']({
+    this.userService['getCaptchaPhone']({
       params: {
-        email: this.validateForm.value.email
+        phone: this.validateForm.value.phone
       },
       data: {}
     })
@@ -121,17 +129,5 @@ export class RegisterPhoneComponent implements OnInit {
     } else {
       this.timeK = 60;
     }
-  }
-  ngOnInit(): void {
-    this.validateForm = this.fb.group({
-      email: [null, [Validators.email, Validators.required]],
-      password: [null, [Validators.required]],
-      checkPassword: [null, [Validators.required, this.confirmationValidator]],
-      loginName: [null, [Validators.required]],
-      phonePrefix: ['+86'],
-      phone: [null, []],
-      captcha: [null, [Validators.required]],
-      agree: [false]
-    });
   }
 }
