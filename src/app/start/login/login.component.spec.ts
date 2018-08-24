@@ -4,6 +4,8 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { LoginComponent } from './login.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ShareModule } from '../../share/share.module';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -11,7 +13,11 @@ describe('LoginComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoginComponent ]
+      declarations: [ LoginComponent ],
+      imports: [
+        ShareModule,
+        RouterTestingModule
+      ]
     })
     .compileComponents();
   }));

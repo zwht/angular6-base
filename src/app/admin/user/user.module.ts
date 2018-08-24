@@ -15,40 +15,40 @@ export const routes: Routes = [
         component: IndexComponent,
         data: {
             name: '用户',
-            roles:[1001],
+            roles: [1001],
             menu: true
         },
-        canActivate:[PermissionGuard]
+        canActivate: [PermissionGuard]
     },
     {
         path: 'add',
         component: AddComponent,
         data: {
             name: '添加用户',
-            roles:[1001]
+            roles: [1001]
         },
-        canActivate:[PermissionGuard]
+        canActivate: [PermissionGuard]
     },
     {
         path: 'update/:id',
         component: UpdateComponent,
         data: {
             name: '编辑用户',
-            roles:[1001]
+            roles: [1001]
         },
-        canActivate:[PermissionGuard]
+        canActivate: [PermissionGuard]
     },
     {
         path: 'relation/:id',
         component: VpnComponent,
         data: {
             name: 'vpn绑定',
-            roles:[1001]
+            roles: [1001]
         },
-        canActivate:[PermissionGuard]
+        canActivate: [PermissionGuard]
     },
-    
-    
+
+
 ];
 
 

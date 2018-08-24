@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NewsAddComponent } from './news-add.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ShareModule } from '../../../share/share.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('NewsAddComponent', () => {
   let component: NewsAddComponent;
@@ -8,7 +11,12 @@ describe('NewsAddComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NewsAddComponent ]
+      declarations: [ NewsAddComponent ],
+      imports: [
+        BrowserAnimationsModule,
+        ShareModule,
+        RouterTestingModule
+      ]
     })
     .compileComponents();
   }));

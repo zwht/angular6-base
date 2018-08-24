@@ -4,14 +4,19 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { NotFoundComponent } from './not-found.component';
-
+import { RouterTestingModule } from '@angular/router/testing';
+import { ShareModule } from '../../share/share.module';
 describe('NotFoundComponent', () => {
   let component: NotFoundComponent;
   let fixture: ComponentFixture<NotFoundComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NotFoundComponent ]
+      declarations: [ NotFoundComponent ],
+      imports: [
+        ShareModule,
+        RouterTestingModule
+      ]
     })
     .compileComponents();
   }));

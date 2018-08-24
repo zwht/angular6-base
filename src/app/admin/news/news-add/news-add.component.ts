@@ -65,7 +65,7 @@ export class NewsAddComponent implements OnInit {
           })
         )
       data.subscribe(d => {
-        d.state=1102
+        d.state = 1102
         if (this.id) {
           this.edit(d)
         } else {

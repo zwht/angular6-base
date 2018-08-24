@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GroupListComponent } from './group-list.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ShareModule } from '../../../share/share.module';
 
 describe('GroupListComponent', () => {
   let component: GroupListComponent;
@@ -8,7 +10,11 @@ describe('GroupListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GroupListComponent ]
+      declarations: [ GroupListComponent ],
+      imports: [
+        ShareModule,
+        RouterTestingModule
+      ]
     })
     .compileComponents();
   }));

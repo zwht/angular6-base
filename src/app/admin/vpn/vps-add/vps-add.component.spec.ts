@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { VpsAddComponent } from './vps-add.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ShareModule } from '../../../share/share.module';
 
 describe('VpsAddComponent', () => {
   let component: VpsAddComponent;
@@ -8,7 +10,11 @@ describe('VpsAddComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ VpsAddComponent ]
+      declarations: [ VpsAddComponent ],
+      imports: [
+        ShareModule,
+        RouterTestingModule
+      ]
     })
     .compileComponents();
   }));

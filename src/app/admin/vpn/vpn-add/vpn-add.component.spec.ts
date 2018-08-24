@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { VpnAddComponent } from './vpn-add.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ShareModule } from '../../../share/share.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('VpnAddComponent', () => {
   let component: VpnAddComponent;
@@ -8,7 +11,12 @@ describe('VpnAddComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ VpnAddComponent ]
+      declarations: [ VpnAddComponent ],
+      imports: [
+        ShareModule,
+        RouterTestingModule,
+        BrowserAnimationsModule
+      ]
     })
     .compileComponents();
   }));

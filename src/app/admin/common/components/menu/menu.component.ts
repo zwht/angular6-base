@@ -4,7 +4,6 @@ import * as news from '../../../news/news.module';
 import * as user from '../../../user/user.module';
 import * as vpn from '../../../vpn/vpn.module';
 import { Router } from '@angular/router';
-import { CodeDataService } from '../../../../share/services/code-data.service';
 import { SessionService } from '../../../../share/services/SessionService';
 
 @Component({
@@ -52,8 +51,7 @@ export class MenuComponent implements OnInit {
 
     constructor(
         private router: Router,
-        private sessionService: SessionService,
-        private codeDataService: CodeDataService) {
+        private sessionService: SessionService) {
     }
 
     ngOnInit() {
@@ -64,7 +62,7 @@ export class MenuComponent implements OnInit {
             return;
         } else {
             this.hardImg = this.sessionService.getItem('hardImg');
-            userType = this.sessionService.getItem('roles').split(',').map(item=>{
+            userType = this.sessionService.getItem('roles').split(',').map(item => {
                 return Number(item);
             });
         }

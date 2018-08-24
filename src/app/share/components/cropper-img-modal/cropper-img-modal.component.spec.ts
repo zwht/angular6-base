@@ -1,16 +1,21 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CropperImgModalComponent } from './cropper-img-modal.component';
-
+import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { NzModalRef } from 'ng-zorro-antd';
 describe('CropperImgModalComponent', () => {
   let component: CropperImgModalComponent;
   let fixture: ComponentFixture<CropperImgModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CropperImgModalComponent ]
+      declarations: [CropperImgModalComponent],
+      imports: [
+        NgZorroAntdModule
+      ],
+      providers: [NzModalRef]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

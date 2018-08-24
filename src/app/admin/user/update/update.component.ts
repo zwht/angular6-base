@@ -42,6 +42,13 @@ export class UpdateComponent implements OnInit {
     this.id = this.route.snapshot.params['id'];
     this.getById(this.id);
 
+    if (this.codeDataService && this.codeDataService.codeObjList['10']) {
+      this.checkOptionsOne = JSON.parse(JSON.stringify(this.codeDataService.codeObjList['10']));
+      this.checkOptionsOne = this.checkOptionsOne.filter(item => {
+        return item.code !== 1001;
+      });
+    }
+
     this.validateForm = this.fb.group({
       email: [null, [Validators.email]],
       name: [null, [Validators.required]],
@@ -49,10 +56,6 @@ export class UpdateComponent implements OnInit {
       loginName: [null, [Validators.required]],
       lcode: [null, [Validators.required]],
       img: [null, [Validators.required]],
-    });
-    this.checkOptionsOne = JSON.parse(JSON.stringify(this.codeDataService.codeObjList['10']))
-    this.checkOptionsOne = this.checkOptionsOne.filter(item => {
-      return item.code !== 1001;
     });
   }
 

@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NewsTypeComponent } from './news-type.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ShareModule } from '../../../share/share.module';
 
 describe('NewsTypeComponent', () => {
   let component: NewsTypeComponent;
@@ -8,7 +10,11 @@ describe('NewsTypeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NewsTypeComponent ]
+      declarations: [ NewsTypeComponent ],
+      imports: [
+        ShareModule,
+        RouterTestingModule
+      ]
     })
     .compileComponents();
   }));

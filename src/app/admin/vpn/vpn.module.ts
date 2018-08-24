@@ -8,47 +8,46 @@ import { VpsComponent } from './vps/vps.component';
 import { VpsAddComponent } from './vps-add/vps-add.component';
 import { VpnAddComponent } from './vpn-add/vpn-add.component';
 
-
 export const routes: Routes = [
     {
         path: '',
         component: IndexComponent,
         data: {
             name: 'vpn',
-            roles:[1001],
+            roles: [1001],
             menu: true
         },
-        canActivate:[PermissionGuard]
+        canActivate: [PermissionGuard]
     },
     {
         path: 'add',
         component: VpnAddComponent,
         data: {
             name: 'vpn添加',
-            roles:[1001]
+            roles: [1001]
         },
-        canActivate:[PermissionGuard]
+        canActivate: [PermissionGuard]
     },
     {
         path: 'vps',
         component: VpsComponent,
         data: {
             name: 'vps',
-            roles:[1001],
+            roles: [1001],
             menu: true
         },
-        canActivate:[PermissionGuard]
+        canActivate: [PermissionGuard]
     },
     {
         path: 'vps/add',
         component: VpsAddComponent,
         data: {
             name: 'vps添加',
-            roles:[1001]
+            roles: [1001]
         },
-        canActivate:[PermissionGuard]
+        canActivate: [PermissionGuard]
     }
-    
+
 ];
 
 

@@ -1,9 +1,9 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
 
 import { MenuComponent } from './menu.component';
+import { ShareModule } from '../../../../share/share.module';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('MenuComponent', () => {
   let component: MenuComponent;
@@ -11,9 +11,13 @@ describe('MenuComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MenuComponent ]
+      declarations: [MenuComponent],
+      imports: [
+        ShareModule,
+        RouterTestingModule
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
