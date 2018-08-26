@@ -9,7 +9,7 @@ import { HttpServer } from '../services/HttpServer';
 })
 export class CodeService {
 
-    url = '/v1/code/:params1/:params2/:params3/:params4/:params5';
+    url = 'http://127.0.0.1:4614/v1/code/:params1/:params2/:params3/:params4/:params5';
     urls = {
         add: {
             method: 'post',
@@ -42,7 +42,6 @@ export class CodeService {
             }
         },
     };
-
     constructor(httpServer: HttpServer) {
         httpServer.S(this);
     }

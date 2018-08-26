@@ -12,6 +12,7 @@ export class CodeDataService {
 
   constructor(private codeService: CodeService,
     private sessionService: SessionService) {
+
     this.getDataLocalStorage();
   }
   getDataLocalStorage() {
@@ -23,6 +24,9 @@ export class CodeDataService {
     }
     if (this.sessionService.getItem('codeList')) {
       this.codeList = JSON.parse(this.sessionService.getItem('codeList'));
+    }
+    if (!this.codeList.length) {
+      this.getData();
     }
   }
   getData() {
