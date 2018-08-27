@@ -1,24 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { VpsService } from '../../../share/restServices/VpsService';
-import { VpnService } from '../../../share/restServices/VpnService';
-import { NewsTypeService } from '../../../share/restServices/NewsTypeService';
-import { NewsService } from '../../../share/restServices/NewsService';
+import { VpsService } from '../../../share/restServices/vps.service';
+import { VpnService } from '../../../share/restServices/vpn.service';
+import { NewsTypeService } from '../../../share/restServices/news-type.service';
+import { NewsService } from '../../../share/restServices/news.service';
 
 @Component({
   selector: 'app-new-index',
   templateUrl: './index.component.html',
-  styleUrls: ['../../common/style/list.less','./index.component.less']
+  styleUrls: ['../../common/style/list.less', './index.component.less']
 })
 export class IndexComponent implements OnInit {
-  pageSize = 10
-  pageNum = 1
-  totalCount = null
-  list = []
+  pageSize = 10;
+  pageNum = 1;
+  totalCount = null;
+  list = [];
   search = {
     name: '',
     id: ''
-  }
+  };
 
   constructor(
     private router: Router,
@@ -26,12 +26,12 @@ export class IndexComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getList()
+    this.getList();
   }
 
   getList(num?) {
-    this.pageNum = num ? num : 1
-    this.newsService['list']({
+    this.pageNum = num ? num : 1;
+    this.newsService.list({
       params: {
         params2: this.pageNum,
         params3: this.pageSize
@@ -41,30 +41,28 @@ export class IndexComponent implements OnInit {
         id: this.search.id
       }
     })
-      .then(response => {
-        if (response.code == 200) {
+      .subscribe(response => {
+        if (response.code === 200) {
           this.list = response.data.pageData;
           this.totalCount = response.data.totalCount;
         }
-      })
+      });
   }
 
   del(id) {
-    this.newsService['del']({
+    this.newsService.del({
       params: {
         params2: id
       },
       data: {}
     })
-      .then(response => {
-        if (response.code == 200) {
-          this.getList()
+      .subscribe(response => {
+        if (response.code === 200) {
+          this.getList();
         }
-      })
+      });
   }
   goAdd(id) {
     this.router.navigate(['/admin/news/add'], { queryParams: { id: id } });
   }
-
-
 }

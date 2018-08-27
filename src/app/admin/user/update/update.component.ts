@@ -6,7 +6,7 @@ import {
   FormGroup,
   Validators
 } from '@angular/forms';
-import { UserService } from '../../../share/restServices/UserService';
+import { UserService } from '../../../share/restServices/user.service';
 import { NzMessageService } from '../../../../../node_modules/ng-zorro-antd';
 import { RegExpService } from '../../../share/services/reg-exp.service';
 import { CodeDataService } from '../../../share/services/code-data.service';
@@ -76,7 +76,7 @@ export class UpdateComponent implements OnInit {
       }).map(item => {
         return item.code;
       });
-      this.userService['update']({
+      this.userService.update({
         data: {
           id: this.id,
           loginName: this.validateForm.value.loginName.replace(this.regExpService.listObj['前后空格'], ''),
@@ -87,7 +87,7 @@ export class UpdateComponent implements OnInit {
           img: this.validateForm.value.img
         }
       })
-        .then(response => {
+        .subscribe(response => {
           this.loading = false;
           if (response.code === 200) {
             this.router.navigate(['/admin/user']);
@@ -98,13 +98,13 @@ export class UpdateComponent implements OnInit {
     }
   }
   getById(id) {
-    this.userService['getById']({
+    this.userService.getById({
       params: {
         params2: id
       },
       data: {}
     })
-      .then(response => {
+      .subscribe(response => {
         if (response.code === 200) {
           if (response.data.roles !== '') {
             const aaa = response.data.roles.split(',');

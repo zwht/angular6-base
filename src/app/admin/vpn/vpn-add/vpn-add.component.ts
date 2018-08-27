@@ -3,10 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd';
 import { RegExpService } from '../../../share/services/reg-exp.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { of } from 'rxjs'
-import { map } from 'rxjs/operators'
-import { VpnService } from '../../../share/restServices/VpnService';
-import { VpsService } from '../../../share/restServices/VpsService';
+import { of } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { VpnService } from '../../../share/restServices/vpn.service';
+import { VpsService } from '../../../share/restServices/vps.service';
 
 @Component({
   selector: 'app-vpn-add',
@@ -18,8 +18,8 @@ export class VpnAddComponent implements OnInit {
   validateForm: FormGroup;
   loading = false;
   id;
-  title = "添加vpn"
-  vpsList=[]
+  title = '添加vpn';
+  vpsList = [];
   constructor(
     private activatedRoute: ActivatedRoute,
     private _message: NzMessageService,
@@ -43,68 +43,72 @@ export class VpnAddComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       this.id = params['id'];
       if (this.id) {
-        this.title = "编辑vpn"
-        this.getDetail()
+        this.title = '编辑vpn';
+        this.getDetail();
       }
     });
   }
   submitForm(): void {
     for (const i in this.validateForm.controls) {
-      this.validateForm.controls[i].markAsDirty();
-      this.validateForm.controls[i].updateValueAndValidity();
+      if (i) {
+        this.validateForm.controls[i].markAsDirty();
+        this.validateForm.controls[i].updateValueAndValidity();
+      }
     }
     if (this.validateForm.valid) {
       this.loading = true;
-      let data = of(this.validateForm.value)
+      const data = of(this.validateForm.value)
         .pipe(
           map(d => {
-            for (let i in d) {
-              d[i] = this.regExpService.replace('前后空格', d[i], '')
+            for (const i in d) {
+              if (i) {
+                d[i] = this.regExpService.replace('前后空格', d[i], '');
+              }
             }
             return d;
           })
-        )
+        );
       data.subscribe(d => {
         if (this.id) {
-          this.edit(d)
+          this.edit(d);
         } else {
-          this.add(d)
+          this.add(d);
         }
-      })
+      });
     }
   }
   add(d) {
-    this.vpnService['add']({
+    this.vpnService.add({
       data: d
     })
-      .then(response => {
+      .subscribe(response => {
         this.loading = false;
         if (response.code === 200) {
-          this.router.navigate(['/admin/vpn'])
+          this.router.navigate(['/admin/vpn']);
         } else {
           this._message.create('error', response.msg, { nzDuration: 4000 });
         }
       });
   }
   edit(d) {
-    this.vpnService['update']({
+    this.vpnService.update({
       data: Object.assign({ id: this.id }, d)
     })
-      .then(response => {
+      .subscribe(response => {
         this.loading = false;
         if (response.code === 200) {
-          this.router.navigate(['/admin/vpn'])
+          this.router.navigate(['/admin/vpn']);
         } else {
           this._message.create('error', response.msg, { nzDuration: 4000 });
         }
       });
   }
   getDetail() {
-    this.vpnService['getById']({
+    this.vpnService.getById({
       params: { params2: this.id }
     })
-      .then(response => {
-        if (response.code == 200) {
+      .subscribe(response => {
+        if (response.code === 200) {
           this.validateForm = this.fb.group({
             ip: [response.data.ip, []],
             password: [response.data.password, []],
@@ -112,24 +116,21 @@ export class VpnAddComponent implements OnInit {
             name: [response.data.name, [Validators.required]]
           });
         }
-      })
+      });
   }
   getVpsList(num?) {
-
-    this.vpsService['list']({
+    this.vpsService.list({
       params: {
         params2: 1,
         params3: 1000
       },
       data: {
-        
       }
     })
-      .then(response => {
-        if (response.code == 200) {
+      .subscribe(response => {
+        if (response.code === 200) {
           this.vpsList = response.data.pageData;
-         
         }
-      })
+      });
   }
 }

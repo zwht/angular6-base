@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../../share/restServices/UserService';
+import { UserService } from '../../../share/restServices/user.service';
 import { CodeDataService } from '../../../share/services/code-data.service';
-import { TestService } from '../../../share/restServices/test.service';
-import { filter } from 'rxjs/operators';
-import { HttpResponse } from 'selenium-webdriver/http';
 
 @Component({
   selector: 'app-index',
@@ -30,33 +27,19 @@ export class IndexComponent implements OnInit {
   list = [];
   constructor(
     private userService: UserService,
-    private test: TestService,
     private codeDataService: CodeDataService
   ) { }
 
   ngOnInit() {
     this.codeObj = this.codeDataService.codeObj;
     this.getList();
-
-    this.test.list({
-      params: {
-        params2: 1,
-        params3: 100
-      },
-      data: {
-        name: 9
-      }
-    })
-      .subscribe(data => {
-        debugger
-      });
   }
 
   getList(num?) {
     if (num) {
       this.pageNum = num;
     }
-    this.userService['list']({
+    this.userService.list({
       params: {
         params2: this.pageNum,
         params3: this.pageSize
@@ -68,7 +51,7 @@ export class IndexComponent implements OnInit {
         email: this.zhungtai
       }
     })
-      .then(response => {
+      .subscribe(response => {
         if (response.code === 200) {
           response.data.pageData.forEach(aaa => {
             aaa.roles = aaa.roles.split(',');
@@ -81,13 +64,13 @@ export class IndexComponent implements OnInit {
   cancel() { }
 
   deldeldel(id) {
-    this.userService['del']({
+    this.userService.del({
       params: {
         params2: id
       },
       data: {}
     })
-      .then(response => {
+      .subscribe(response => {
         if (response.code === 200) {
           this.getList();
         }
@@ -95,14 +78,14 @@ export class IndexComponent implements OnInit {
   }
 
   StateOK(id) {
-    this.userService['updateState']({
+    this.userService.updateState({
       params: {
         id: id,
         state: true
       },
       data: {}
     })
-      .then(response => {
+      .subscribe(response => {
         if (response.code === 200) {
           this.getList();
         }
@@ -110,7 +93,7 @@ export class IndexComponent implements OnInit {
   }
 
   StateNO(id) {
-    this.userService['updateState']({
+    this.userService.updateState({
       params: {
         id: id,
         state: false
@@ -118,7 +101,7 @@ export class IndexComponent implements OnInit {
       },
       data: {}
     })
-      .then(response => {
+      .subscribe(response => {
         if (response.code === 200) {
           this.getList();
         }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { VpnRelationService } from '../../../share/restServices/VpnRelationService';
-import { VpnService } from '../../../share/restServices/VpnService';
+import { VpnRelationService } from '../../../share/restServices/vpn-relation.service';
+import { VpnService } from '../../../share/restServices/vpn.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -16,7 +16,7 @@ export class VpnComponent implements OnInit {
     vpnId: '',
     userId: '',
     overdueTime: new Date()
-  }
+  };
   constructor(
     private route: ActivatedRoute,
     private vpnService: VpnService,
@@ -29,7 +29,7 @@ export class VpnComponent implements OnInit {
     this.getRelationByUserId();
   }
   del(item) {
-    this.vpnRelationService['updateState']({
+    this.vpnRelationService.updateState({
       params: {
         id: item.relationId,
         vpnId: item.vpnId,
@@ -38,30 +38,30 @@ export class VpnComponent implements OnInit {
       data: {
       }
     })
-      .then(response => {
-        if (response.code == 200) {
+      .subscribe(response => {
+        if (response.code === 200) {
           this.getVpnList();
           this.getRelationByUserId();
         }
-      })
+      });
   }
   getRelationByUserId() {
-    this.vpnRelationService['getListByUserId']({
+    this.vpnRelationService.getListByUserId({
       params: {
         id: this.vpnRelation.userId
       },
       data: {}
     })
-      .then(response => {
-        if (response.code == 200) {
+      .subscribe(response => {
+        if (response.code === 200) {
           this.userVpnList = response.data;
         }
-      })
+      });
   }
 
 
   getVpnList() {
-    this.vpnService['list']({
+    this.vpnService.list({
       params: {
         params2: 1,
         params3: 1000
@@ -70,23 +70,23 @@ export class VpnComponent implements OnInit {
         state: 2001
       }
     })
-      .then(response => {
-        if (response.code == 200) {
+      .subscribe(response => {
+        if (response.code === 200) {
           this.vpnList = response.data.pageData;
 
         }
-      })
+      });
   }
   add() {
     this.loading = true;
-    this.vpnRelationService['add']({
+    this.vpnRelationService.add({
       data: {
         userId: this.vpnRelation.userId,
         vpnId: this.vpnRelation.vpnId,
         overdueTime: new Date(this.vpnRelation.overdueTime).getTime(),
       }
     })
-      .then(response => {
+      .subscribe(response => {
         this.loading = false;
         this.getVpnList();
         this.getRelationByUserId();

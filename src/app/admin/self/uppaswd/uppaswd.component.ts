@@ -5,7 +5,7 @@ import {
   FormGroup,
   Validators
 } from '@angular/forms';
-import { UserService } from '../../../share/restServices/UserService';
+import { UserService } from '../../../share/restServices/user.service';
 import { NzMessageService } from 'ng-zorro-antd';
 import { RegExpService } from '../../../share/services/reg-exp.service';
 import { CodeDataService } from '../../../share/services/code-data.service';
@@ -29,7 +29,7 @@ export class UppaswdComponent implements OnInit {
     private fb: FormBuilder,
     private userService: UserService,
     private router: Router,
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.validateForm = this.fb.group({
@@ -53,8 +53,10 @@ export class UppaswdComponent implements OnInit {
 
   submitForm(): void {
     for (const i in this.validateForm.controls) {
-      this.validateForm.controls[i].markAsDirty();
-      this.validateForm.controls[i].updateValueAndValidity();
+      if (i) {
+        this.validateForm.controls[i].markAsDirty();
+        this.validateForm.controls[i].updateValueAndValidity();
+      }
     }
     if (this.validateForm.valid) {
       this.loading = true;
@@ -65,7 +67,7 @@ export class UppaswdComponent implements OnInit {
         },
         data: {}
       })
-        .then(response => {
+        .subscribe(response => {
           this.loading = false;
           if (response.code === 200) {
             // this.router.navigate(['/admin/self'])

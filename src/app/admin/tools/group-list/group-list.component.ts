@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GroupService } from '../../../share/restServices/GroupService';
+import { GroupService } from '../../../share/restServices/group.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,27 +9,27 @@ import { Router } from '@angular/router';
 })
 export class GroupListComponent implements OnInit {
 
-  pageSize = 10
-  pageNum = 1
-  totalCount = null
-  list = []
+  pageSize = 10;
+  pageNum = 1;
+  totalCount = null;
+  list = [];
   search = {
     name: '',
     id: ''
-  }
+  };
 
   constructor(
     private router: Router,
-    private GroupService: GroupService
+    private groupService: GroupService
   ) { }
 
   ngOnInit() {
-    this.getList()
+    this.getList();
   }
 
   getList(num?) {
-    this.pageNum = num ? num : 1
-    this.GroupService['list']({
+    this.pageNum = num ? num : 1;
+    this.groupService.list({
       params: {
         params2: this.pageNum,
         params3: this.pageSize
@@ -39,29 +39,28 @@ export class GroupListComponent implements OnInit {
         id: this.search.id
       }
     })
-      .then(response => {
-        if (response.code == 200) {
+      .subscribe(response => {
+        if (response.code === 200) {
           this.list = response.data.pageData;
           this.totalCount = response.data.totalCount;
         }
-      })
+      });
   }
 
   del(id) {
-    this.GroupService['del']({
+    this.groupService.del({
       params: {
         params2: id
       },
       data: {}
     })
-      .then(response => {
-        if (response.code == 200) {
-          this.getList()
+      .subscribe(response => {
+        if (response.code === 200) {
+          this.getList();
         }
-      })
+      });
   }
   goAdd(id) {
     this.router.navigate(['/admin/tools/group/add'], { queryParams: { id: id } });
   }
-
 }

@@ -3,10 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd';
 import { RegExpService } from '../../../share/services/reg-exp.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { of } from 'rxjs'
-import { map } from 'rxjs/operators'
-import { NewsService } from '../../../share/restServices/NewsService';
-import { NewsTypeService } from '../../../share/restServices/NewsTypeService';
+import { of } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { NewsService } from '../../../share/restServices/news.service';
+import { NewsTypeService } from '../../../share/restServices/news-type.service';
 
 @Component({
   selector: 'app-news-add',
@@ -18,8 +18,8 @@ export class NewsAddComponent implements OnInit {
   validateForm: FormGroup;
   loading = false;
   id;
-  title = "添加新闻"
-  vpsList = []
+  title = '添加新闻';
+  vpsList = [];
   constructor(
     private activatedRoute: ActivatedRoute,
     private _message: NzMessageService,
@@ -43,69 +43,73 @@ export class NewsAddComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       this.id = params['id'];
       if (this.id) {
-        this.title = "编辑新闻"
-        this.getDetail()
+        this.title = '编辑新闻';
+        this.getDetail();
       }
     });
   }
   submitForm(): void {
     for (const i in this.validateForm.controls) {
-      this.validateForm.controls[i].markAsDirty();
-      this.validateForm.controls[i].updateValueAndValidity();
+      if (i) {
+        this.validateForm.controls[i].markAsDirty();
+        this.validateForm.controls[i].updateValueAndValidity();
+      }
     }
     if (this.validateForm.valid) {
       this.loading = true;
-      let data = of(this.validateForm.value)
+      const data = of(this.validateForm.value)
         .pipe(
           map(d => {
-            for (let i in d) {
-              d[i] = this.regExpService.replace('前后空格', d[i], '')
+            for (const i in d) {
+              if (i) {
+                d[i] = this.regExpService.replace('前后空格', d[i], '');
+              }
             }
             return d;
           })
-        )
+        );
       data.subscribe(d => {
-        d.state = 1102
+        d.state = 1102;
         if (this.id) {
-          this.edit(d)
+          this.edit(d);
         } else {
-          this.add(d)
+          this.add(d);
         }
-      })
+      });
     }
   }
   add(d) {
     this.newsService['add']({
       data: d
     })
-      .then(response => {
+      .subscribe(response => {
         this.loading = false;
         if (response.code === 200) {
-          this.router.navigate(['/admin/news'])
+          this.router.navigate(['/admin/news']);
         } else {
           this._message.create('error', response.msg, { nzDuration: 4000 });
         }
       });
   }
   edit(d) {
-    this.newsService['update']({
+    this.newsService.update({
       data: Object.assign({ id: this.id }, d)
     })
-      .then(response => {
+      .subscribe(response => {
         this.loading = false;
         if (response.code === 200) {
-          this.router.navigate(['/admin/news'])
+          this.router.navigate(['/admin/news']);
         } else {
           this._message.create('error', response.msg, { nzDuration: 4000 });
         }
       });
   }
   getDetail() {
-    this.newsService['getById']({
+    this.newsService.getById({
       params: { params2: this.id }
     })
-      .then(response => {
-        if (response.code == 200) {
+      .subscribe(response => {
+        if (response.code === 200) {
           this.validateForm = this.fb.group({
             content: [response.data.content, []],
             typeId: [response.data.typeId, []],
@@ -114,10 +118,10 @@ export class NewsAddComponent implements OnInit {
             title: [response.data.title, [Validators.required]]
           });
         }
-      })
+      });
   }
   getVpsList(num?) {
-    this.newsTypeService['list']({
+    this.newsTypeService.list({
       params: {
         params2: 1,
         params3: 1000
@@ -125,10 +129,10 @@ export class NewsAddComponent implements OnInit {
       data: {
       }
     })
-      .then(response => {
-        if (response.code == 200) {
-          this.vpsList = response.data.pageData
+      .subscribe(response => {
+        if (response.code === 200) {
+          this.vpsList = response.data.pageData;
         }
-      })
+      });
   }
 }

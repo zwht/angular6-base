@@ -1,23 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { VpsService } from '../../../share/restServices/VpsService';
-import { VpnService } from '../../../share/restServices/VpnService';
-import { NewsTypeService } from '../../../share/restServices/NewsTypeService';
+import { VpsService } from '../../../share/restServices/vps.service';
+import { VpnService } from '../../../share/restServices/vpn.service';
+import { NewsTypeService } from '../../../share/restServices/news-type.service';
 
 @Component({
   selector: 'app-new-type',
   templateUrl: './news-type.component.html',
-  styleUrls: ['../../common/style/list.less','./news-type.component.less']
+  styleUrls: ['../../common/style/list.less', './news-type.component.less']
 })
 export class NewsTypeComponent implements OnInit {
-  pageSize = 10
-  pageNum = 1
-  totalCount = null
-  list = []
+  pageSize = 10;
+  pageNum = 1;
+  totalCount = null;
+  list = [];
   search = {
     name: '',
     id: ''
-  }
+  };
 
   constructor(
     private router: Router,
@@ -25,11 +25,11 @@ export class NewsTypeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getList()
+    this.getList();
   }
 
   getList(num?) {
-    this.pageNum = num ? num : 1
+    this.pageNum = num ? num : 1;
     this.newsTypeService['list']({
       params: {
         params2: this.pageNum,
@@ -40,26 +40,26 @@ export class NewsTypeComponent implements OnInit {
         id: this.search.id
       }
     })
-      .then(response => {
-        if (response.code == 200) {
+      .subscribe(response => {
+        if (response.code === 200) {
           this.list = response.data.pageData;
           this.totalCount = response.data.totalCount;
         }
-      })
+      });
   }
 
   del(id) {
-    this.newsTypeService['del']({
+    this.newsTypeService.del({
       params: {
         params2: id
       },
       data: {}
     })
-      .then(response => {
-        if (response.code == 200) {
-          this.getList()
+      .subscribe(response => {
+        if (response.code === 200) {
+          this.getList();
         }
-      })
+      });
   }
   goAdd(id) {
     this.router.navigate(['/admin/news/type/add'], { queryParams: { id: id } });

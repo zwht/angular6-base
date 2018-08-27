@@ -1,9 +1,7 @@
 import { Component, Input, ViewChild, ElementRef, forwardRef } from '@angular/core';
-import { FileService } from '../../restServices/FileService';
+import { FileService } from '../../restServices/file.service';
 import { NzModalService } from 'ng-zorro-antd';
 import { CropperImgModalComponent } from '../cropper-img-modal/cropper-img-modal.component';
-import { HttpClient, HttpRequest, HttpResponse } from '@angular/common/http';
-import { filter } from 'rxjs/operators';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
 @Component({
@@ -36,9 +34,18 @@ export class CropperImgComponent implements ControlValueAccessor {
   cImg: ElementRef;
 
   constructor(private fileService: FileService,
-    private http: HttpClient,
     private nzModalService: NzModalService) {
+  }
+  ngOnInit() {
+    if (this.boxStyle) {
+      this.boxStyle.width = this.boxStyle.width ? this.boxStyle.width : 200;
+      this.boxStyle.height = this.boxStyle.height ? this.boxStyle.height : 200;
+    } else {
+      this.boxStyle = { width: 200, height: 200 };
+    }
+    this.contentDialogStyle = { width: this.boxStyle.width + 'px', height: this.boxStyle.height + 'px' };
 
+    this.cropperInit();
   }
 
 
@@ -56,23 +63,9 @@ export class CropperImgComponent implements ControlValueAccessor {
     this.onModelTouched = fn;
   }
 
-  ngOnInit() {
-    if (this.boxStyle) {
-      this.boxStyle.width = this.boxStyle.width ? this.boxStyle.width : 200;
-      this.boxStyle.height = this.boxStyle.height ? this.boxStyle.height : 200;
-    } else {
-      this.boxStyle = { width: 200, height: 200 };
-    }
-    this.contentDialogStyle = { width: this.boxStyle.width + 'px', height: this.boxStyle.height + 'px' };
-
-    this.cropperInit();
-  }
-
   cropperInit() {
-
     // Import image
     const URL = window.URL;
-
     if (URL) {
       const that = this;
       this.inputImage.nativeElement.onchange = function () {
@@ -103,23 +96,19 @@ export class CropperImgComponent implements ControlValueAccessor {
   }
   save(cropper) {
     this.loading = true;
-    const that = this;
     const result = cropper['getCroppedCanvas']({ width: this.boxStyle.width, height: this.boxStyle.height });
     result.toBlob((blob) => {
       const formData = new FormData();
-      formData.append('file', blob, that.fileName);
-      const req = new HttpRequest('POST',
-        '/v1/file/upload',
-        formData, {});
-      this.http.request(req).pipe(filter(e => e instanceof HttpResponse))
-        .subscribe((event: any) => {
-          const obj = event.body;
-          obj.url = that.model = obj.data;
-          this.onModelChange(obj.data);
-          that.inputImage.nativeElement.files = null;
-          that.dialog = false;
-          that.loading = false;
-        }, (err) => {
+      formData.append('file', blob, this.fileName);
+      this.fileService.add({
+        data: formData
+      })
+        .subscribe(response => {
+          this.model = response.data;
+          this.onModelChange(response.data);
+          this.inputImage.nativeElement.files = null;
+          this.dialog = false;
+          this.loading = false;
         });
     });
   }

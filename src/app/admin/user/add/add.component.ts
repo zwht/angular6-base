@@ -5,12 +5,12 @@ import {
   FormGroup,
   Validators
 } from '@angular/forms';
-import { UserService } from '../../../share/restServices/UserService';
+import { UserService } from '../../../share/restServices/user.service';
 import { NzMessageService } from '../../../../../node_modules/ng-zorro-antd';
 import { RegExpService } from '../../../share/services/reg-exp.service';
 import { CodeDataService } from '../../../share/services/code-data.service';
 import { Router } from '@angular/router';
-import { GroupService } from '../../../share/restServices/GroupService';
+import { GroupService } from '../../../share/restServices/group.service';
 
 @Component({
   selector: 'app-add',
@@ -97,7 +97,7 @@ export class AddComponent implements OnInit {
           parentId: this.validateForm.value.parentId
         }
       })
-        .then(response => {
+        .subscribe(response => {
           this.loading = false;
           if (response.code === 200) {
             this.checkOptionsOne.forEach(bbb => {
@@ -133,7 +133,7 @@ export class AddComponent implements OnInit {
     return miao;
   }
   getList() {
-    this.groupService['list']({
+    this.groupService.list({
       params: {
         params2: 1,
         params3: 1000
@@ -141,7 +141,7 @@ export class AddComponent implements OnInit {
       data: {
       }
     })
-      .then(response => {
+      .subscribe(response => {
         if (response.code === 200) {
           this.parentIdList = response.data.pageData;
         }

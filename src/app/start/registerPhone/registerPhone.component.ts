@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { UserService } from '../../share/restServices/UserService';
+import { UserService } from '../../share/restServices/user.service';
 import { NzMessageService } from 'ng-zorro-antd';
 import { RegExpService } from '../../share/services/reg-exp.service';
 import { Router } from '@angular/router';
@@ -63,11 +63,11 @@ export class RegisterPhoneComponent implements OnInit {
           })
         );
       data.subscribe(d => {
-        this.userService['registerPhone']({
+        this.userService.registerPhone({
           params: { captcha: this.validateForm.value.captcha },
           data: d
         })
-          .then(response => {
+          .subscribe(response => {
             this.loading = false;
             if (response.code === 200) {
               this.router.navigate(['/']);
@@ -104,13 +104,13 @@ export class RegisterPhoneComponent implements OnInit {
       return;
     }
     this.captchaLoading = true;
-    this.userService['getCaptchaPhone']({
+    this.userService.getCaptchaPhone({
       params: {
         phone: this.validateForm.value.phone
       },
       data: {}
     })
-      .then(response => {
+      .subscribe(response => {
         this.captchaLoading = false;
         if (response.code === 200) {
           this.setTi();

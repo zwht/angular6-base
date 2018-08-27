@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CodeService } from '../restServices/CodeService';
+import { CodeService } from '../restServices/code.service';
 import { SessionService } from './SessionService';
 
 @Injectable({
@@ -30,14 +30,14 @@ export class CodeDataService {
     }
   }
   getData() {
-    this.codeService['list']({
+    this.codeService.list({
       params: {
         params2: 1,
         params3: 1000
       },
       data: {}
     })
-      .then(response => {
+      .subscribe(response => {
         if (response.code === 200) {
           this.codeObjList = {};
           this.codeObj = {};

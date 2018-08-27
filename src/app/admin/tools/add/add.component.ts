@@ -5,7 +5,7 @@ import {
   FormGroup,
   Validators
 } from '@angular/forms';
-import { CodeService } from '../../../share/restServices/CodeService';
+import { CodeService } from '../../../share/restServices/code.service';
 import { NzMessageService } from 'ng-zorro-antd';
 import { RegExpService } from '../../../share/services/reg-exp.service';
 import { Router } from '@angular/router';
@@ -43,16 +43,16 @@ export class AddComponent implements OnInit {
     }
     if (this.validateForm.valid) {
       this.loading = true;
-      this.CodeService['add']({
+      this.CodeService.add({
         data: {
-          groups: this.regExpService.replace('前后空格',this.validateForm.value.groups, ''),
-          code: this.regExpService.replace('前后空格',this.validateForm.value.code, ''),
-          name: this.regExpService.replace('前后空格',this.validateForm.value.name, ''),
-          description: this.regExpService.replace('前后空格',this.validateForm.value.description, ''),
-          roles:'[1,2]'
+          groups: this.regExpService.replace('前后空格', this.validateForm.value.groups, ''),
+          code: this.regExpService.replace('前后空格', this.validateForm.value.code, ''),
+          name: this.regExpService.replace('前后空格', this.validateForm.value.name, ''),
+          description: this.regExpService.replace('前后空格', this.validateForm.value.description, ''),
+          roles: '[1,2]'
         }
       })
-        .then(response => {
+        .subscribe(response => {
           this.loading = false;
           if (response.code === 200) {
             this.router.navigate(['/admin/tools'])

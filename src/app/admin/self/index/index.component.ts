@@ -6,7 +6,7 @@ import {
   FormGroup,
   Validators
 } from '@angular/forms';
-import { UserService } from '../../../share/restServices/UserService';
+import { UserService } from '../../../share/restServices/user.service';
 import { NzMessageService } from '../../../../../node_modules/ng-zorro-antd';
 import { RegExpService } from '../../../share/services/reg-exp.service';
 import { CodeDataService } from '../../../share/services/code-data.service';
@@ -28,9 +28,7 @@ export class IndexComponent implements OnInit {
   phone = null;
   state = null;
   roles = [];
-  codeObj={}
-
-
+  codeObj = {};
 
   id = null;
   checkOptionsOne = [];
@@ -43,29 +41,29 @@ export class IndexComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.codeObj = this.codeDataService.codeObj
-    this.id = this.sessionService.getItem('id')
-    this.getById(this.id)
+    this.codeObj = this.codeDataService.codeObj;
+    this.id = this.sessionService.getItem('id');
+    this.getById(this.id);
   }
 
   getById(id) {
-    this.userService['getById']({
+    this.userService.getById({
       params: {
         params2: id
       },
       data: {}
     })
-      .then(response => {
-        if (response.code == 200) {
-        this.email = response.data.email
-        this.loginName = response.data.loginName
-        this.name = response.data.name
-        this.phone = response.data.phone
-        this.state = response.data.state
-          if (response.data.roles != "") {
-            this.roles = response.data.roles.split(',')
+      .subscribe(response => {
+        if (response.code === 200) {
+          this.email = response.data.email;
+          this.loginName = response.data.loginName;
+          this.name = response.data.name;
+          this.phone = response.data.phone;
+          this.state = response.data.state;
+          if (response.data.roles !== '') {
+            this.roles = response.data.roles.split(',');
           }
         }
-      })
+      });
   }
 }

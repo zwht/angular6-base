@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { UserService } from '../../share/restServices/UserService';
+import { UserService } from '../../share/restServices/user.service';
 import { NzMessageService } from 'ng-zorro-antd';
 import { RegExpService } from '../../share/services/reg-exp.service';
 import { Router } from '@angular/router';
 import { CodeDataService } from '../../share/services/code-data.service';
 import { SessionService } from '../../share/services/SessionService';
 import { of } from '../../../../node_modules/rxjs';
-import { map } from 'rxjs/operators'
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-register',
@@ -64,11 +64,11 @@ export class RegisterComponent implements OnInit {
           })
         );
       data.subscribe(d => {
-        this.userService['registerEmail']({
+        this.userService.registerEmail({
           params: { captcha: this.validateForm.value.captcha },
           data: d
         })
-          .then(response => {
+          .subscribe(response => {
             this.loading = false;
             if (response.code === 200) {
               this.router.navigate(['/']);
@@ -106,13 +106,13 @@ export class RegisterComponent implements OnInit {
       return;
     }
     this.captchaLoading = true;
-    this.userService['getCaptchaEmail']({
+    this.userService.getCaptchaEmail({
       params: {
         email: this.validateForm.value.email
       },
       data: {}
     })
-      .then(response => {
+      .subscribe(response => {
         this.captchaLoading = false;
         if (response.code === 200) {
           this.setTi();
@@ -132,7 +132,4 @@ export class RegisterComponent implements OnInit {
       this.timeK = 60;
     }
   }
-
-
-  
 }

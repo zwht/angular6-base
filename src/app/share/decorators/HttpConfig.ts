@@ -34,7 +34,7 @@ function setData(config, data) {
 }
 // 判断用户接口权限
 function getPermission(roles) {
-  if (roles) {
+  if (roles && roles.length) {
     const localRoles = sessionService.getItem('roles');
     if (!localRoles) {
       return false;

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserService } from '../../share/restServices/UserService';
+import { UserService } from '../../share/restServices/user.service';
 import { NzMessageService } from 'ng-zorro-antd';
 import { RegExpService } from '../../share/services/reg-exp.service';
 import { Router } from '@angular/router';
@@ -80,7 +80,7 @@ export class LoginComponent implements OnInit {
                     loginName: this.validateForm.value.userName.replace(this.regExpService.listObj['前后空格'], '')
                 }
             })
-                .then(response => {
+                .subscribe(response => {
                     this.loading = false;
                     if (response.code === 200) {
                         this.panduan2();
