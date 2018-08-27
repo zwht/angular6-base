@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../share/restServices/UserService';
 import { CodeDataService } from '../../../share/services/code-data.service';
-
+import { TestService } from '../../../share/restServices/test.service';
+import { filter } from 'rxjs/operators';
+import { HttpResponse } from 'selenium-webdriver/http';
 
 @Component({
   selector: 'app-index',
@@ -28,12 +30,26 @@ export class IndexComponent implements OnInit {
   list = [];
   constructor(
     private userService: UserService,
+    private test: TestService,
     private codeDataService: CodeDataService
   ) { }
 
   ngOnInit() {
     this.codeObj = this.codeDataService.codeObj;
     this.getList();
+
+    this.test.list({
+      params: {
+        params2: 1,
+        params3: 100
+      },
+      data: {
+        name: 9
+      }
+    })
+      .subscribe(data => {
+        debugger
+      });
   }
 
   getList(num?) {

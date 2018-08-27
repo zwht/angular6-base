@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit {
     ngOnInit(): void {
         this.panduan();
         this.codeDataService.getData();
+
     }
     panduan(): void {
         if (this.sessionService.getItem('remember') === 'true') {

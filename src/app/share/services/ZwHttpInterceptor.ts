@@ -47,19 +47,24 @@ export class ZwHttpInterceptor implements HttpInterceptor {
         key = true;
       }
     });
-    let authReq = req.clone({
-      setHeaders: {
-        Authorization: this.sessionService.getItem('token') || '',
-        'Content-Type': 'application/json; charset=utf-8'
-      }
-    });
-    if (key) {
+
+    let authReq = req;
+    if (!req.headers.get('Content-Type')) {
       authReq = req.clone({
         setHeaders: {
-          Authorization: this.sessionService.getItem('token') || ''
+          Authorization: this.sessionService.getItem('token') || '',
+          'Content-Type': 'application/json; charset=utf-8'
         }
       });
+      if (key) {
+        authReq = req.clone({
+          setHeaders: {
+            Authorization: this.sessionService.getItem('token') || ''
+          }
+        });
+      }
     }
+
     const started = Date.now();
     return next.handle(authReq)
       .pipe(
