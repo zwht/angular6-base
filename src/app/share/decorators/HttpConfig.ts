@@ -6,10 +6,11 @@ import { filter, map } from 'rxjs/operators';
 import { TestConfig } from '../../../config';
 
 const sessionService = new SessionService();
+const host = location.host; // localhost:9877
 // 设置url
 function setUrl(config, data, url) {
   const params = Object.assign({}, config.params, data.params);
-  let new_url = TestConfig.url + url, str = '';
+  let new_url = (host === 'localhost:9877' ? TestConfig.url : '') + url, str = '';
   const urlArr = new_url.split('/');
   for (const p in params) {
     if (urlArr.indexOf(':' + p) !== -1) {

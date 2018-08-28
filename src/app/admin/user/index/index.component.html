@@ -1,6 +1,4 @@
 <div class="list-box">
-
-
   <img [src]="'/v1/file/img'+fileUrl" alt="">
   <div class="search clear">
     <div>
@@ -35,7 +33,6 @@
       <button nz-button nzType="tianjia" routerLink="./add">添加用户</button>
     </div>
   </div>
-
   <div class="table-box">
     <nz-table #basicTable [nzData]="list" [nzFrontPagination]="false" [nzPageIndex]="pageNum" [nzTotal]="totalCount" [nzPageSize]="pageSize"
       (nzPageIndexChange)="getList()">

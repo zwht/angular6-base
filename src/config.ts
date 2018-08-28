@@ -1,4 +1,4 @@
 export const TestConfig = {
-  // url: 'http://localhost:4614'
-  url: ''
+  url: 'http://localhost:4614',
+  token: ''
 };
