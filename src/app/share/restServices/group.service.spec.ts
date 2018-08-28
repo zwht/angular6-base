@@ -1,11 +1,16 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { GroupService } from './group.service';
+import { HttpClient } from '@angular/common/http';
+import { ShareModule } from '../share.module';
 
 describe('GroupService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [GroupService]
+      providers: [GroupService, HttpClient],
+      imports: [
+        ShareModule
+      ]
     });
   });
 

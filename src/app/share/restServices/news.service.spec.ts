@@ -1,11 +1,16 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { NewsService } from './news.service';
+import { HttpClient } from '@angular/common/http';
+import { ShareModule } from '../share.module';
 
 describe('NewsService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [NewsService]
+      providers: [NewsService, HttpClient],
+      imports: [
+        ShareModule
+      ]
     });
   });
 

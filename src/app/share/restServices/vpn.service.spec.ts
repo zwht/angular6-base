@@ -1,11 +1,16 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { VpnService } from './vpn.service';
+import { HttpClient } from '@angular/common/http';
+import { ShareModule } from '../share.module';
 
 describe('VpnService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [VpnService]
+      providers: [VpnService, HttpClient],
+      imports: [
+        ShareModule
+      ]
     });
   });
 

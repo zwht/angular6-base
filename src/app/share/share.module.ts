@@ -13,6 +13,7 @@ import {ZwHttpInterceptorService} from './services/zw-http-interceptor.service';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { CropperImgComponent } from './components/cropper-img/cropper-img.component';
 import { CropperImgModalComponent } from './components/cropper-img-modal/cropper-img-modal.component';
+import { CodeNamePipe } from './pipe/code-name.pipe';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { CropperImgModalComponent } from './components/cropper-img-modal/cropper
     declarations: [
         CropperImgComponent,
         CropperImgModalComponent,
+        CodeNamePipe,
     ],
     exports: [
         CommonModule,
@@ -33,7 +35,8 @@ import { CropperImgModalComponent } from './components/cropper-img-modal/cropper
         ReactiveFormsModule,
         HttpClientModule,
         NgZorroAntdModule,
-        CropperImgComponent
+        CropperImgComponent,
+        CodeNamePipe
     ],
     providers: [
         {

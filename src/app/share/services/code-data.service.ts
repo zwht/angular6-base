@@ -66,4 +66,18 @@ export class CodeDataService {
         }
       });
   }
+  getGroup(group) {
+    if (this.codeObjList[group]) {
+      return this.codeObjList[group];
+    } else {
+      return [];
+    }
+  }
+  getName(key) {
+    let name = this.codeObj[key];
+    if (!name) {
+      name = key;
+    }
+    return name;
+  }
 }

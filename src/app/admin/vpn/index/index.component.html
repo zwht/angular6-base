@@ -46,7 +46,7 @@
           <td>{{data.createTime | date :'yyyy-MM-dd hh:mm:ss'}}</td>
           <td>{{data.lockTime | date :'yyyy-MM-dd hh:mm:ss'}}</td>
           <td>{{data.vpsId}}</td>
-          <td>{{data.state==2001?"空闲":"使用中"}}</td>
+          <td>{{data.state | codeName}}</td>
           <td>
             <button nz-button (click)="goAdd(data.id)">编辑</button>
             &nbsp;&nbsp;

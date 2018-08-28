@@ -22,8 +22,4 @@ describe('CodeDataService', () => {
   it('should be created', inject([CodeDataService], (service: CodeDataService) => {
     expect(service).toBeTruthy();
   }));
-
-  it('获取code数据', async(inject([CodeDataService], (service: CodeDataService) => {
-    expect(service.codeList.length).toBeGreaterThan(0);
-  })));
 });

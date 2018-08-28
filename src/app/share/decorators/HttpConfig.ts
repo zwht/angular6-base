@@ -3,12 +3,13 @@ import { SessionService } from '../services/session.service';
 import { HttpClient, HttpRequest, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
+import { TestConfig } from '../../../config';
 
 const sessionService = new SessionService();
 // 设置url
 function setUrl(config, data, url) {
   const params = Object.assign({}, config.params, data.params);
-  let new_url = url, str = '';
+  let new_url = TestConfig.url + url, str = '';
   const urlArr = new_url.split('/');
   for (const p in params) {
     if (urlArr.indexOf(':' + p) !== -1) {
