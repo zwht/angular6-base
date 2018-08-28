@@ -4,7 +4,7 @@ import { ShareModule } from '../share/share.module';
 
 
 import { MenuComponent } from './common/components/menu/menu.component';
-import { PermissionGuard } from '../share/services/PermissionGuard';
+import { PermissionGuardService } from '../share/services/permission-guard.service';
 
 export const routes: Routes = [
   {
@@ -16,22 +16,22 @@ export const routes: Routes = [
         loadChildren: './vpn/vpn.module#VpnModule',
         data: {
           name: 'vpn',
-          //hideChild: true,
+          // hideChild: true,
           roles: [1001],
           menu: true
         },
-        canActivate: [PermissionGuard]
+        canActivate: [PermissionGuardService]
       },
       {
         path: 'user',
         loadChildren: './user/user.module#UserModule',
         data: {
           name: '用户管理',
-          //hideChild: true,
+          // hideChild: true,
           roles: [1001],
           menu: true
         },
-        canActivate: [PermissionGuard]
+        canActivate: [PermissionGuardService]
       },
       {
         path: 'tools',
@@ -41,7 +41,7 @@ export const routes: Routes = [
           roles: [1001],
           menu: true
         },
-        canActivate: [PermissionGuard]
+        canActivate: [PermissionGuardService]
       },
       {
         path: 'news',
@@ -51,7 +51,7 @@ export const routes: Routes = [
           roles: [1001],
           menu: true
         },
-        canActivate: [PermissionGuard]
+        canActivate: [PermissionGuardService]
       },
       {
         path: 'self',

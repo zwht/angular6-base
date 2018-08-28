@@ -5,7 +5,7 @@ import { NzMessageService } from 'ng-zorro-antd';
 import { RegExpService } from '../../share/services/reg-exp.service';
 import { Router } from '@angular/router';
 import { CodeDataService } from '../../share/services/code-data.service';
-import { SessionService } from '../../share/services/SessionService';
+import { SessionService } from '../../share/services/session.service';
 
 @Component({
     selector: 'app-login',
@@ -89,15 +89,17 @@ export class LoginComponent implements OnInit {
                         this.sessionService.setItem('hardImg', response.data.img, '2h');
                         this.sessionService.setItem('roles', response.data.roles, '2h');
                         this.sessionService.setItem('id', response.data.id, '2h');
-                        if (response.data.roles.indexOf('1001') !== -1) {
-                            this.router.navigateByUrl('/admin/user');
-                        } else if (response.data.roles.indexOf('1002') !== -1) {
-                            this.router.navigateByUrl('/admin/self');
-                        } else if (response.data.roles.indexOf('1003') !== -1) {
-                            this.router.navigateByUrl('/admin/self');
-                        } else {
-                            this.router.navigateByUrl('/admin/self');
-                        }
+                        setTimeout(() => {
+                            if (response.data.roles.indexOf('1001') !== -1) {
+                                this.router.navigateByUrl('/admin/user');
+                            } else if (response.data.roles.indexOf('1002') !== -1) {
+                                this.router.navigateByUrl('/admin/self');
+                            } else if (response.data.roles.indexOf('1003') !== -1) {
+                                this.router.navigateByUrl('/admin/self');
+                            } else {
+                                this.router.navigateByUrl('/admin/self');
+                            }
+                        }, 200);
                     } else {
                         this._message.create('error', response.msg, { nzDuration: 4000 });
                     }

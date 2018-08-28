@@ -12,7 +12,7 @@ import { RegExpService } from '../../../share/services/reg-exp.service';
 import { CodeDataService } from '../../../share/services/code-data.service';
 import { forEach } from '@angular/router/src/utils/collection';
 import { Router } from '@angular/router';
-import { SessionService } from '../../../share/services/SessionService';
+import { SessionService } from '../../../share/services/session.service';
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',

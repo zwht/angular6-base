@@ -9,7 +9,7 @@ import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
 registerLocaleData(zh);
 
-import {ZwHttpInterceptor} from './services/ZwHttpInterceptor';
+import {ZwHttpInterceptorService} from './services/zw-http-interceptor.service';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { CropperImgComponent } from './components/cropper-img/cropper-img.component';
 import { CropperImgModalComponent } from './components/cropper-img-modal/cropper-img-modal.component';
@@ -38,7 +38,7 @@ import { CropperImgModalComponent } from './components/cropper-img-modal/cropper
     providers: [
         {
             provide: HTTP_INTERCEPTORS,
-            useClass: ZwHttpInterceptor,
+            useClass: ZwHttpInterceptorService,
             multi: true,
         },
     ],

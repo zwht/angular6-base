@@ -3,7 +3,7 @@ import { TestBed, inject } from '@angular/core/testing';
 import { CodeDataService } from './code-data.service';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { CodeService } from '../restServices/code.service';
-import { SessionService } from './SessionService';
+import { SessionService } from './session.service';
 import { async } from 'q';
 
 describe('CodeDataService', () => {

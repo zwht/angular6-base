@@ -33,9 +33,10 @@ export class CropperImgComponent implements ControlValueAccessor {
   @ViewChild('cImg')
   cImg: ElementRef;
 
-  constructor(private fileService: FileService,
-    private nzModalService: NzModalService) {
-  }
+  constructor(
+    private fileService: FileService,
+    private nzModalService: NzModalService
+  ) {}
   ngOnInit() {
     if (this.boxStyle) {
       this.boxStyle.width = this.boxStyle.width ? this.boxStyle.width : 200;
@@ -44,7 +45,6 @@ export class CropperImgComponent implements ControlValueAccessor {
       this.boxStyle = { width: 200, height: 200 };
     }
     this.contentDialogStyle = { width: this.boxStyle.width + 'px', height: this.boxStyle.height + 'px' };
-
     this.cropperInit();
   }
 

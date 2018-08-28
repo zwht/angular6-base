@@ -1,5 +1,5 @@
 import { HttpData } from '../interfaces/httpData';
-import { SessionService } from '../../share/services/SessionService';
+import { SessionService } from '../services/session.service';
 import { HttpClient, HttpRequest, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';

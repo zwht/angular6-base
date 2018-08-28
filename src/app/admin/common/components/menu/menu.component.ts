@@ -4,7 +4,7 @@ import * as news from '../../../news/news.module';
 import * as user from '../../../user/user.module';
 import * as vpn from '../../../vpn/vpn.module';
 import { Router } from '@angular/router';
-import { SessionService } from '../../../../share/services/SessionService';
+import { SessionService } from '../../../../share/services/session.service';
 
 @Component({
     selector: 'app-menu',

@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ShareModule } from '../../share/share.module';
 
 import { IndexComponent } from './index/index.component';
-import { PermissionGuard } from '../../share/services/PermissionGuard';
+import { PermissionGuardService } from '../../share/services/permission-guard.service';
 import { VpsComponent } from './vps/vps.component';
 import { VpsAddComponent } from './vps-add/vps-add.component';
 import { VpnAddComponent } from './vpn-add/vpn-add.component';
@@ -17,7 +17,7 @@ export const routes: Routes = [
             roles: [1001],
             menu: true
         },
-        canActivate: [PermissionGuard]
+        canActivate: [PermissionGuardService]
     },
     {
         path: 'add',
@@ -26,7 +26,7 @@ export const routes: Routes = [
             name: 'vpn添加',
             roles: [1001]
         },
-        canActivate: [PermissionGuard]
+        canActivate: [PermissionGuardService]
     },
     {
         path: 'vps',
@@ -36,7 +36,7 @@ export const routes: Routes = [
             roles: [1001],
             menu: true
         },
-        canActivate: [PermissionGuard]
+        canActivate: [PermissionGuardService]
     },
     {
         path: 'vps/add',
@@ -45,7 +45,7 @@ export const routes: Routes = [
             name: 'vps添加',
             roles: [1001]
         },
-        canActivate: [PermissionGuard]
+        canActivate: [PermissionGuardService]
     }
 
 ];

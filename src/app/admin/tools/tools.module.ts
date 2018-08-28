@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ShareModule } from '../../share/share.module';
 
-import { PermissionGuard } from '../../share/services/PermissionGuard';
+import { PermissionGuardService } from '../../share/services/permission-guard.service';
 
 import { IndexComponent } from './index/index.component';
 import { AddComponent } from './add/add.component';
@@ -43,7 +43,7 @@ export const routes: Routes = [
             roles:[1001],
             menu: true
         },
-        canActivate:[PermissionGuard]
+        canActivate:[PermissionGuardService]
     },
     {
         path: 'group/add',
@@ -52,7 +52,7 @@ export const routes: Routes = [
             name: '编辑公司',
             roles:[1001]
         },
-        canActivate:[PermissionGuard]
+        canActivate:[PermissionGuardService]
     }
 ];
 

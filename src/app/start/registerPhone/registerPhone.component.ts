@@ -5,7 +5,7 @@ import { NzMessageService } from 'ng-zorro-antd';
 import { RegExpService } from '../../share/services/reg-exp.service';
 import { Router } from '@angular/router';
 import { CodeDataService } from '../../share/services/code-data.service';
-import { SessionService } from '../../share/services/SessionService';
+import { SessionService } from '../../share/services/session.service';
 import { of } from '../../../../node_modules/rxjs';
 import { map } from 'rxjs/operators';
 

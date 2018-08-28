@@ -5,7 +5,7 @@ import { ShareModule } from '../../share/share.module';
 import { IndexComponent } from './index/index.component';
 import { AddComponent } from './add/add.component';
 import { UpdateComponent } from './update/update.component';
-import { PermissionGuard } from '../../share/services/PermissionGuard';
+import { PermissionGuardService } from '../../share/services/permission-guard.service';
 import { VpnComponent } from './vpn/vpn.component';
 
 
@@ -18,7 +18,7 @@ export const routes: Routes = [
             roles: [1001],
             menu: true
         },
-        canActivate: [PermissionGuard]
+        canActivate: [PermissionGuardService]
     },
     {
         path: 'add',
@@ -27,7 +27,7 @@ export const routes: Routes = [
             name: '添加用户',
             roles: [1001]
         },
-        canActivate: [PermissionGuard]
+        canActivate: [PermissionGuardService]
     },
     {
         path: 'update/:id',
@@ -36,7 +36,7 @@ export const routes: Routes = [
             name: '编辑用户',
             roles: [1001]
         },
-        canActivate: [PermissionGuard]
+        canActivate: [PermissionGuardService]
     },
     {
         path: 'relation/:id',
@@ -45,7 +45,7 @@ export const routes: Routes = [
             name: 'vpn绑定',
             roles: [1001]
         },
-        canActivate: [PermissionGuard]
+        canActivate: [PermissionGuardService]
     },
 
 

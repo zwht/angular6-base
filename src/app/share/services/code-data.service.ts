@@ -1,6 +1,9 @@
+/**
+ * Created by zhaowei on 2018/7/12.
+ */
 import { Injectable } from '@angular/core';
 import { CodeService } from '../restServices/code.service';
-import { SessionService } from './SessionService';
+import { SessionService } from './session.service';
 
 @Injectable({
   providedIn: 'root'
