@@ -13,7 +13,7 @@
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">E-mail</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
-        <input nz-input formControlName="email" id="email">
+        <input appTrim nz-input formControlName="email" id="email">
         <nz-form-explain *ngIf="validateForm.get('email').dirty && validateForm.get('email').errors">输入正确email!</nz-form-explain>
       </nz-form-control>
     </nz-form-item>
@@ -22,7 +22,7 @@
       <nz-form-control [nzSm]="14" [nzXs]="24">
         <div nz-row [nzGutter]="8">
           <div nz-col [nzSpan]="12">
-            <input nz-input formControlName="captcha" id="captcha">
+            <input appTrim nz-input formControlName="captcha" id="captcha">
           </div>
           <div nz-col [nzSpan]="12">
             <button nz-button [nzLoading]="captchaLoading" [disabled]="timeK!=60" (click)="getCaptcha($event)">{{timeK==60?'获取验证码':'还有'+timeK+'s可重发'}}</button>
@@ -35,14 +35,14 @@
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="password" nzRequired>密码</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
-        <input nz-input type="password" id="password" formControlName="password" (ngModelChange)="updateConfirmValidator()">
+        <input appTrim nz-input type="password" id="password" formControlName="password" (ngModelChange)="updateConfirmValidator()">
         <nz-form-explain *ngIf="validateForm.get('password').dirty && validateForm.get('password').errors">请输入密码!</nz-form-explain>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="checkPassword" nzRequired>确认密码</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
-        <input nz-input type="password" formControlName="checkPassword" id="checkPassword">
+        <input appTrim nz-input type="password" formControlName="checkPassword" id="checkPassword">
         <nz-form-explain *ngIf="validateForm.get('checkPassword').dirty && validateForm.get('checkPassword').errors">
           <ng-container *ngIf="validateForm.get('checkPassword').hasError('required')">
             请确认您的密码!
@@ -60,7 +60,7 @@
         </span>
       </nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
-        <input nz-input id="loginName" formControlName="loginName">
+        <input appTrim nz-input id="loginName" formControlName="loginName">
         <nz-form-explain *ngIf="validateForm.get('loginName').dirty && validateForm.get('loginName').errors">请输入你的昵称!</nz-form-explain>
       </nz-form-control>
     </nz-form-item>

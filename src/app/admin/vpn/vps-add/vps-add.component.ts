@@ -59,8 +59,6 @@ export class VpsAddComponent implements OnInit {
             for (const i in d) {
               if (i === 'overdueTime') {
                 d[i] = new Date(d[i]).getTime();
-              } else {
-                d[i] = this.regExpService.replace('前后空格', d[i], '');
               }
             }
             return d;

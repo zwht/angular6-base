@@ -3,11 +3,11 @@
     <div>
       <div class="chaxun">
         <span>姓名</span>
-        <input nz-input placeholder="请输入姓名" [(ngModel)]="name" (keyup.enter)="buchaxun(name,ID)">
+        <input appTrim nz-input placeholder="请输入姓名" [(ngModel)]="name" (keyup.enter)="buchaxun(name,ID)">
       </div>
       <div class="chaxun">
         <span>ID</span>
-        <input nz-input placeholder="请输入ID" [(ngModel)]="ID" (keyup.enter)="buchaxun(name,ID)">
+        <input appTrim nz-input placeholder="请输入ID" [(ngModel)]="ID" (keyup.enter)="buchaxun(name,ID)">
       </div>
       <div class="chaxun">
         <button nz-button nzType="chaxun" (click)="buchaxun(name,ID)">查询</button>

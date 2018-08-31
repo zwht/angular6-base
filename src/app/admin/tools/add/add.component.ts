@@ -45,10 +45,10 @@ export class AddComponent implements OnInit {
       this.loading = true;
       this.CodeService.add({
         data: {
-          groups: this.regExpService.replace('前后空格', this.validateForm.value.groups, ''),
-          code: this.regExpService.replace('前后空格', this.validateForm.value.code, ''),
-          name: this.regExpService.replace('前后空格', this.validateForm.value.name, ''),
-          description: this.regExpService.replace('前后空格', this.validateForm.value.description, ''),
+          groups: this.regExpService,
+          code: this.regExpService,
+          name: this.regExpService,
+          description: this.regExpService,
           roles: '[1,2]'
         }
       })

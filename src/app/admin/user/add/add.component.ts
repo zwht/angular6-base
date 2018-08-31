@@ -87,11 +87,11 @@ export class AddComponent implements OnInit {
       });
       this.userService['add']({
         data: {
-          loginName: this.validateForm.value.loginName.replace(this.regExpService.listObj['前后空格'], ''),
-          name: this.validateForm.value.name.replace(this.regExpService.listObj['前后空格'], ''),
-          password: btoa(encodeURIComponent(this.validateForm.value.password.replace(this.regExpService.listObj['前后空格'], ''))),
-          phone: this.validateForm.value.phone.replace(this.regExpService.listObj['前后空格'], ''),
-          email: this.validateForm.value.email.replace(this.regExpService.listObj['前后空格'], ''),
+          loginName: this.validateForm.value.loginName,
+          name: this.validateForm.value.name,
+          password: btoa(encodeURIComponent(this.validateForm.value.password)),
+          phone: this.validateForm.value.phone,
+          email: this.validateForm.value.email,
           roles: this.setRoles(roles),
           img: this.validateForm.value.img,
           parentId: this.validateForm.value.parentId

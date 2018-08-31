@@ -60,11 +60,6 @@ export class VpnAddComponent implements OnInit {
       const data = of(this.validateForm.value)
         .pipe(
           map(d => {
-            for (const i in d) {
-              if (i) {
-                d[i] = this.regExpService.replace('前后空格', d[i], '');
-              }
-            }
             return d;
           })
         );

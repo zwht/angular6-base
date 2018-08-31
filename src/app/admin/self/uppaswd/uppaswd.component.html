@@ -22,7 +22,7 @@
         <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="ypassword" nzRequired>原密码</nz-form-label>
           <nz-form-control [nzSm]="14" [nzXs]="24">
-            <input nz-input type="password" id="ypassword" formControlName="ypassword">
+            <input appTrim nz-input type="password" id="ypassword" formControlName="ypassword">
             <nz-form-explain *ngIf="validateForm.get('ypassword').dirty && validateForm.get('ypassword').errors">Please input your ypassword!</nz-form-explain>
           </nz-form-control>
         </nz-form-item>
@@ -30,7 +30,7 @@
         <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="password" nzRequired>新密码</nz-form-label>
           <nz-form-control [nzSm]="14" [nzXs]="24">
-            <input nz-input type="password" id="password" formControlName="password" (ngModelChange)="updateConfirmValidator()">
+            <input appTrim nz-input type="password" id="password" formControlName="password" (ngModelChange)="updateConfirmValidator()">
             <nz-form-explain *ngIf="validateForm.get('password').dirty && validateForm.get('password').errors">Please input your password!</nz-form-explain>
           </nz-form-control>
         </nz-form-item>
@@ -38,7 +38,7 @@
         <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="checkPassword" nzRequired>重复新密码</nz-form-label>
           <nz-form-control [nzSm]="14" [nzXs]="24">
-            <input nz-input type="password" formControlName="checkPassword" id="checkPassword">
+            <input appTrim nz-input type="password" formControlName="checkPassword" id="checkPassword">
             <nz-form-explain *ngIf="validateForm.get('checkPassword').dirty && validateForm.get('checkPassword').errors">
               <ng-container *ngIf="validateForm.get('checkPassword').hasError('required')">
                 Please confirm your password!

@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
             } else {
                 this.sessionService.setItem('loginKey', this.validateForm.value.userName);
                 this.sessionService.setItem('password',
-                    btoa(encodeURIComponent(this.validateForm.value.password.replace(this.regExpService.listObj['前后空格'], ''))));
+                    btoa(encodeURIComponent(this.validateForm.value.password)));
             }
         }
         this.sessionService.setItem('loginKey', this.validateForm.value.userName);
@@ -77,9 +77,8 @@ export class LoginComponent implements OnInit {
             this.loading = true;
             this.userService['login']({
                 data: {
-                    password: this.panduan1 ? btoa(encodeURIComponent(this.validateForm.value.password.replace(
-                        this.regExpService.listObj['前后空格'], ''))) : this.validateForm.value.password,
-                    loginName: this.validateForm.value.userName.replace(this.regExpService.listObj['前后空格'], '')
+                    password: this.panduan1 ? btoa(encodeURIComponent(this.validateForm.value.password)) : this.validateForm.value.password,
+                    loginName: this.validateForm.value.userName
                 }
             })
                 .subscribe(response => {

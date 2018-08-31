@@ -3,7 +3,7 @@
     <p>点击更换图片</p>
     <img  [src]="'/v1/file/img/'+model" alt="">
   </div>
-  <input #inputImage  type="file" accept="image/*" style="display: none;"/>
+  <input appTrim #inputImage  type="file" accept="image/*" style="display: none;"/>
   <div *ngIf="!model" >
     <button (click)="showDialog()" nz-button nzType="primary">选择图片</button>
   </div>

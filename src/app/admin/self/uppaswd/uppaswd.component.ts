@@ -62,8 +62,8 @@ export class UppaswdComponent implements OnInit {
       this.loading = true;
       this.userService['updatePassword']({
         params: {
-          oldPassword: btoa(encodeURIComponent(this.validateForm.value.ypassword.replace(this.regExpService.listObj['前后空格'], ''))),
-          password: btoa(encodeURIComponent(this.validateForm.value.password.replace(this.regExpService.listObj['前后空格'], ''))),
+          oldPassword: btoa(encodeURIComponent(this.validateForm.value.ypassword)),
+          password: btoa(encodeURIComponent(this.validateForm.value.password)),
         },
         data: {}
       })

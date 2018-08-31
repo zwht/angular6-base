@@ -46,15 +46,11 @@ export class RegisterComponent implements OnInit {
     }
     if (this.validateForm.valid) {
       this.loading = true;
-
       const data = of(this.validateForm.value)
         .pipe(
           map(d => {
             for (const i in d) {
               if (i) {
-                if (d[i] && typeof (d[i]) === 'string') {
-                  d[i] = this.regExpService.replace('前后空格', d[i], '');
-                }
                 if (i === 'password') {
                   d[i] = btoa(encodeURIComponent(d[i]));
                 }
