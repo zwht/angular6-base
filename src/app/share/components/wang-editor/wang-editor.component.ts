@@ -1,7 +1,7 @@
 import { Component, Input, ViewChild, ElementRef, forwardRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-// import as * a from 'wangeditor';
-let E = require('wangeditor');
+declare var require: any;
+const E = require('wangeditor');
 @Component({
   selector: 'app-wang-editor',
   templateUrl: './wang-editor.component.html',
