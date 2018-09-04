@@ -7,17 +7,4 @@
   <div *ngIf="!model" >
     <button (click)="showDialog()" nz-button nzType="primary">选择图片</button>
   </div>
-
-  <!--<nz-modal [nzVisible]="dialog" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter" (nzOnCancel)="handleCancel($event)">
-    <ng-template #modalTitle>
-      裁剪上传
-    </ng-template>
-    <ng-template #modalContent>
-
-      <img style="width: 100%;" #image src="./assets/images/sky-bg.jpg">
-    </ng-template>
-    <ng-template #modalFooter>
-      <button (click)="save()" nz-button nzType="primary">保存</button>
-    </ng-template>
-  </nz-modal>-->
 </div>

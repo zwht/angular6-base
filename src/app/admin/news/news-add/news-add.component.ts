@@ -20,6 +20,12 @@ export class NewsAddComponent implements OnInit {
   id;
   title = '添加新闻';
   vpsList = [];
+
+  searchOptions = [
+    { value: 'jack', label: '杰克' },
+    { value: 'lucy', label: '露西' },
+    { value: 'tom', label: '汤姆' }
+  ];
   constructor(
     private activatedRoute: ActivatedRoute,
     private _message: NzMessageService,
@@ -37,7 +43,7 @@ export class NewsAddComponent implements OnInit {
       typeId: [null, []],
       content: [null, []],
       abstract: [null, []],
-      labels: [null, []],
+      labels: [[], []],
       title: [null, [Validators.required]]
     });
     this.activatedRoute.queryParams.subscribe(params => {
@@ -57,9 +63,15 @@ export class NewsAddComponent implements OnInit {
     }
     if (this.validateForm.valid) {
       this.loading = true;
+
       const data = of(this.validateForm.value)
         .pipe(
           map(d => {
+            for (const item in d) {
+              if (item === 'labels') {
+                d['labels'] = d['labels'].join(',');
+              }
+            }
             return d;
           })
         );
@@ -109,7 +121,7 @@ export class NewsAddComponent implements OnInit {
             content: [response.data.content, []],
             typeId: [response.data.typeId, []],
             abstract: [response.data.abstract, []],
-            labels: [response.data.labels, []],
+            labels: [response.data.labels.split(','), []],
             title: [response.data.title, [Validators.required]]
           });
         }

@@ -1,10 +1,14 @@
 .news-add-cpt{
-  .form-box{
+  .form-box{ position: relative;
     /deep/ form {
       nz-form-item{
         nz-form-label{ display: inline;}
         nz-form-control{ display: inline-block; min-width: 120px;}
       }
     }
+    /deep/.w-e-menu,/deep/.w-e-text-container{ z-index: 99 !important;}
+  }
+  .saveBtn{ position: absolute; right: 20px; top:20px; z-index: 1999;
+    button{ margin: 0 10px;}
   }
 }

@@ -26,12 +26,8 @@ export class CropperImgComponent implements ControlValueAccessor {
   @Input()
   boxStyle;
 
-  @ViewChild('image')
-  image: ElementRef;
   @ViewChild('inputImage')
   inputImage: ElementRef;
-  @ViewChild('cImg')
-  cImg: ElementRef;
 
   constructor(
     private fileService: FileService,
