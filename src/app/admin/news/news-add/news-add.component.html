@@ -13,57 +13,73 @@
   </div>
   <div class="form-box">
     <div class="saveBtn">
-        <button nz-button nzType="primary" (click)="submitForm()">保存</button>
-        <button nz-button nzType="default" (click)="submitForm()">保存并且发布</button>
+      <button nz-button nzType="primary" (click)="submitForm()">保存</button>
+      <button nz-button nzType="default" (click)="submitForm()">保存并且发布</button>
     </div>
     <form nz-form [formGroup]="validateForm">
-      <nz-form-item>
-        <nz-form-label nzFor="typeId" nzRequired>新闻类型</nz-form-label>
-        <nz-form-control>
-          <nz-select id="typeId" formControlName="typeId" placeholder="typeId" nzAllowClear>
-            <nz-option *ngFor="let item of vpsList" [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
-          </nz-select>
-          <nz-form-explain *ngIf="validateForm.get('typeId').dirty && validateForm.get('typeId').errors">Please input id!</nz-form-explain>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label nzFor="title" nzRequired>标题</nz-form-label>
-        <nz-form-control>
-          <input style="width:1100px;" appTrim nz-input id="title" formControlName="title" placeholder="title">
-          <nz-form-explain *ngIf="validateForm.get('title').dirty && validateForm.get('title').errors">填写分组</nz-form-explain>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label nzFor="title" nzRequired>url</nz-form-label>
-        <nz-form-control>
-          <input style="width:1100px;" appTrim nz-input id="urlEn" formControlName="urlEn" placeholder="urlEn">
-          <nz-form-explain *ngIf="validateForm.get('urlEn').dirty && validateForm.get('urlEn').errors">填写分组</nz-form-explain>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label nzFor="abstract" nzRequired>摘要</nz-form-label>
-        <nz-form-control>
-          <input nzType="textarea" style="width:1100px;" appTrim nz-input id="abstract" formControlName="abstract" placeholder="abstract">
-          <nz-form-explain *ngIf="validateForm.get('abstract').dirty && validateForm.get('abstract').errors">填写分组</nz-form-explain>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label nzFor="labels" nzRequired>标签</nz-form-label>
-        <nz-form-control>
-          <nz-select nzMode="tags" style="width: 1100px;" nzPlaceHolder="标签" id="labels" formControlName="labels">
-            <nz-option *ngFor="let option of searchOptions" [nzLabel]="option.label" [nzValue]="option.value">
-            </nz-option>
-          </nz-select>
-          <nz-form-explain *ngIf="validateForm.get('labels').dirty && validateForm.get('labels').errors">填写分组</nz-form-explain>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label style="vertical-align:top;" nzFor="content" nzRequired>内容</nz-form-label>
-        <nz-form-control style="width:1100px; vertical-align:top;">
-          <app-wang-editor id="content" formControlName="content"></app-wang-editor>
-          <nz-form-explain *ngIf="validateForm.get('content').dirty && validateForm.get('content').errors">填写分组</nz-form-explain>
-        </nz-form-control>
-      </nz-form-item>
+      <div nz-row>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzFor="typeId" nzRequired>新闻类型</nz-form-label>
+            <nz-form-control>
+              <nz-select id="typeId" formControlName="typeId" placeholder="typeId" nzAllowClear>
+                <nz-option *ngFor="let item of vpsList" [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
+              </nz-select>
+              <nz-form-explain *ngIf="validateForm.get('typeId').dirty && validateForm.get('typeId').errors">Please
+                input id!</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzFor="urlEn" nzRequired>url</nz-form-label>
+            <nz-form-control>
+              <input style="width:120px;" appTrim nz-input id="urlEn" formControlName="urlEn" placeholder="urlEn">
+              <nz-form-explain *ngIf="validateForm.get('urlEn').dirty && validateForm.get('urlEn').errors">填写分组</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzFor="title" nzRequired>标题</nz-form-label>
+            <nz-form-control>
+              <input style="width:400px;" appTrim nz-input id="title" formControlName="title" placeholder="title">
+              <nz-form-explain *ngIf="validateForm.get('title').dirty && validateForm.get('title').errors">填写分组</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzFor="abstract" nzRequired>摘要</nz-form-label>
+            <nz-form-control>
+              <input nzType="textarea" style="width:1100px;" appTrim nz-input id="abstract" formControlName="abstract"
+                placeholder="abstract">
+              <nz-form-explain *ngIf="validateForm.get('abstract').dirty && validateForm.get('abstract').errors">填写分组</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzFor="labels" nzRequired>标签</nz-form-label>
+            <nz-form-control>
+              <nz-select nzMode="tags" style="width: 1100px;" nzPlaceHolder="标签" id="labels" formControlName="labels">
+                <nz-option *ngFor="let option of searchOptions" [nzLabel]="option.label" [nzValue]="option.value">
+                </nz-option>
+              </nz-select>
+              <nz-form-explain *ngIf="validateForm.get('labels').dirty && validateForm.get('labels').errors">填写分组</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label style="vertical-align:top;" nzFor="content" nzRequired>内容</nz-form-label>
+            <nz-form-control style="width:1100px; vertical-align:top;">
+              <app-wang-editor id="content" formControlName="content"></app-wang-editor>
+              <nz-form-explain *ngIf="validateForm.get('content').dirty && validateForm.get('content').errors">填写分组</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
     </form>
   </div>
 </div>
