@@ -37,7 +37,7 @@ export class IndexComponent implements OnInit {
         params3: this.pageSize
       },
       data: {
-        name: this.search.name,
+        title: this.search.name,
         id: this.search.id
       }
     })
