@@ -63,7 +63,6 @@ export class IndexComponent implements OnInit {
       });
   }
   goAdd(id) {
-    debugger
     this.router.navigate(['/admin/news/add'], { queryParams: { id: id } });
   }
 }
