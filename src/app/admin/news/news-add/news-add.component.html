@@ -34,6 +34,13 @@
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
+        <nz-form-label nzFor="title" nzRequired>url</nz-form-label>
+        <nz-form-control>
+          <input style="width:1100px;" appTrim nz-input id="urlEn" formControlName="urlEn" placeholder="urlEn">
+          <nz-form-explain *ngIf="validateForm.get('urlEn').dirty && validateForm.get('urlEn').errors">填写分组</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
         <nz-form-label nzFor="abstract" nzRequired>摘要</nz-form-label>
         <nz-form-control>
           <input nzType="textarea" style="width:1100px;" appTrim nz-input id="abstract" formControlName="abstract" placeholder="abstract">

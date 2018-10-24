@@ -44,6 +44,7 @@ export class NewsAddComponent implements OnInit {
       content: [null, []],
       abstract: [null, []],
       labels: [[], []],
+      urlEn: [null, [Validators.required]],
       title: [null, [Validators.required]]
     });
     this.activatedRoute.queryParams.subscribe(params => {
@@ -122,7 +123,8 @@ export class NewsAddComponent implements OnInit {
             typeId: [response.data.typeId, []],
             abstract: [response.data.abstract, []],
             labels: [response.data.labels.split(','), []],
-            title: [response.data.title, [Validators.required]]
+            title: [response.data.title, [Validators.required]],
+            urlEn: [response.data.urlEn, [Validators.required]],
           });
         }
       });
