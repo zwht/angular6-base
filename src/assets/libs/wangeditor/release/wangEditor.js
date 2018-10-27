@@ -781,7 +781,7 @@
         if (html == null) {
             return '';
         }
-        return html.replace(/</gm, '&lt;').replace(/>/gm, '&gt;').replace(/"/gm, '&quot;').replace(/(\r\n|\r|\n)/g, '<br/>');
+        return html.replace(/</gm, '&lt;').replace(/>/gm, '&gt;').replace(/"/gm, '&quot;');
     }
 
     // 返回百分比的格式
@@ -2025,10 +2025,10 @@
         _createPanel: function _createPanel(value, className) {
             var _this = this;
             // 设置编辑的时候select
-            var list = ['language-JavaScript',
-            'language-Markup', 'language-CSS', 
-            'language-Go', 'language-Less',
-            'language-SQL']
+            var list = ['language-javascript',
+            'language-html', 'language-css', 
+            'language-go', 'language-less',
+            'language-sql']
             var selectSrt = ''
             for (var i = 0; i < list.length; i++) {
                 if (className == list[i]) {
@@ -2038,7 +2038,9 @@
                 }
             }
             // value - 要编辑的内容
-            value = value || '';
+            if(value){
+                value = value.replace('<br/>','\n').replace('<br>','\n') || '';
+            }
             var type = !value ? 'new' : 'edit';
             var textId = getRandom('texxt');
             var btnId = getRandom('btn');
@@ -2088,7 +2090,7 @@
         // 插入代码
         _insertCode: function _insertCode(value, className) {
             var editor = this.editor;
-            editor.cmd.do('insertHTML', '<pre class="' + className + '"><code class="' + className + '">' + value + '</code></pre><p><br></p>');
+            editor.cmd.do('insertHTML', '<pre><code class="' + className + '">' + value + '</code></pre><p><br></p>');
         },
 
         // 更新代码
@@ -2098,8 +2100,6 @@
             if (!$selectionELem) {
                 return;
             }
-            var parent = $selectionELem.parent();
-            parent.attr('class', className)
             $selectionELem.attr('class', className);
             $selectionELem.html(value);
             editor.selection.restoreSelection();
