@@ -98,7 +98,7 @@ export class LoginComponent implements OnInit {
                             } else if (response.data.roles.indexOf('1003') !== -1) {
                                 this.router.navigateByUrl('/admin/self');
                             } else {
-                                this.router.navigateByUrl('/admin/self');
+                                this.router.navigateByUrl('/admin/news');
                             }
                         }, 200);
                     } else {
