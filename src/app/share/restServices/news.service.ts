@@ -20,7 +20,7 @@ export class NewsService {
     params: {
       params1: 'add'
     },
-    roles: [1001]
+    roles: [1001, 1004]
   })
   add(data: HttpData): Observable<any> {
     return data.observable;
@@ -44,7 +44,8 @@ export class NewsService {
     params: {
       params1: 'del'
     },
-    roles: []
+    roles: [1001, 1004]
+
   })
   del(data: HttpData): Observable<any> {
     return data.observable;
@@ -56,7 +57,7 @@ export class NewsService {
     params: {
       params1: 'update'
     },
-    roles: []
+    roles: [1001, 1004]
   })
   update(data: HttpData): Observable<any> {
     return data.observable;

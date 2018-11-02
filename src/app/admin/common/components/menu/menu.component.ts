@@ -30,7 +30,7 @@ export class MenuComponent implements OnInit {
             children: tools.routes
         },
         {
-            name: '文案管理',
+            name: '新闻管理',
             children: news.routes
         },
         {
@@ -77,7 +77,7 @@ export class MenuComponent implements OnInit {
                 let key = false;
                 item.data.roles.forEach(ob1 => {
                     userType.forEach(ob2 => {
-                        if (ob1 === ob2) {
+                        if (ob1 == ob2) {
                             key = true;
                         }
                     });
@@ -92,13 +92,13 @@ export class MenuComponent implements OnInit {
                     children: [], data: item.data
                 };
                 this.routesMenu.forEach(subItem => {
-                    if ((item.data as any).name === subItem['name']) {
+                    if ((item.data as any).name == subItem['name']) {
                         (subItem as any).children.forEach(subSubItem => {
                             if (subSubItem.data && subSubItem.data.menu) {
                                 if (subSubItem.data.roles && subSubItem.data.roles.length) {
                                     let key = false;
                                     subSubItem.data.roles.forEach(ob1 => {
-                                        if (ob1 === userType) {
+                                        if (ob1 == userType) {
                                             key = true;
                                         }
                                     });

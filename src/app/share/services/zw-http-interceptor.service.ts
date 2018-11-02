@@ -36,35 +36,19 @@ export class ZwHttpInterceptorService implements HttpInterceptor {
     'status.503': '服务不可用。服务器当前不可用(过载或故障)。'
   };
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
-    const fromList = [
-      'v1/file/upload',
-      'v1/file/uploadUserHeader'
-    ];
-    let key = false;
-    fromList.forEach(item => {
-      if (req.url.indexOf(item) !== -1) {
-        key = true;
-      }
-    });
-    let authReq = req;
-    // 如果请求不是通过装饰器函数过来的，添加headers设置
-    if (!req.headers.get('Content-Type')) {
-      authReq = req.clone({
-        setHeaders: {
-          Authorization: this.sessionService.getItem('token') || '',
-          'Content-Type': 'application/json; charset=utf-8'
-        }
-      });
-    }
-    if (key) {
-      authReq = req.clone({
-        setHeaders: {
-          Authorization: 'Bearer ' + localStorage.getItem('token') || ''
-        }
-      });
-    }
+
+    // let authReq = req;
+    // // 如果请求不是通过装饰器函数过来的，添加headers设置
+    // if (!req.headers.get('Content-Type')) {
+    //   authReq = req.clone({
+    //     setHeaders: {
+    //       Authorization: this.sessionService.getItem('token') || '',
+    //       'Content-Type': 'application/json; charset=utf-8'
+    //     }
+    //   });
+    // }
     const started = Date.now();
-    return next.handle(authReq)
+    return next.handle(req)
       .pipe(
         catchError((err, source) => {
           if (err.status <= 200 || err.status >= 300) {

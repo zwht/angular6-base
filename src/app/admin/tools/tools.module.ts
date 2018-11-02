@@ -40,19 +40,19 @@ export const routes: Routes = [
         component: GroupListComponent,
         data: {
             name: '公司管理',
-            roles:[1001],
+            roles: [1001],
             menu: true
         },
-        canActivate:[PermissionGuardService]
+        canActivate: [PermissionGuardService]
     },
     {
         path: 'group/add',
         component: GroupAddComponent,
         data: {
             name: '编辑公司',
-            roles:[1001]
+            roles: [1001]
         },
-        canActivate:[PermissionGuardService]
+        canActivate: [PermissionGuardService]
     }
 ];
 

@@ -20,7 +20,17 @@ export class NewsAddComponent implements OnInit {
   id;
   title = '添加新闻';
   vpsList = [];
-
+  sourceList = [
+    {
+      name: '原创'
+    },
+    {
+      name: '转载'
+    },
+    {
+      name: '翻译'
+    }
+  ];
   searchOptions = [
     { value: 'jack', label: '杰克' },
     { value: 'lucy', label: '露西' },
@@ -40,22 +50,17 @@ export class NewsAddComponent implements OnInit {
   ngOnInit(): void {
     this.getVpsList();
     this.validateForm = this.fb.group({
-      typeId: [null, []],
-      content: [null, []],
-      abstract: [null, []],
-      labels: [[], []],
+      typeId: [null, [Validators.required]],
+      content: [null, [Validators.required]],
+      abstract: [null, [Validators.required]],
+      labels: [[], [Validators.required]],
+      source: ['原创', [Validators.required]],
       urlEn: [null, [Validators.required]],
       title: [null, [Validators.required]]
     });
-    this.activatedRoute.queryParams.subscribe(params => {
-      this.id = params['id'];
-      if (this.id) {
-        this.title = '编辑新闻';
-        this.getDetail();
-      }
-    });
+
   }
-  submitForm(): void {
+  submitForm(type?): void {
     for (const i in this.validateForm.controls) {
       if (i) {
         this.validateForm.controls[i].markAsDirty();
@@ -77,7 +82,12 @@ export class NewsAddComponent implements OnInit {
           })
         );
       data.subscribe(d => {
-        d.state = 1102;
+        if (!d.state) {
+          d.state = 1102;
+        }
+        if (d.state < 1105 && type) {
+          d.state = 1105;
+        }
         if (this.id) {
           this.edit(d);
         } else {
@@ -93,7 +103,7 @@ export class NewsAddComponent implements OnInit {
       .subscribe(response => {
         this.loading = false;
         if (response.code === 200) {
-          this.router.navigate(['/admin/news']);
+          this._message.create('success', '保存成功', { nzDuration: 4000 });
         } else {
           this._message.create('error', response.msg, { nzDuration: 4000 });
         }
@@ -106,7 +116,7 @@ export class NewsAddComponent implements OnInit {
       .subscribe(response => {
         this.loading = false;
         if (response.code === 200) {
-          this.router.navigate(['/admin/news']);
+          this._message.create('success', '保存成功', { nzDuration: 4000 });
         } else {
           this._message.create('error', response.msg, { nzDuration: 4000 });
         }
@@ -118,14 +128,13 @@ export class NewsAddComponent implements OnInit {
     })
       .subscribe(response => {
         if (response.code === 200) {
-          this.validateForm = this.fb.group({
-            content: [response.data.content, []],
-            typeId: [response.data.typeId, []],
-            abstract: [response.data.abstract, []],
-            labels: [response.data.labels.split(','), []],
-            title: [response.data.title, [Validators.required]],
-            urlEn: [response.data.urlEn, [Validators.required]],
-          });
+          this.validateForm.controls['content'].setValue(response.data.content);
+          this.validateForm.controls['typeId'].setValue(response.data.typeId);
+          this.validateForm.controls['abstract'].setValue(response.data.abstract);
+          this.validateForm.controls['labels'].setValue(response.data.labels.split(','));
+          this.validateForm.controls['source'].setValue(response.data.source);
+          this.validateForm.controls['title'].setValue(response.data.title);
+          this.validateForm.controls['urlEn'].setValue(response.data.urlEn);
         }
       });
   }
@@ -140,7 +149,17 @@ export class NewsAddComponent implements OnInit {
     })
       .subscribe(response => {
         if (response.code === 200) {
-          this.vpsList = response.data.pageData;
+          if (response.data.pageData.length) {
+            this.vpsList = response.data.pageData;
+            this.validateForm.controls['typeId'].setValue(this.vpsList[0].id);
+          }
+          this.activatedRoute.queryParams.subscribe(params => {
+            this.id = params['id'];
+            if (this.id) {
+              this.title = '编辑新闻';
+              this.getDetail();
+            }
+          });
         }
       });
   }
