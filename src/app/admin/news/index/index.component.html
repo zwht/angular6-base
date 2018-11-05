@@ -42,7 +42,7 @@
           <td>{{data.typeName}}</td>
           <td>{{data.author}}</td>
           <td>
-            <nz-tag [nzColor]="'#2db7f5'">{{data.state|codeName}}</nz-tag>
+            <nz-tag [nzColor]="data.state!=1105?'green':'#2db7f5'">{{data.state|codeName}}</nz-tag>
           </td>
           <td>
             <button nz-button (click)="setState(data)">{{data.state!=1105?'发布':'下架'}}</button>
