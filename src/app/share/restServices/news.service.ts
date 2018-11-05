@@ -63,6 +63,18 @@ export class NewsService {
     return data.observable;
   }
 
+  // updateState
+  @HttpConfig({
+    method: 'get',
+    params: {
+      params1: 'updateState'
+    },
+    roles: [1001, 1004]
+  })
+  updateState(data: HttpData): Observable<any> {
+    return data.observable;
+  }
+
   // getById
   @HttpConfig({
     method: 'get',

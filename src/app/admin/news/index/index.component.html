@@ -23,8 +23,8 @@
     </div>
   </div>
   <div class="table-box">
-    <nz-table #basicTable [nzData]="list" [nzFrontPagination]="false" [nzPageIndex]="pageNum" [nzTotal]="totalCount" [nzPageSize]="pageSize"
-      (nzPageIndexChange)="getList($event)">
+    <nz-table #basicTable [nzData]="list" [nzFrontPagination]="false" [nzPageIndex]="pageNum" [nzTotal]="totalCount"
+      [nzPageSize]="pageSize" (nzPageIndexChange)="getList($event)">
       <thead>
         <tr>
           <th>序号</th>
@@ -41,8 +41,12 @@
           <td>{{data.title}}</td>
           <td>{{data.typeName}}</td>
           <td>{{data.author}}</td>
-          <td>{{data.state}}</td>
           <td>
+            <nz-tag [nzColor]="'#2db7f5'">{{data.state|codeName}}</nz-tag>
+          </td>
+          <td>
+            <button nz-button (click)="setState(data)">{{data.state!=1105?'发布':'下架'}}</button>
+            &nbsp;&nbsp;
             <button nz-button (click)="goAdd(data.id)">编辑</button>
             &nbsp;&nbsp;
             <button nz-popconfirm nz-button nzTitle="您确定要删除吗?" (nzOnConfirm)="del(data.id)" (nzOnCancel)="cancel()">删除</button>

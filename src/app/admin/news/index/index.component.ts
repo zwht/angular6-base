@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { VpsService } from '../../../share/restServices/vps.service';
-import { VpnService } from '../../../share/restServices/vpn.service';
-import { NewsTypeService } from '../../../share/restServices/news-type.service';
 import { NewsService } from '../../../share/restServices/news.service';
-
+import { CodeDataService } from '../../../share/services/code-data.service';
 @Component({
   selector: 'app-new-index',
   templateUrl: './index.component.html',
@@ -22,7 +19,8 @@ export class IndexComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private newsService: NewsService
+    private newsService: NewsService,
+    private codeDataService: CodeDataService
   ) { }
 
   ngOnInit() {
@@ -43,12 +41,31 @@ export class IndexComponent implements OnInit {
     })
       .subscribe(response => {
         if (response.code === 200) {
-          this.list = response.data.pageData;
+          this.list = response.data.pageData.map(item => {
+            item.stateName = this.codeDataService.getName(item.state);
+            return item;
+          });
           this.totalCount = response.data.totalCount;
         }
       });
   }
-
+  setState(item) {
+    let state = 1106;
+    if (item.state != 1105) {
+      state = 1105;
+    }
+    this.newsService.updateState({
+      params: {
+        id: item.id,
+        state
+      }
+    })
+      .subscribe(response => {
+        if (response.code === 200) {
+          this.getList();
+        }
+      });
+  }
   del(id) {
     this.newsService.del({
       params: {
