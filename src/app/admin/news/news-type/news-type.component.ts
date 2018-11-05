@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { VpsService } from '../../../share/restServices/vps.service';
-import { VpnService } from '../../../share/restServices/vpn.service';
 import { NewsTypeService } from '../../../share/restServices/news-type.service';
 
 @Component({

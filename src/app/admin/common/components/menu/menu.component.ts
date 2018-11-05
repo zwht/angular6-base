@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import * as tools from '../../../tools/tools.module';
 import * as news from '../../../news/news.module';
 import * as user from '../../../user/user.module';
-import * as vpn from '../../../vpn/vpn.module';
 import { Router } from '@angular/router';
 import { SessionService } from '../../../../share/services/session.service';
 
@@ -21,10 +20,6 @@ export class MenuComponent implements OnInit {
     userName = this.sessionService.getItem('userName');
     // 有子菜单的需要引入
     routesMenu = [
-        {
-            name: 'vpn',
-            children: vpn.routes
-        },
         {
             name: '基础数据',
             children: tools.routes

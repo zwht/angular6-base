@@ -18,18 +18,7 @@ export const routes: Routes = [
           name: 'Angular动态加载组件',
           // hideChild: true,
           roles: [1001],
-          menu: true
-        },
-        canActivate: [PermissionGuardService]
-      },
-      {
-        path: 'vpn',
-        loadChildren: './vpn/vpn.module#VpnModule',
-        data: {
-          name: 'vpn',
-          // hideChild: true,
-          roles: [1001],
-          menu: true
+          // menu: true
         },
         canActivate: [PermissionGuardService]
       },

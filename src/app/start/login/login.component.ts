@@ -92,11 +92,11 @@ export class LoginComponent implements OnInit {
                         this.sessionService.setItem('id', response.data.id, '2h');
                         setTimeout(() => {
                             if (response.data.roles.indexOf('1001') !== -1) {
-                                this.router.navigateByUrl('/admin/user');
+                                this.router.navigateByUrl('/admin/news');
                             } else if (response.data.roles.indexOf('1002') !== -1) {
-                                this.router.navigateByUrl('/admin/self');
+                                this.router.navigateByUrl('/admin/news');
                             } else if (response.data.roles.indexOf('1003') !== -1) {
-                                this.router.navigateByUrl('/admin/self');
+                                this.router.navigateByUrl('/admin/news');
                             } else {
                                 this.router.navigateByUrl('/admin/news');
                             }

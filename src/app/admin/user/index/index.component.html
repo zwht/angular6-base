@@ -64,8 +64,6 @@
           <td class="tdqiyong" *ngIf="data.state">已启用</td>
           <td class="tdnoqiyong" *ngIf="!data.state">未启用</td>
           <td>
-            <button nz-button [routerLink]="['./relation',data.id]">vpn</button>
-            &nbsp;&nbsp;
             <button nz-button [routerLink]="['./update',data.id]">编辑</button>
             &nbsp;&nbsp;
             <button nz-popconfirm nz-button nzTitle="您确定要删除吗?" (nzOnConfirm)="deldeldel(data.id)" (nzOnCancel)="cancel()">删除</button>

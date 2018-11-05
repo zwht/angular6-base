@@ -6,7 +6,6 @@ import { IndexComponent } from './index/index.component';
 import { AddComponent } from './add/add.component';
 import { UpdateComponent } from './update/update.component';
 import { PermissionGuardService } from '../../share/services/permission-guard.service';
-import { VpnComponent } from './vpn/vpn.component';
 
 
 export const routes: Routes = [
@@ -38,15 +37,7 @@ export const routes: Routes = [
         },
         canActivate: [PermissionGuardService]
     },
-    {
-        path: 'relation/:id',
-        component: VpnComponent,
-        data: {
-            name: 'vpn绑定',
-            roles: [1001]
-        },
-        canActivate: [PermissionGuardService]
-    },
+
 
 
 ];
@@ -57,7 +48,7 @@ export const routes: Routes = [
         ShareModule,
         RouterModule.forChild(routes)
     ],
-    declarations: [IndexComponent, UpdateComponent, VpnComponent, AddComponent],
+    declarations: [IndexComponent, UpdateComponent, AddComponent],
     providers: [],
 })
 export class UserModule { }
