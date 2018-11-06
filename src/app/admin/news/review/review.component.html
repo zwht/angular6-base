@@ -1,0 +1,61 @@
+<div class="list-box">
+  <div class="search clear">
+    <div>
+      <div class="chaxun">
+        <span>姓名</span>
+        <input appTrim nz-input placeholder="请输入姓名" [(ngModel)]="search.name" (keyup.enter)="getList()">
+      </div>
+      <div class="chaxun">
+        <span>ID</span>
+        <input appTrim nz-input placeholder="请输入ID" [(ngModel)]="search.id" (keyup.enter)="getList()">
+      </div>
+      <div class="chaxun">
+        <button nz-button nzType="chaxun" (click)="getList()">查询</button>
+      </div>
+    </div>
+  </div>
+  <div class="table-head">
+    <div class="head-h2">
+      <span>文章评论</span>
+    </div>
+  </div>
+  <div class="table-box">
+    <nz-table #basicTable [nzData]="list" [nzFrontPagination]="false" [nzPageIndex]="pageNum" [nzTotal]="totalCount"
+      [nzPageSize]="pageSize" (nzPageIndexChange)="getList($event)">
+      <thead>
+        <tr>
+          <th>序号</th>
+          <th>文章</th>
+          <th>评论内容</th>
+          <th>用户名</th>
+          <th>email</th>
+          <th>网站</th>
+          <th>父级id</th>
+          <th>状态</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of list let i= index">
+          <td>{{pageSize*(pageNum-1)+i+1}}</td>
+          <td>{{data.new_id}}</td>
+          <td>{{data.content}}</td>
+          <td>{{data.user_name}}</td>
+          <td>{{data.email}}</td>
+          <td>{{data.url}}</td>
+          <td>{{data.parent_id}}</td>
+          <td>
+            <nz-tag [nzColor]="data.state!=1203?'green':'#2db7f5'">{{data.state|codeName}}</nz-tag>
+          </td>
+          <td>
+            <button nz-button (click)="setState(data)">{{data.state!=1203?'通过':'不通过'}}</button>
+            &nbsp;&nbsp;
+            <!-- <button nz-button (click)="goAdd(data.id)">编辑</button>
+            &nbsp;&nbsp; -->
+            <button nz-popconfirm nz-button nzTitle="您确定要删除吗?" (nzOnConfirm)="del(data.id)" (nzOnCancel)="cancel()">删除</button>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>

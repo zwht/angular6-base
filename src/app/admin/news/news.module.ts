@@ -6,6 +6,7 @@ import { IndexComponent } from './index/index.component';
 import { NewsTypeComponent } from './news-type/news-type.component';
 import { NewsTypeAddComponent } from './news-type-add/news-type-add.component';
 import { NewsAddComponent } from './news-add/news-add.component';
+import { ReviewComponent } from './review/review.component';
 
 export const routes: Routes = [
     {
@@ -21,6 +22,14 @@ export const routes: Routes = [
         component: NewsAddComponent,
         data: {
             name: '新闻',
+        }
+    },
+    {
+        path: 'review',
+        component: ReviewComponent,
+        data: {
+            name: '评论审核',
+            menu: true
         }
     },
     {
@@ -45,7 +54,7 @@ export const routes: Routes = [
         ShareModule,
         RouterModule.forChild(routes)
     ],
-    declarations: [IndexComponent, NewsTypeComponent, NewsTypeAddComponent, NewsAddComponent],
+    declarations: [IndexComponent, NewsTypeComponent, NewsTypeAddComponent, NewsAddComponent, ReviewComponent],
     providers: [],
 })
 export class NewsModule { }
