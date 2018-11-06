@@ -41,7 +41,7 @@
               <td>{{data.name}}</td>
               <td>{{data.description}}</td>
               <td>
-                <button nz-button [routerLink]="['./update',data.id]">编辑</button>
+                <button nz-button (click)="goAdd(data.id)">编辑</button>
                 &nbsp;&nbsp;
                 <button nz-popconfirm nz-button nzTitle="您确定要删除吗?" (nzOnConfirm)="deldeldel(data.id)" (nzOnCancel)="cancel()">删除</button>
               </td>

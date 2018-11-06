@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CodeService } from '../../../share/restServices/code.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -18,6 +19,7 @@ export class IndexComponent implements OnInit {
   list = [];
 
   constructor(
+    private router: Router,
     private codeService: CodeService
   ) { }
 
@@ -85,5 +87,7 @@ export class IndexComponent implements OnInit {
         }
       });
   }
-
+  goAdd(id) {
+    this.router.navigate(['/admin/tools/add'], { queryParams: { id: id } });
+  }
 }
