@@ -38,12 +38,12 @@
       <tbody>
         <tr *ngFor="let data of list let i= index">
           <td>{{pageSize*(pageNum-1)+i+1}}</td>
-          <td>{{data.new_id}}</td>
+          <td>{{data.newId}}</td>
           <td>{{data.content}}</td>
-          <td>{{data.user_name}}</td>
+          <td>{{data.userName}}</td>
           <td>{{data.email}}</td>
           <td>{{data.url}}</td>
-          <td>{{data.parent_id}}</td>
+          <td>{{data.parentId}}</td>
           <td>
             <nz-tag [nzColor]="data.state!=1203?'green':'#2db7f5'">{{data.state|codeName}}</nz-tag>
           </td>

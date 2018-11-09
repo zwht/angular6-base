@@ -53,13 +53,18 @@ export class ReviewComponent implements OnInit {
       });
   }
   setState(item) {
-    let state = 1202;
-    if (item.state != 1203) {
+    let state = 1202, key = 1;
+    if (item.state === 1203) {
+      key = -1;
+    }
+    if (item.state !== 1203) {
       state = 1203;
     }
     this.reviewService.updateState({
       params: {
         id: item.id,
+        newsId: item.newId,
+        key,
         state
       }
     })
