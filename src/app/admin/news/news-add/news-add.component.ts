@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd';
 import { RegExpService } from '../../../share/services/reg-exp.service';
@@ -14,7 +14,8 @@ import { NewsTypeService } from '../../../share/restServices/news-type.service';
   styleUrls: ['../../common/style/add.less', './news-add.component.less']
 })
 export class NewsAddComponent implements OnInit {
-
+  @ViewChild('addBox')
+  addBox: ElementRef;
   validateForm: FormGroup;
   loading = false;
   id;
@@ -60,6 +61,7 @@ export class NewsAddComponent implements OnInit {
     });
 
   }
+  
   submitForm(type?): void {
     for (const i in this.validateForm.controls) {
       if (i) {

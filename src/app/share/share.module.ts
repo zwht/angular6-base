@@ -16,6 +16,8 @@ import { CropperImgModalComponent } from './components/cropper-img-modal/cropper
 import { CodeNamePipe } from './pipe/code-name.pipe';
 import { TrimDirective } from './directives/trim.directive';
 import { WangEditorComponent } from './components/wang-editor/wang-editor.component';
+import { NgIfDirective } from './directives/ng-if.directive';
+import { UeditorComponent } from './components/ueditor/ueditor.component';
 
 
 @NgModule({
@@ -31,7 +33,9 @@ import { WangEditorComponent } from './components/wang-editor/wang-editor.compon
         CropperImgModalComponent,
         CodeNamePipe,
         TrimDirective,
-        WangEditorComponent
+        WangEditorComponent,
+        NgIfDirective,
+        UeditorComponent
     ],
     exports: [
         CommonModule,
@@ -42,7 +46,9 @@ import { WangEditorComponent } from './components/wang-editor/wang-editor.compon
         CropperImgComponent,
         CodeNamePipe,
         TrimDirective,
-        WangEditorComponent
+        WangEditorComponent,
+        NgIfDirective,
+        UeditorComponent
     ],
     providers: [
         {

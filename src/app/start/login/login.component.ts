@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
     validateForm: FormGroup;
     loading = false;
     panduan1 = false;
+    ss = 1;
     constructor(
         private sessionService: SessionService,
         private codeDataService: CodeDataService,
@@ -27,11 +28,12 @@ export class LoginComponent implements OnInit {
         private regExpService: RegExpService,
         private userService: UserService) {
     }
-
+    fk(e) {
+        this.ss += 1;
+    }
     ngOnInit(): void {
         this.panduan();
         this.codeDataService.getData();
-
     }
     panduan(): void {
         if (this.sessionService.getItem('remember') === 'true') {

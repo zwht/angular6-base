@@ -38,7 +38,9 @@
               "node_modules/cropperjs/dist/cropper.css"
             ],
             "scripts": [
-              "node_modules/cropperjs/dist/cropper.min.js"
+              "node_modules/cropperjs/dist/cropper.min.js",
+              "src/assets/libs/uEditor/ueditor.config.js",
+              "src/assets/libs/uEditor/ueditor.all.js"
             ]
           },
           "configurations": {

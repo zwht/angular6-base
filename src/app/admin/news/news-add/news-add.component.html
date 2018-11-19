@@ -1,4 +1,4 @@
-<div class="add-box news-add-cpt">
+<div class="add-box news-add-cpt" #addBox>
   <div class="heard">
     <div>
       <nz-breadcrumb>
@@ -96,8 +96,8 @@
         <div nz-col nzSpan="24">
           <nz-form-item>
             <nz-form-control>
-              <app-wang-editor style="width: 1160px; display: block;" id="content" 
-              formControlName="content"></app-wang-editor>
+              <app-ueditor style="width: 1160px; display: block;" id="content" 
+              formControlName="content"></app-ueditor>
               <nz-form-explain *ngIf="validateForm.get('content').dirty && validateForm.get('content').errors">
                 填写新闻内容
               </nz-form-explain>
