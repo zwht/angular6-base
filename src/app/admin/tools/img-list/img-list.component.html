@@ -1,0 +1,61 @@
+<div class="list-box">
+  <div class="search clear">
+    <div>
+      <div class="chaxun">
+        <span>姓名</span>
+        <input appTrim nz-input placeholder="请输入姓名" [(ngModel)]="search.name" (keyup.enter)="getList()">
+      </div>
+      <div class="chaxun">
+        <span>ID</span>
+        <input appTrim nz-input placeholder="请输入ID" [(ngModel)]="search.id" (keyup.enter)="getList()">
+      </div>
+      <div class="chaxun">
+        <button nz-button nzType="chaxun" (click)="getList()">查询</button>
+      </div>
+    </div>
+  </div>
+  <div class="table-head">
+    <div class="head-h2">
+      <span>码表管理</span>
+    </div>
+    <div class="btn-box">
+      <span style="vertical-align: middle; line-height: 32px;">宽/高:&nbsp;</span>
+      <nz-input-group nzCompact style="display:inline-block; width: 200px; vertical-align: middle;">
+        <input type="text" nzSize="small" placeholder="宽" nz-input [ngModel]="boxStyle.width" style="width: 80px;">
+        <input type="text" nzSize="small" placeholder="高" nz-input [ngModel]="boxStyle.height" style="width: 80px;">
+      </nz-input-group>
+      <input #addImg type="file" accept="image/*" style="display: none;" />
+      <button style="vertical-align: middle;" nz-button nzType="tianjia" (click)="add()">添加图片</button>
+    </div>
+  </div>
+
+  <div class="table-box">
+    <nz-table #basicTable [nzData]="list" [nzFrontPagination]="false" [nzPageIndex]="pageNum" [nzTotal]="totalCount"
+      [nzPageSize]="pageSize" (nzPageIndexChange)="getList($event)">
+      <thead>
+        <tr>
+          <th>序号</th>
+          <th>名称</th>
+          <th>类型</th>
+          <th>预览</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of list let i= index">
+          <td>{{pageSize*(pageNum-1)+i+1}}</td>
+          <td>/v1/file/img/{{data.id}}</td>
+          <td>
+            <nz-tag [nzColor]="data.state!=1105?'green':'#2db7f5'">{{data.type|codeName}}</nz-tag>
+          </td>
+          <td>
+            <img style='width:200px' [src]="'/v1/file/img/'+data.id" alt="">
+          </td>
+          <td>
+            <button nz-popconfirm nz-button nzTitle="您确定要删除吗?" (nzOnConfirm)="del(data.id)" (nzOnCancel)="cancel()">删除</button>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>

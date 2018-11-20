@@ -29,6 +29,7 @@ export const routes: Routes = [
         component: ReviewComponent,
         data: {
             name: '评论审核',
+            roles: [1001],
             menu: true
         }
     },
@@ -37,6 +38,7 @@ export const routes: Routes = [
         component: NewsTypeComponent,
         data: {
             name: '新闻类型',
+            roles: [1001],
             menu: true
         }
     },

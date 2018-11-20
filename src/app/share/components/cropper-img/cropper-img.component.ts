@@ -32,7 +32,7 @@ export class CropperImgComponent implements ControlValueAccessor {
   constructor(
     private fileService: FileService,
     private nzModalService: NzModalService
-  ) {}
+  ) { }
   ngOnInit() {
     if (this.boxStyle) {
       this.boxStyle.width = this.boxStyle.width ? this.boxStyle.width : 200;
@@ -97,7 +97,10 @@ export class CropperImgComponent implements ControlValueAccessor {
       const formData = new FormData();
       formData.append('file', blob, this.fileName);
       this.fileService.add({
-        data: formData
+        data: formData,
+        params: {
+          fileType: 1301
+        }
       })
         .subscribe(response => {
           this.model = response.data;

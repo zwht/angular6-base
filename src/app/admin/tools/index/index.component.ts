@@ -88,6 +88,6 @@ export class IndexComponent implements OnInit {
       });
   }
   goAdd(id) {
-    this.router.navigate(['/admin/tools/add'], { queryParams: { id: id } });
+    this.router.navigate(['/admin/tools/code/add'], { queryParams: { id: id } });
   }
 }
