@@ -11,6 +11,7 @@ import { CropperImgModalComponent } from 'src/app/share/components/cropper-img-m
   styleUrls: ['./img-list.component.less', '../../common/style/list.less']
 })
 export class ImgListComponent implements OnInit {
+  isYt = false;
   loading = false;
   dialog = false;
   fileName = '';
@@ -22,7 +23,7 @@ export class ImgListComponent implements OnInit {
     name: '',
     id: ''
   };
-  boxStyle = { width: 600, height: 200 };
+  boxStyle = { width: 800, height: 300 };
   @ViewChild('addImg')
   inputImage: ElementRef;
 
@@ -75,7 +76,7 @@ export class ImgListComponent implements OnInit {
     this.inputImage.nativeElement.setAttribute('type', 'file');
     this.inputImage.nativeElement.click();
   }
-  showModalForComponent(blobURL) {
+  showModalForComponent(file) {
     const subscription = this.nzModalService.create({
       nzTitle: '裁剪图片',
       nzContent: CropperImgModalComponent,
@@ -86,33 +87,32 @@ export class ImgListComponent implements OnInit {
       },
       nzFooter: null,
       nzComponentParams: {
-        blobURL: blobURL,
+        blobURL: URL.createObjectURL(file),
         boxStyle: this.boxStyle
       }
     });
     subscription.afterClose.subscribe(result => {
       if (result !== 'onShown' && result.getCroppedCanvas) {
-        this.save(result);
+        const cropper = result['getCroppedCanvas']({ width: this.boxStyle.width, height: this.boxStyle.height });
+        cropper.toBlob((blob) => {
+          this.save(blob);
+        });
       }
     });
   }
-  save(cropper) {
-    this.loading = true;
-    const result = cropper['getCroppedCanvas']({ width: this.boxStyle.width, height: this.boxStyle.height });
-    result.toBlob((blob) => {
-      const formData = new FormData();
-      formData.append('file', blob, this.fileName);
-      this.fileService.add({
-        data: formData,
-        params: {
-          fileType: 1302
-        }
-      })
-        .subscribe(response => {
-          this.loading = false;
-          this.getList();
-        });
-    });
+  save(file) {
+    const formData = new FormData();
+    formData.append('file', file, this.fileName);
+    this.fileService.add({
+      data: formData,
+      params: {
+        fileType: 1302
+      }
+    })
+      .subscribe(response => {
+        this.loading = false;
+        this.getList();
+      });
   }
   cropperInit() {
     // Import image
@@ -127,7 +127,12 @@ export class ImgListComponent implements OnInit {
           file = files[0];
           that.fileName = file.name;
           if (/^image\/\w+/.test(file.type)) {
-            that.showModalForComponent(URL.createObjectURL(file));
+            that.loading = true;
+            if (!that.isYt) {
+              that.save(file);
+            } else {
+              that.showModalForComponent(file);
+            }
           } else {
             window.alert('Please choose an image file.');
           }
@@ -136,5 +141,4 @@ export class ImgListComponent implements OnInit {
     } else {
     }
   }
-
 }

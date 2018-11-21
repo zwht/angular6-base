@@ -61,7 +61,6 @@ export class NewsAddComponent implements OnInit {
     });
 
   }
-  
   submitForm(type?): void {
     for (const i in this.validateForm.controls) {
       if (i) {
@@ -105,6 +104,7 @@ export class NewsAddComponent implements OnInit {
       .subscribe(response => {
         this.loading = false;
         if (response.code === 200) {
+          this.router.navigate(['/admin/news/add'], { queryParams: { id: response.data } });
           this._message.create('success', '保存成功', { nzDuration: 4000 });
         } else {
           this._message.create('error', response.msg, { nzDuration: 4000 });

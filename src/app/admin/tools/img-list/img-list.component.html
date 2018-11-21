@@ -19,13 +19,15 @@
       <span>码表管理</span>
     </div>
     <div class="btn-box">
-      <span style="vertical-align: middle; line-height: 32px;">宽/高:&nbsp;</span>
-      <nz-input-group nzCompact style="display:inline-block; width: 200px; vertical-align: middle;">
+      <span *ngIf='isYt' style="vertical-align: middle; line-height: 32px;">宽/高：</span>
+      <nz-input-group *ngIf='isYt' nzCompact style="display:inline-block; width: 180px; vertical-align: middle;">
         <input type="text" nzSize="small" placeholder="宽" nz-input [ngModel]="boxStyle.width" style="width: 80px;">
         <input type="text" nzSize="small" placeholder="高" nz-input [ngModel]="boxStyle.height" style="width: 80px;">
       </nz-input-group>
+      <span>是否裁剪：</span>
+      <nz-switch [(ngModel)]="isYt" nzCheckedChildren="是" nzUnCheckedChildren="否"></nz-switch>
       <input #addImg type="file" accept="image/*" style="display: none;" />
-      <button style="vertical-align: middle;" nz-button nzType="tianjia" (click)="add()">添加图片</button>
+      <button style="vertical-align: middle; margin-left:20px;" nz-button nzType="tianjia" (click)="add()">添加图片</button>
     </div>
   </div>
 
@@ -37,6 +39,7 @@
           <th>序号</th>
           <th>名称</th>
           <th>类型</th>
+          <th>创建时间</th>
           <th>预览</th>
           <th>操作</th>
         </tr>
@@ -48,6 +51,7 @@
           <td>
             <nz-tag [nzColor]="data.state!=1105?'green':'#2db7f5'">{{data.type|codeName}}</nz-tag>
           </td>
+          <td>{{data.createTime | date:'yyyy/MM/dd'}}</td>
           <td>
             <img style='width:200px' [src]="'/v1/file/img/'+data.id" alt="">
           </td>
