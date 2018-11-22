@@ -1,6 +1,8 @@
 <div class="markdown-add-cpt" #addBox>
   <div class="form-box">
     <nz-affix class="saveBtn" [nzTarget]="addBox">
+      <nz-switch (ngModelChange)="switchChange($event)" [(ngModel)]="isMarkdown" nzCheckedChildren="是" nzUnCheckedChildren="否">
+      </nz-switch>
       <button nz-button nzType="primary" (click)="submitForm()">保存</button>
       <button *ngIf="state!=1105" nz-button nzType="default" (click)="submitForm(2)">保存并且发布</button>
     </nz-affix>
@@ -85,12 +87,9 @@
         <div nz-col class="markDownBOx">
           <nz-form-item>
             <nz-form-control>
-              <button class="setMarkDown" nz-button nzType="default" nzSize="small" nz-popconfirm nzTitle="您确定要生成markDown?"
-                (nzOnConfirm)="contentChange()">生成markDown</button>
               <div class="textareaBox">
-                <textarea (blur)=markdownBlur($event) (focus)=markdownFocus($event) #box1 
-                (ngModelChange)=contentMarkdownChange($event) id="contentMarkdown" formControlName="contentMarkdown"
-                  nz-input placeholder="MarkDown 文章主体内容"></textarea>
+                <textarea (blur)=markdownBlur($event) (focus)=markdownFocus($event) #box1 (ngModelChange)=contentMarkdownChange($event)
+                  id="contentMarkdown" formControlName="contentMarkdown" nz-input placeholder="MarkDown 文章主体内容"></textarea>
               </div>
               <nz-form-explain *ngIf="validateForm.get('contentMarkdown').dirty && validateForm.get('contentMarkdown').errors">
                 填写新闻内容
@@ -101,8 +100,7 @@
         <div nz-col class="editBOx" #box2>
           <nz-form-item>
             <nz-form-control>
-
-              <app-ueditor style="width: 802px; display: block;" id="content" formControlName="content"></app-ueditor>
+              <app-ueditor [isMarkdown]='isMarkdown' (ngModelChange)=contentChange($event) style="width: 802px; display: block;" id="content" formControlName="content"></app-ueditor>
               <nz-form-explain *ngIf="validateForm.get('content').dirty && validateForm.get('content').errors">
                 填写新闻内容
               </nz-form-explain>

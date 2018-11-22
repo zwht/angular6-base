@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, ElementRef, forwardRef, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, Input, forwardRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 declare var UE: any;
 
@@ -16,6 +16,8 @@ export class UeditorComponent implements ControlValueAccessor, AfterViewInit, On
   editor;
   @Input()
   model: any;
+  @Input()
+  isMarkdown: boolean;
   newModel: any;
   constructor() {
 
@@ -42,12 +44,16 @@ export class UeditorComponent implements ControlValueAccessor, AfterViewInit, On
   }
 
   public onModelChange: Function = () => {
-
   }
   public onModelTouched: Function = () => { };
   writeValue(value: any) {
     if (value && this.editor) {
       this.editor.ready(() => {
+        if (this.isMarkdown) {
+          this.editor.setDisabled('fullscreen');
+        } else {
+          this.editor.setEnabled();
+        }
         const newStr = this.editor.getContent();
         if (newStr !== value) {
           this.newModel = value;
@@ -56,6 +62,7 @@ export class UeditorComponent implements ControlValueAccessor, AfterViewInit, On
       });
     }
   }
+
   registerOnChange(fn: Function): void {
     this.onModelChange = fn;
   }

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { RegExpService } from '../../../share/services/reg-exp.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
@@ -20,6 +20,7 @@ export class NewsAddComponent implements OnInit, OnDestroy {
   @ViewChild('box2')
   box2: ElementRef;
 
+  isMarkdown = true;
   changeSum = 0;
   isFocus = false;
   saveSetTime;
@@ -52,7 +53,7 @@ export class NewsAddComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private _message: NzMessageService,
-    private regExpService: RegExpService,
+    private nzModalService: NzModalService,
     private fb: FormBuilder,
     private newsService: NewsService,
     private newsTypeService: NewsTypeService,
@@ -65,7 +66,7 @@ export class NewsAddComponent implements OnInit, OnDestroy {
     this.validateForm = this.fb.group({
       typeId: [null, [Validators.required]],
       content: [null, [Validators.required]],
-      contentMarkdown: [null, [Validators.required]],
+      contentMarkdown: [{ disabled: true }, [Validators.required]],
       abstract: [null, [Validators.required]],
       labels: [[], [Validators.required]],
       source: ['原创', [Validators.required]],
@@ -78,8 +79,8 @@ export class NewsAddComponent implements OnInit, OnDestroy {
   submitForm(type?): void {
     for (const i in this.validateForm.controls) {
       if (i) {
-        this.validateForm.controls[i].markAsDirty();
-        this.validateForm.controls[i].updateValueAndValidity();
+        this.validateForm.get(i).markAsDirty();
+        this.validateForm.get(i).updateValueAndValidity();
       }
     }
     if (this.validateForm.valid) {
@@ -142,15 +143,15 @@ export class NewsAddComponent implements OnInit, OnDestroy {
     })
       .subscribe(response => {
         if (response.code === 200) {
-          this.validateForm.controls['contentMarkdown'].setValue(response.data.contentMarkdown);
-          this.validateForm.controls['content'].setValue(response.data.content);
-          this.validateForm.controls['typeId'].setValue(response.data.typeId);
-          this.validateForm.controls['abstract'].setValue(response.data.abstract);
-          this.validateForm.controls['labels'].setValue(response.data.labels.split(','));
-          this.validateForm.controls['source'].setValue(response.data.source);
-          this.validateForm.controls['title'].setValue(response.data.title);
-          this.validateForm.controls['urlEn'].setValue(response.data.urlEn);
-          this.validateForm.controls['state'].setValue(response.data.state);
+          this.validateForm.get('contentMarkdown').setValue(response.data.contentMarkdown);
+          this.validateForm.get('content').setValue(response.data.content);
+          this.validateForm.get('typeId').setValue(response.data.typeId);
+          this.validateForm.get('abstract').setValue(response.data.abstract);
+          this.validateForm.get('labels').setValue(response.data.labels.split(','));
+          this.validateForm.get('source').setValue(response.data.source);
+          this.validateForm.get('title').setValue(response.data.title);
+          this.validateForm.get('urlEn').setValue(response.data.urlEn);
+          this.validateForm.get('state').setValue(response.data.state);
           this.state = response.data.state;
           setTimeout(() => {
             this.setBoxHeight();
@@ -171,7 +172,7 @@ export class NewsAddComponent implements OnInit, OnDestroy {
         if (response.code === 200) {
           if (response.data.pageData.length) {
             this.vpsList = response.data.pageData;
-            this.validateForm.controls['typeId'].setValue(this.vpsList[0].id);
+            this.validateForm.get('typeId').setValue(this.vpsList[0].id);
           }
           this.activatedRoute.queryParams.subscribe(params => {
             this.id = params['id'];
@@ -183,35 +184,34 @@ export class NewsAddComponent implements OnInit, OnDestroy {
         }
       });
   }
-  contentChange() {
+  contentChange(e) {
     this.setBoxHeight();
-    const contStr = this.converter.makeMarkdown(this.validateForm.getRawValue()['content']);
+    const contStr = this.converter.makeMarkdown(e);
     const contentMarkdown = this.validateForm.getRawValue()['contentMarkdown'] || '';
-    if (contentMarkdown != contStr) {
-      this.validateForm.controls['contentMarkdown'].setValue(contStr);
+    if (contentMarkdown != contStr && !this.isMarkdown) {
+      this.validateForm.get('contentMarkdown').setValue(contStr);
     }
   }
   contentMarkdownChange(e) {
     // 自动保存设置
-    if (this.isFocus) {
-      if (!this.changeSum) {
-        this.saveSetTime = setInterval(() => {
-          this.submitForm();
-        }, 1000 * 60);
-      }
-      this.changeSum++;
-      console.log(this.changeSum);
-      if (this.changeSum > 50) {
-        this.zdSave();
-        this.changeSum = 0;
-      }
-    }
+    // if (this.isFocus) {
+    //   if (!this.changeSum) {
+    //     this.saveSetTime = setInterval(() => {
+    //       this.submitForm();
+    //     }, 1000 * 60);
+    //   }
+    //   this.changeSum++;
+    //   if (this.changeSum > 50) {
+    //     this.zdSave();
+    //     this.changeSum = 0;
+    //   }
+    // }
 
     this.setBoxHeight();
     const markDownStr = this.converter.makeHtml(e);
     const content = this.validateForm.getRawValue()['content'] || '';
-    if (content != markDownStr) {
-      this.validateForm.controls['content'].setValue(markDownStr);
+    if (content != markDownStr && this.isMarkdown) {
+      this.validateForm.get('content').setValue(markDownStr);
     }
   }
   setBoxHeight() {
@@ -224,6 +224,19 @@ export class NewsAddComponent implements OnInit, OnDestroy {
       box1.style.height = box1H + 'px';
     }
   }
+  switchChange(e) {
+    const markDownValue = this.validateForm.get('contentMarkdown')['value'];
+    const editValue = this.validateForm.get('content')['value'];
+    setTimeout(() => {
+      if (e) {
+        this.validateForm.get('contentMarkdown').reset({ value: markDownValue, disabled: false });
+        this.validateForm.get('content').reset({ value: editValue, disabled: true });
+      } else {
+        this.validateForm.get('contentMarkdown').reset({ value: markDownValue, disabled: true });
+        this.validateForm.get('content').reset({ value: editValue, disabled: false });
+      }
+    }, 500);
+  }
   markdownBlur(e) {
     this.isFocus = false;
   }
@@ -231,7 +244,14 @@ export class NewsAddComponent implements OnInit, OnDestroy {
     this.isFocus = true;
   }
   ngOnDestroy() {
-    this.zdSave();
+    // this.nzModalService.confirm({
+    //   nzTitle: 'Do you Want to delete these items?',
+    //   nzContent: 'When clicked the OK button, this dialog will be closed after 1 second',
+    //   nzOnOk: () => new Promise((resolve, reject) => {
+    //     setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
+    //   }).catch(() => console.log('Oops errors!'))
+    // });
+    // this.zdSave();
   }
   zdSave() {
     if (this.saveSetTime) {
