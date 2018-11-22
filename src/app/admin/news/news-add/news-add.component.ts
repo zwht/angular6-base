@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd';
 import { RegExpService } from '../../../share/services/reg-exp.service';
@@ -14,17 +14,20 @@ const Showdown = require('showdown');
   templateUrl: './news-add.component.html',
   styleUrls: ['../../common/style/add.less', './news-add.component.less']
 })
-export class NewsAddComponent implements OnInit {
+export class NewsAddComponent implements OnInit, OnDestroy {
   @ViewChild('box1')
   box1: ElementRef;
   @ViewChild('box2')
   box2: ElementRef;
 
-  markdownJD = false;
+  changeSum = 0;
+  isFocus = false;
+  saveSetTime;
   converter = new Showdown.Converter();
   validateForm: FormGroup;
   loading = false;
   id;
+  state = 1102;
   title = '添加新闻';
   vpsList = [];
   sourceList = [
@@ -67,7 +70,8 @@ export class NewsAddComponent implements OnInit {
       labels: [[], [Validators.required]],
       source: ['原创', [Validators.required]],
       urlEn: [null, [Validators.required]],
-      title: [null, [Validators.required]]
+      title: [null, [Validators.required]],
+      state: [null, []]
     });
 
   }
@@ -80,7 +84,6 @@ export class NewsAddComponent implements OnInit {
     }
     if (this.validateForm.valid) {
       this.loading = true;
-
       const data = of(this.validateForm.value)
         .pipe(
           map(d => {
@@ -93,11 +96,10 @@ export class NewsAddComponent implements OnInit {
           })
         );
       data.subscribe(d => {
-        if (!d.state) {
-          d.state = 1102;
-        }
-        if (d.state < 1105 && type) {
-          d.state = 1105;
+        if (type || this.state == 1105) {
+          d.state = this.state = 1105;
+        } else {
+          d.state = this.state = 1102;
         }
         if (this.id) {
           this.edit(d);
@@ -148,6 +150,8 @@ export class NewsAddComponent implements OnInit {
           this.validateForm.controls['source'].setValue(response.data.source);
           this.validateForm.controls['title'].setValue(response.data.title);
           this.validateForm.controls['urlEn'].setValue(response.data.urlEn);
+          this.validateForm.controls['state'].setValue(response.data.state);
+          this.state = response.data.state;
           setTimeout(() => {
             this.setBoxHeight();
           }, 1000);
@@ -179,19 +183,34 @@ export class NewsAddComponent implements OnInit {
         }
       });
   }
-  contentChange(e) {
+  contentChange() {
     this.setBoxHeight();
-    const contStr = this.converter.makeMarkdown(e);
+    const contStr = this.converter.makeMarkdown(this.validateForm.getRawValue()['content']);
     const contentMarkdown = this.validateForm.getRawValue()['contentMarkdown'] || '';
-    if (contentMarkdown != contStr && !this.markdownJD) {
+    if (contentMarkdown != contStr) {
       this.validateForm.controls['contentMarkdown'].setValue(contStr);
     }
   }
   contentMarkdownChange(e) {
+    // 自动保存设置
+    if (this.isFocus) {
+      if (!this.changeSum) {
+        this.saveSetTime = setInterval(() => {
+          this.submitForm();
+        }, 1000 * 60);
+      }
+      this.changeSum++;
+      console.log(this.changeSum);
+      if (this.changeSum > 50) {
+        this.zdSave();
+        this.changeSum = 0;
+      }
+    }
+
     this.setBoxHeight();
     const markDownStr = this.converter.makeHtml(e);
     const content = this.validateForm.getRawValue()['content'] || '';
-    if (content != markDownStr && this.markdownJD) {
+    if (content != markDownStr) {
       this.validateForm.controls['content'].setValue(markDownStr);
     }
   }
@@ -206,9 +225,18 @@ export class NewsAddComponent implements OnInit {
     }
   }
   markdownBlur(e) {
-    this.markdownJD = false;
+    this.isFocus = false;
   }
   markdownFocus(e) {
-    this.markdownJD = true;
+    this.isFocus = true;
+  }
+  ngOnDestroy() {
+    this.zdSave();
+  }
+  zdSave() {
+    if (this.saveSetTime) {
+      clearInterval(this.saveSetTime);
+    }
+    this.submitForm();
   }
 }

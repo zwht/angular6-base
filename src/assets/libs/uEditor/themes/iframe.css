@@ -1,1 +1,55 @@
+
 /*可以在这里添加你自己的css*/
+*, :after, :before { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;}
+html {height: 100%;width: 100%;}
+body {font-family: -apple-system,BlinkMacSystemFont,"Lucida Grande","Helvetica Neue",Helvetica,Arial,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","WenQuanYi Micro Hei","Noto Sans CJK SC","Source Han Sans CN",SimSun,sans-serif;height: 100%;width: 100%;
+  overflow-y: auto;overflow-x: hidden;margin: 0;line-height: 1.42857143;
+  color: #444; font-size: 16px;}
+hr{border: 1px solid #ededed; border-bottom: none;}
+.h1,h1 {font-size: 32px}
+.h2,h2 {font-size: 28px}
+.h3,h3 {font-size: 24px}
+.h4,h4 {font-size: 20px}
+.h5,h5 {font-size: 18px}
+.h6,h6 {font-size: 16px}
+h1,h2,h3,h4,h5,.h1,.h2,.h3,.h4,.h5{ font-weight: bold; color: #000;
+margin-bottom: 0.4em; margin-top: 1.5em;}
+h6,.h6{ margin-bottom: 0.4em; margin-top: 1em; color: #c00;}
+p{ margin: 0 0 1em;}
+code{background-color: #fee9cc;color: rgba(0, 0, 0, 0.75);padding: 1px 3px;
+  font-size: 12px;border-radius: 3px;border-radius: 3px;}
+  
+.pull-right { float: right !important }
+.pull-left { float: left !important }
+.hide { display: none }
+.show { display: block}
+.clear {zoom:1;clear: both}
+.clear2{clear: both}
+.clear:after,.clear2:after { content: " "; height: 0; width: 0; visibility: hidden;
+  display: block; clear: both }
+.overflow { overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+.text-center{ text-align: center}
+.text-left{ text-align: left}
+.text-right{ text-align: right;}
+.middle{ display: table;}
+.middle>div{ display: table-cell; vertical-align: middle;}
+.no-select{-webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none;}
+.disabled {pointer-events: none; opacity: 0.7 !important; cursor: not-allowed !important; }
+.overflowAuto{
+  overflow-y: auto;
+  
+}
+.overflowAuto::-webkit-scrollbar {/*滚动条整体样式*/
+  width: 4px;     /*高宽分别对应横竖滚动条的尺寸*/
+  height: 1px;
+}
+.overflowAuto::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+  border-radius: 10px;
+  background-color: #987;
+
+}
+.overflowAuto::-webkit-scrollbar-track {/*滚动条里面轨道*/
+  /*-webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);*/
+  /*border-radius: 10px;*/
+  background: #f1f1f1;
+}
