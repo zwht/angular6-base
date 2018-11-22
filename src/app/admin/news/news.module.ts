@@ -21,7 +21,7 @@ export const routes: Routes = [
         path: 'add',
         component: NewsAddComponent,
         data: {
-            name: '新闻',
+            name: '富文本add',
         }
     },
     {
@@ -56,7 +56,9 @@ export const routes: Routes = [
         ShareModule,
         RouterModule.forChild(routes)
     ],
-    declarations: [IndexComponent, NewsTypeComponent, NewsTypeAddComponent, NewsAddComponent, ReviewComponent],
+    declarations: [IndexComponent, NewsTypeComponent,
+         NewsTypeAddComponent, NewsAddComponent,
+         ReviewComponent],
     providers: [],
 })
 export class NewsModule { }

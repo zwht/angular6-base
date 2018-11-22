@@ -19,7 +19,8 @@
       <span>新闻类型</span>
     </div>
     <div class="btn-box">
-      <button nz-button nzType="tianjia" routerLink="./add">添加新闻</button>
+      <button nz-button nzType="tianjia" routerLink="./markdown" style="margin-right:20px;">markdown添加</button>
+      <button nz-button nzType="tianjia" routerLink="./add">富文本添加</button>
     </div>
   </div>
   <div class="table-box">
@@ -47,7 +48,7 @@
           <td>
             <button nz-button (click)="setState(data)">{{data.state!=1105?'发布':'下架'}}</button>
             &nbsp;&nbsp;
-            <button nz-button (click)="goAdd(data.id)">编辑</button>
+            <button nz-button (click)="goAdd(data)">编辑</button>
             &nbsp;&nbsp;
             <button nz-popconfirm nz-button nzTitle="您确定要删除吗?" (nzOnConfirm)="del(data.id)" (nzOnCancel)="cancel()">删除</button>
           </td>

@@ -79,7 +79,7 @@ export class IndexComponent implements OnInit {
         }
       });
   }
-  goAdd(id) {
-    this.router.navigate(['/admin/news/add'], { queryParams: { id: id } });
+  goAdd(item) {
+    this.router.navigate(['/admin/news/add'], { queryParams: { id: item.id } });
   }
 }

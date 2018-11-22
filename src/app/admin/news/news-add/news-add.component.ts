@@ -7,15 +7,21 @@ import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { NewsService } from '../../../share/restServices/news.service';
 import { NewsTypeService } from '../../../share/restServices/news-type.service';
-
+declare const require: any;
+const Showdown = require('showdown');
 @Component({
   selector: 'app-news-add',
   templateUrl: './news-add.component.html',
   styleUrls: ['../../common/style/add.less', './news-add.component.less']
 })
 export class NewsAddComponent implements OnInit {
-  @ViewChild('addBox')
-  addBox: ElementRef;
+  @ViewChild('box1')
+  box1: ElementRef;
+  @ViewChild('box2')
+  box2: ElementRef;
+
+  markdownJD = false;
+  converter = new Showdown.Converter();
   validateForm: FormGroup;
   loading = false;
   id;
@@ -33,9 +39,12 @@ export class NewsAddComponent implements OnInit {
     }
   ];
   searchOptions = [
-    { value: 'jack', label: '杰克' },
-    { value: 'lucy', label: '露西' },
-    { value: 'tom', label: '汤姆' }
+    { value: 'angualr2', label: 'angualr2' },
+    { value: 'typeScript', label: 'typeScript' },
+    { value: 'es6', label: 'es6' },
+    { value: 'go', label: 'go' },
+    { value: 'css3', label: 'css3' },
+    { value: 'html5', label: 'html5' },
   ];
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -53,6 +62,7 @@ export class NewsAddComponent implements OnInit {
     this.validateForm = this.fb.group({
       typeId: [null, [Validators.required]],
       content: [null, [Validators.required]],
+      contentMarkdown: [null, [Validators.required]],
       abstract: [null, [Validators.required]],
       labels: [[], [Validators.required]],
       source: ['原创', [Validators.required]],
@@ -99,12 +109,12 @@ export class NewsAddComponent implements OnInit {
   }
   add(d) {
     this.newsService['add']({
-      data: d
+      data: Object.assign({ markdown: 1402 }, d)
     })
       .subscribe(response => {
         this.loading = false;
         if (response.code === 200) {
-          this.router.navigate(['/admin/news/add'], { queryParams: { id: response.data } });
+          this.router.navigate(['/admin/news/markdown'], { queryParams: { id: response.data } });
           this._message.create('success', '保存成功', { nzDuration: 4000 });
         } else {
           this._message.create('error', response.msg, { nzDuration: 4000 });
@@ -113,7 +123,7 @@ export class NewsAddComponent implements OnInit {
   }
   edit(d) {
     this.newsService.update({
-      data: Object.assign({ id: this.id }, d)
+      data: Object.assign({ id: this.id, markdown: 1402 }, d)
     })
       .subscribe(response => {
         this.loading = false;
@@ -130,6 +140,7 @@ export class NewsAddComponent implements OnInit {
     })
       .subscribe(response => {
         if (response.code === 200) {
+          this.validateForm.controls['contentMarkdown'].setValue(response.data.contentMarkdown);
           this.validateForm.controls['content'].setValue(response.data.content);
           this.validateForm.controls['typeId'].setValue(response.data.typeId);
           this.validateForm.controls['abstract'].setValue(response.data.abstract);
@@ -137,6 +148,9 @@ export class NewsAddComponent implements OnInit {
           this.validateForm.controls['source'].setValue(response.data.source);
           this.validateForm.controls['title'].setValue(response.data.title);
           this.validateForm.controls['urlEn'].setValue(response.data.urlEn);
+          setTimeout(() => {
+            this.setBoxHeight();
+          }, 1000);
         }
       });
   }
@@ -164,5 +178,37 @@ export class NewsAddComponent implements OnInit {
           });
         }
       });
+  }
+  contentChange(e) {
+    this.setBoxHeight();
+    const contStr = this.converter.makeMarkdown(e);
+    const contentMarkdown = this.validateForm.getRawValue()['contentMarkdown'] || '';
+    if (contentMarkdown != contStr && !this.markdownJD) {
+      this.validateForm.controls['contentMarkdown'].setValue(contStr);
+    }
+  }
+  contentMarkdownChange(e) {
+    this.setBoxHeight();
+    const markDownStr = this.converter.makeHtml(e);
+    const content = this.validateForm.getRawValue()['content'] || '';
+    if (content != markDownStr && this.markdownJD) {
+      this.validateForm.controls['content'].setValue(markDownStr);
+    }
+  }
+  setBoxHeight() {
+    const box1 = this.box1.nativeElement;
+    const box2H = this.box2.nativeElement.clientHeight - 14;
+    const box1H = box1.scrollTop + 2 + box1.scrollHeight;
+    if (box2H > box1H) {
+      box1.style.height = box2H + 'px';
+    } else {
+      box1.style.height = box1H + 'px';
+    }
+  }
+  markdownBlur(e) {
+    this.markdownJD = false;
+  }
+  markdownFocus(e) {
+    this.markdownJD = true;
   }
 }

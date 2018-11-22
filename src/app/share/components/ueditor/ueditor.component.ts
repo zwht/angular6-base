@@ -16,15 +16,24 @@ export class UeditorComponent implements ControlValueAccessor, AfterViewInit, On
   editor;
   @Input()
   model: any;
-
+  newModel: any;
   constructor() {
 
+  }
+  ngInit() {
+    if (this.model) {
+      this.newModel = this.model;
+    }
   }
 
   ngAfterViewInit() {
     this.editor = UE.getEditor('wangEditorCpt');
     this.editor.addListener('selectionchange', () => {
-      this.onModelChange(this.editor.getContent());
+      const newStr = this.editor.getContent();
+      if (this.newModel !== newStr) {
+        this.newModel = newStr;
+        this.onModelChange(newStr);
+      }
     });
   }
 
@@ -37,10 +46,13 @@ export class UeditorComponent implements ControlValueAccessor, AfterViewInit, On
   }
   public onModelTouched: Function = () => { };
   writeValue(value: any) {
-    this.model = value;
-    if (this.model) {
+    if (value && this.editor) {
       this.editor.ready(() => {
-        this.editor.setContent(this.model);
+        const newStr = this.editor.getContent();
+        if (newStr !== value) {
+          this.newModel = value;
+          this.editor.setContent(value);
+        }
       });
     }
   }

@@ -24,6 +24,7 @@
     "cropperjs": "^1.4.1",
     "ng-zorro-antd": "^1.8.0",
     "rxjs": "~6.3.3",
+    "showdown": "^1.9.0",
     "wangeditor": "^3.1.1",
     "zone.js": "~0.8.26"
   },

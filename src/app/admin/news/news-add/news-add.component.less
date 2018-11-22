@@ -1,4 +1,7 @@
-.news-add-cpt{
+.markdown-add-cpt{
+  .ant-row{
+    >div{ float: left;}
+  }
   .form-box{ position: relative;
     /deep/ form {
       nz-form-item{
@@ -9,17 +12,28 @@
     }
     /deep/.has-error .ant-form-explain{ position: absolute; left: 0;}
   }
-  .saveBtn{ position: absolute; right: 20px; top:20px; z-index: 1999;
-    button{ margin: 0 10px;}
+  .nzRow{ padding: 15px 0 0; background: #fff;
+    margin-bottom: 10px;
+    >div{ padding-left: 20px;}
   }
-  app-ueditor{
-    /deep/iframe{
-      h1 {font-size: 36px}
-      h2 {font-size: 32px}
-      h3 {font-size: 30px}
-      h4 {font-size: 28px}
-      h5 {font-size: 26px}
-      h6 {font-size: 24px}
+  .zyy{
+    /deep/.ant-form-item-required, /deep/.ant-form-item-required::after,
+    /deep/.ant-form-item-required::before{
+      vertical-align: top;
     }
+  }
+  .editBOx{ width: 822px;padding-right: 20px;
+    margin-left: -1px;
+    app-ueditor{
+      /deep/.edui-default /deep/.edui-editor{ border-radius: 0 !important;}
+    }
+  }
+  .markDownBOx{ width:calc(100% - 822px); padding-left: 20px;
+    nz-form-control{ display: block;}
+    textarea{ width: 100%; min-height:260px; border: 1px solid #d4d4d4;
+       border-radius: 0 !important;}
+  }
+  .saveBtn{ position: absolute; right: 20px; top:60px; z-index: 1999;
+    button{ margin: 0 10px;}
   }
 }
