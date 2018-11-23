@@ -22,20 +22,49 @@
       vertical-align: top;
     }
   }
-  .editBOx{ width: 822px;padding-right: 20px;
-    margin-left: -1px;
-    app-ueditor{
-      /deep/.edui-default /deep/.edui-editor{ border-radius: 0 !important;}
-    }
-  }
-  .markDownBOx{ width:calc(100% - 822px); padding-left: 20px;
-    nz-form-control{ display: block;}
-    textarea{ width: 100%; min-height:260px; border: 1px solid #d4d4d4;
-       border-radius: 0 !important;}
-  }
   .saveBtn{ position: absolute; right: 20px; top:70px; z-index: 1999;
     button{ margin: 0 10px;}
     /deep/.ant-affix{ padding-top:15px;}
   }
-  /deep/.ant-form-item-children{ display: block; width: 100%;}
+  .artEditBox{ border:1px solid #d4d4d4; margin: 10px;
+    background: #fff;
+  }
+
+  .editBOx{ width:calc(100% - 841px); overflow-y: auto;
+    app-ueditor{
+      /deep/.edui-default /deep/.edui-editor{ border-radius: 0 !important; border: 0;}
+    }
+  }
+  .markDownBOx{ width:calc(100% - 841px); overflow-y: auto;
+    nz-form-control{ display: block;}
+    textarea{ width: 100%; min-height:260px; border: 0; padding: 10px;
+      border-radius: 0 !important;}
+  }
+  
+  /deep/.showHtml{font-family: -apple-system,BlinkMacSystemFont,"Lucida Grande","Helvetica Neue",Helvetica,Arial,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","WenQuanYi Micro Hei","Noto Sans CJK SC","Source Han Sans CN",SimSun,sans-serif;
+    line-height: 1.42857143;color: #444; font-size: 16px;
+    width: 841px; border-left: 1px solid #d4d4d4; overflow-y: auto;
+    min-height: 260px; background: #fff;
+    padding: 0 20px; float: right;
+
+    /* 和文章详情页面共同css----start*/
+    ul,li{ list-style-type: inherit; margin: inherit; padding: inherit }
+    ul{ margin-left: 1.5em;}
+    ul ul, ol ul {list-style-type: circle;}
+    .h1,h1 {font-size: 32px}
+    .h2,h2 {font-size: 28px}
+    .h3,h3 {font-size: 24px}
+    .h4,h4 {font-size: 20px}
+    .h5,h5 {font-size: 18px}
+    .h6,h6 {font-size: 16px}
+    h1,h2,h3,h4,h5,.h1,.h2,.h3,.h4,.h5{ font-weight: bold; color: #000;
+    margin-bottom: 0.4em; margin-top: 1.5em;}
+    h6,.h6{ margin-bottom: 0.4em; margin-top: 1em; color: #c00;}
+    code{background-color: #fee9cc; display: inline-block;
+      vertical-align: middle; color: #000;
+      padding: 2px 3px 0;border-radius: 3px; font-size: 14px;}
+    pre>code{ background: none; color: inherit; font-size: inherit;
+       padding: 0;  display: inline;}
+    /* 和文章详情页面共同css----end*/
+  }
 }

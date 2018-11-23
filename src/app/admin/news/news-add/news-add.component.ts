@@ -9,6 +9,8 @@ import { NewsService } from '../../../share/restServices/news.service';
 import { NewsTypeService } from '../../../share/restServices/news-type.service';
 declare const require: any;
 const Showdown = require('showdown');
+declare const Prism: any;
+
 @Component({
   selector: 'app-news-add',
   templateUrl: './news-add.component.html',
@@ -19,6 +21,10 @@ export class NewsAddComponent implements OnInit, OnDestroy {
   box1: ElementRef;
   @ViewChild('box2')
   box2: ElementRef;
+  @ViewChild('box3')
+  box3: ElementRef;
+  @ViewChild('article')
+  article: ElementRef;
 
   isMarkdown = true;
   changeSum = 0;
@@ -50,6 +56,10 @@ export class NewsAddComponent implements OnInit, OnDestroy {
     { value: 'css3', label: 'css3' },
     { value: 'html5', label: 'html5' },
   ];
+  actTitle;
+  artInnerHtml;
+  contentMarkdown;
+  content;
   constructor(
     private activatedRoute: ActivatedRoute,
     private _message: NzMessageService,
@@ -65,8 +75,6 @@ export class NewsAddComponent implements OnInit, OnDestroy {
     this.getVpsList();
     this.validateForm = this.fb.group({
       typeId: [null, [Validators.required]],
-      content: [null, [Validators.required]],
-      contentMarkdown: [{ disabled: true }, [Validators.required]],
       abstract: [null, [Validators.required]],
       labels: [[], [Validators.required]],
       source: ['原创', [Validators.required]],
@@ -74,7 +82,9 @@ export class NewsAddComponent implements OnInit, OnDestroy {
       title: [null, [Validators.required]],
       state: [null, []]
     });
-
+    this.validateForm.get('title').valueChanges.subscribe((data) => {
+      this.actTitle = data;
+    });
   }
   submitForm(type?): void {
     for (const i in this.validateForm.controls) {
@@ -82,6 +92,10 @@ export class NewsAddComponent implements OnInit, OnDestroy {
         this.validateForm.get(i).markAsDirty();
         this.validateForm.get(i).updateValueAndValidity();
       }
+    }
+    if (!this.artInnerHtml) {
+      this._message.create('error', `请输入文章内容！`);
+      return;
     }
     if (this.validateForm.valid) {
       this.loading = true;
@@ -102,6 +116,9 @@ export class NewsAddComponent implements OnInit, OnDestroy {
         } else {
           d.state = this.state = 1102;
         }
+        d.content = this.artInnerHtml;
+        d.contentMarkdown = this.contentMarkdown;
+        d.markdown = this.isMarkdown ? 1402 : 1401;
         if (this.id) {
           this.edit(d);
         } else {
@@ -112,7 +129,7 @@ export class NewsAddComponent implements OnInit, OnDestroy {
   }
   add(d) {
     this.newsService['add']({
-      data: Object.assign({ markdown: 1402 }, d)
+      data: Object.assign({}, d)
     })
       .subscribe(response => {
         this.loading = false;
@@ -126,7 +143,7 @@ export class NewsAddComponent implements OnInit, OnDestroy {
   }
   edit(d) {
     this.newsService.update({
-      data: Object.assign({ id: this.id, markdown: 1402 }, d)
+      data: Object.assign({ id: this.id }, d)
     })
       .subscribe(response => {
         this.loading = false;
@@ -143,8 +160,14 @@ export class NewsAddComponent implements OnInit, OnDestroy {
     })
       .subscribe(response => {
         if (response.code === 200) {
-          this.validateForm.get('contentMarkdown').setValue(response.data.contentMarkdown);
-          this.validateForm.get('content').setValue(response.data.content);
+          this.artInnerHtml = response.data.content;
+          this.isMarkdown = response.data.markdown == 1401 ? false : true;
+          this.contentMarkdown = response.data.contentMarkdown;
+          this.content = response.data.content;
+          if (this.isMarkdown && !this.contentMarkdown && this.artInnerHtml) {
+            this.contentMarkdown = this.converter.makeHtml(this.artInnerHtml);
+          }
+
           this.validateForm.get('typeId').setValue(response.data.typeId);
           this.validateForm.get('abstract').setValue(response.data.abstract);
           this.validateForm.get('labels').setValue(response.data.labels.split(','));
@@ -186,56 +209,75 @@ export class NewsAddComponent implements OnInit, OnDestroy {
   }
   contentChange(e) {
     this.setBoxHeight();
-    const contStr = this.converter.makeMarkdown(e);
-    const contentMarkdown = this.validateForm.getRawValue()['contentMarkdown'] || '';
-    if (contentMarkdown != contStr && !this.isMarkdown) {
-      this.validateForm.get('contentMarkdown').setValue(contStr);
-    }
+    this.artInnerHtml = e;
   }
   contentMarkdownChange(e) {
-    // 自动保存设置
-    // if (this.isFocus) {
-    //   if (!this.changeSum) {
-    //     this.saveSetTime = setInterval(() => {
-    //       this.submitForm();
-    //     }, 1000 * 60);
-    //   }
-    //   this.changeSum++;
-    //   if (this.changeSum > 50) {
-    //     this.zdSave();
-    //     this.changeSum = 0;
-    //   }
-    // }
-
     this.setBoxHeight();
-    const markDownStr = this.converter.makeHtml(e);
-    const content = this.validateForm.getRawValue()['content'] || '';
-    if (content != markDownStr && this.isMarkdown) {
-      this.validateForm.get('content').setValue(markDownStr);
-    }
+    this.artInnerHtml = this.converter.makeHtml(e);
   }
   setBoxHeight() {
-    const box1 = this.box1.nativeElement;
-    const box2H = this.box2.nativeElement.clientHeight - 14;
-    const box1H = box1.scrollTop + 2 + box1.scrollHeight;
-    if (box2H > box1H) {
-      box1.style.height = box2H + 'px';
+    setTimeout(() => {
+      this.setHeight();
+    });
+    setTimeout(() => {
+      this.setHeight();
+    }, 500);
+  }
+  setHeight() {
+    const box3 = this.box3.nativeElement;
+    box3.style['height'] = 'auto';
+    const box3H = box3.clientHeight;
+
+    if (this.isMarkdown) {
+      const box1 = this.box1.nativeElement;
+      box1.style['height'] = 'auto';
+      const box1H = box1.scrollTop + 2 + box1.scrollHeight;
+      if (box3H > box1H) {
+        box1.style['height'] = box1H + 'px';
+        box3.style['height'] = box1H + 'px';
+      } else {
+        box1.style['height'] = box3H + 'px';
+      }
     } else {
-      box1.style.height = box1H + 'px';
+      const box2 = this.box2.nativeElement;
+      box2.style['height'] = 'auto';
+      const box2H = box2.clientHeight;
+      if (box3H > box2H) {
+        box2.style['height'] = box3H + 'px';
+      } else {
+        box3.style['height'] = box2H + 'px';
+      }
     }
+    this.insertCodeElement();
   }
   switchChange(e) {
-    const markDownValue = this.validateForm.get('contentMarkdown')['value'];
-    const editValue = this.validateForm.get('content')['value'];
-    setTimeout(() => {
-      if (e) {
-        this.validateForm.get('contentMarkdown').reset({ value: markDownValue, disabled: false });
-        this.validateForm.get('content').reset({ value: editValue, disabled: true });
-      } else {
-        this.validateForm.get('contentMarkdown').reset({ value: markDownValue, disabled: true });
-        this.validateForm.get('content').reset({ value: editValue, disabled: false });
+    if (e) {
+      if (!this.contentMarkdown) {
+        this.contentMarkdown = this.converter.makeMarkdown(this.artInnerHtml);
       }
-    }, 500);
+    } else {
+      if (!this.content) {
+        this.content = this.artInnerHtml;
+      }
+    }
+    this.setBoxHeight();
+  }
+  // 插入 code 标签函数,代码高亮方法
+  insertCodeElement() {
+    const doc_pre = this.article.nativeElement.getElementsByTagName('pre');
+    for (let i = 0; i < doc_pre.length; i++) {
+      const class_val = doc_pre[i].className;
+      if (class_val.indexOf(';') !== -1) {
+        let class_arr = new Array();
+        class_arr = class_val.split(';');
+        class_arr = class_arr['0'].split(':');
+        const lan_class = 'language-' + class_arr['1'];
+        const pre_content = '<code class="' + lan_class + '">' + doc_pre[i].innerHTML + '</code>';
+        doc_pre[i].innerHTML = pre_content;
+        doc_pre[i].className = lan_class;
+      }
+    }
+    Prism.highlightAll();
   }
   markdownBlur(e) {
     this.isFocus = false;

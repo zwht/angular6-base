@@ -32,6 +32,7 @@
           <th>标题</th>
           <th>类型</th>
           <th>作者</th>
+          <th>编辑方式</th>
           <th>状态</th>
           <th>操作</th>
         </tr>
@@ -42,6 +43,7 @@
           <td>{{data.title}}</td>
           <td>{{data.typeName}}</td>
           <td>{{data.author}}</td>
+          <td>{{data.markdown|codeName}}</td>
           <td>
             <nz-tag [nzColor]="data.state!=1105?'green':'#2db7f5'">{{data.state|codeName}}</nz-tag>
           </td>

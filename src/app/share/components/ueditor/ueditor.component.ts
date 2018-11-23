@@ -16,8 +16,6 @@ export class UeditorComponent implements ControlValueAccessor, AfterViewInit, On
   editor;
   @Input()
   model: any;
-  @Input()
-  isMarkdown: boolean;
   newModel: any;
   constructor() {
 
@@ -49,11 +47,11 @@ export class UeditorComponent implements ControlValueAccessor, AfterViewInit, On
   writeValue(value: any) {
     if (value && this.editor) {
       this.editor.ready(() => {
-        if (this.isMarkdown) {
-          this.editor.setDisabled('fullscreen');
-        } else {
-          this.editor.setEnabled();
-        }
+        // if (this.isMarkdown) {
+        //   this.editor.setDisabled('fullscreen');
+        // } else {
+        //   this.editor.setEnabled();
+        // }
         const newStr = this.editor.getContent();
         if (newStr !== value) {
           this.newModel = value;

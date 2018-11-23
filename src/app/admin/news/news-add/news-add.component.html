@@ -1,7 +1,8 @@
 <div class="markdown-add-cpt" #addBox>
   <div class="form-box">
     <nz-affix class="saveBtn" [nzTarget]="addBox">
-      <nz-switch (ngModelChange)="switchChange($event)" [(ngModel)]="isMarkdown" nzCheckedChildren="是" nzUnCheckedChildren="否">
+      <nz-switch (ngModelChange)="switchChange($event)" [(ngModel)]="isMarkdown" nzCheckedChildren="是"
+        nzUnCheckedChildren="否">
       </nz-switch>
       <button nz-button nzType="primary" (click)="submitForm()">保存</button>
       <button *ngIf="state!=1105" nz-button nzType="default" (click)="submitForm(2)">保存并且发布</button>
@@ -83,31 +84,20 @@
           </nz-form-item>
         </div>
       </div>
-      <div nz-row>
-        <div nz-col class="markDownBOx">
-          <nz-form-item>
-            <nz-form-control>
-              <div class="textareaBox">
-                <textarea (blur)=markdownBlur($event) (focus)=markdownFocus($event) #box1 (ngModelChange)=contentMarkdownChange($event)
-                  id="contentMarkdown" formControlName="contentMarkdown" nz-input placeholder="MarkDown 文章主体内容"></textarea>
-              </div>
-              <nz-form-explain *ngIf="validateForm.get('contentMarkdown').dirty && validateForm.get('contentMarkdown').errors">
-                填写新闻内容
-              </nz-form-explain>
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-        <div nz-col class="editBOx" #box2>
-          <nz-form-item>
-            <nz-form-control>
-              <app-ueditor [isMarkdown]='isMarkdown' (ngModelChange)=contentChange($event) style="width: 802px; display: block;" id="content" formControlName="content"></app-ueditor>
-              <nz-form-explain *ngIf="validateForm.get('content').dirty && validateForm.get('content').errors">
-                填写新闻内容
-              </nz-form-explain>
-            </nz-form-control>
-          </nz-form-item>
+    </form>
+    <div class="artEditBox" nz-row>
+      <div *ngIf='isMarkdown' nz-col class="markDownBOx">
+        <textarea nz-input (blur)=markdownBlur($event) (focus)=markdownFocus($event) #box1 (ngModelChange)=contentMarkdownChange($event)
+          [(ngModel)]="contentMarkdown" placeholder="MarkDown 文章主体内容"></textarea>
+      </div>
+      <div *ngIf='!isMarkdown' nz-col class="editBOx" #box2>
+        <app-ueditor (ngModelChange)=contentChange($event) style="width: 100%; display: block;" [(ngModel)]="content"></app-ueditor>
+      </div>
+      <div nz-col class="showHtml" #box3>
+        <h1 class="h1">{{actTitle}}</h1>
+        <div [innerHtml]='artInnerHtml' #article class="art">
         </div>
       </div>
-    </form>
+    </div>
   </div>
 </div>
