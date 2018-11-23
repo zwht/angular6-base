@@ -16,11 +16,10 @@
   </div>
   <div class="table-head">
     <div class="head-h2">
-      <span>新闻类型</span>
+      <span>文章</span>
     </div>
     <div class="btn-box">
-      <button nz-button nzType="tianjia" routerLink="./markdown" style="margin-right:20px;">markdown添加</button>
-      <button nz-button nzType="tianjia" routerLink="./add">富文本添加</button>
+      <button nz-button nzType="tianjia" routerLink="./add">写文章</button>
     </div>
   </div>
   <div class="table-box">
@@ -31,8 +30,11 @@
           <th>序号</th>
           <th>标题</th>
           <th>类型</th>
-          <th>作者</th>
+          <th>创建时间</th>
+          <th>评论</th>
+          <th>访问</th>
           <th>编辑方式</th>
+          <th>来源</th>
           <th>状态</th>
           <th>操作</th>
         </tr>
@@ -42,7 +44,10 @@
           <td>{{pageSize*(pageNum-1)+i+1}}</td>
           <td>{{data.title}}</td>
           <td>{{data.typeName}}</td>
-          <td>{{data.author}}</td>
+          <td>{{data.createTime | date:'yyyy/MM/dd'}}</td>
+          <td>{{data.reviewSum}}</td>
+          <td>{{data.seeSum}}</td>
+          <td>{{data.source}}</td>
           <td>{{data.markdown|codeName}}</td>
           <td>
             <nz-tag [nzColor]="data.state!=1105?'green':'#2db7f5'">{{data.state|codeName}}</nz-tag>

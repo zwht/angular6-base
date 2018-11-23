@@ -1,4 +1,5 @@
-.markdown-add-cpt{ height: 100%; overflow-y: auto;
+.markdown-add-cpt{ height: 100%; overflow-y: auto; position: relative;
+  
   .ant-row{
     >div{ float: left;}
   }
@@ -46,11 +47,16 @@
     width: 841px; border-left: 1px solid #d4d4d4; overflow-y: auto;
     min-height: 260px; background: #fff;
     padding: 0 20px; float: right;
+    .h1{ margin-top: 20px !important;
+      input{ font-size: 32px; height: 50px; border-style: dashed;}
+    }
 
     /* 和文章详情页面共同css----start*/
-    ul,li{ list-style-type: inherit; margin: inherit; padding: inherit }
-    ul{ margin-left: 1.5em;}
-    ul ul, ol ul {list-style-type: circle;}
+    ul,ol{ margin: 0 0 1em 1.5em; padding: 0;}
+    ul li{ list-style-type: disc; }
+    ul ul li, ol ul li{list-style-type: circle;}
+    li{ padding: 0; margin: 0 0 0.5em 0; list-style-type: inherit;}
+    p{ margin-bottom: 1em;}
     .h1,h1 {font-size: 32px}
     .h2,h2 {font-size: 28px}
     .h3,h3 {font-size: 24px}
@@ -65,6 +71,15 @@
       padding: 2px 3px 0;border-radius: 3px; font-size: 14px;}
     pre>code{ background: none; color: inherit; font-size: inherit;
        padding: 0;  display: inline;}
+    blockquote{ padding-left: 20px; border-left: 5px solid #999;
+      margin-bottom: 1em;}
+    a{ color: #1890ff;background-color: transparent;text-decoration: none;outline: none;cursor: pointer;transition: color 0.3s;}
+    a:hover{text-decoration:underline}
+    table{border: 1px solid #ededed;width: 100%; border-left: 0; border-bottom: 0;border-collapse: collapse;}
+    th, td{padding: 6px;height: 40px; border-left: 1px solid #ededed;}
+    th{height: 50px;font-weight: bold; background: #f5f2f3;}
+    tr{ border-bottom: 1px solid #ededed;}
+    tr:nth-child(even){background: #F9FAFC;}
     /* 和文章详情页面共同css----end*/
   }
 }

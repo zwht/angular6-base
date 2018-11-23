@@ -1,7 +1,8 @@
 <div class="markdown-add-cpt" #addBox>
-  <div class="form-box">
+  <app-loading  *ngIf="loading"></app-loading>
+  <div *ngIf="!loading" class="form-box">
     <nz-affix class="saveBtn" [nzTarget]="addBox">
-      <nz-switch (ngModelChange)="switchChange($event)" [(ngModel)]="isMarkdown" nzCheckedChildren="是"
+      <nz-switch [hidden]="id" (ngModelChange)="switchChange($event)" [(ngModel)]="isMarkdown" nzCheckedChildren="是"
         nzUnCheckedChildren="否">
       </nz-switch>
       <button nz-button nzType="primary" (click)="submitForm()">保存</button>
@@ -9,17 +10,6 @@
     </nz-affix>
     <form nz-form [formGroup]="validateForm">
       <div nz-row class="nzRow">
-        <div nz-col>
-          <nz-form-item>
-            <nz-form-label nzFor="title" nzRequired>标题</nz-form-label>
-            <nz-form-control>
-              <input style="width:500px;" appTrim nz-input id="title" formControlName="title" placeholder="标题">
-              <nz-form-explain *ngIf="validateForm.get('title').dirty && validateForm.get('title').errors">
-                填写标题
-              </nz-form-explain>
-            </nz-form-control>
-          </nz-form-item>
-        </div>
         <div nz-col>
           <nz-form-item>
             <nz-form-label nzFor="urlEn" nzRequired>url</nz-form-label>
@@ -94,7 +84,9 @@
         <app-ueditor (ngModelChange)=contentChange($event) style="width: 100%; display: block;" [(ngModel)]="content"></app-ueditor>
       </div>
       <div nz-col class="showHtml" #box3>
-        <h1 class="h1">{{actTitle}}</h1>
+        <h1 class="h1">
+          <input nz-input [(ngModel)]="actTitle" placeholder="请输入标题！" type="text"/>
+        </h1>
         <div [innerHtml]='artInnerHtml' #article class="art">
         </div>
       </div>

@@ -18,6 +18,7 @@ import { TrimDirective } from './directives/trim.directive';
 import { WangEditorComponent } from './components/wang-editor/wang-editor.component';
 import { NgIfDirective } from './directives/ng-if.directive';
 import { UeditorComponent } from './components/ueditor/ueditor.component';
+import { LoadingComponent } from './components/loading/loading.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { UeditorComponent } from './components/ueditor/ueditor.component';
         TrimDirective,
         WangEditorComponent,
         NgIfDirective,
-        UeditorComponent
+        UeditorComponent,
+        LoadingComponent
     ],
     exports: [
         CommonModule,
@@ -48,7 +50,8 @@ import { UeditorComponent } from './components/ueditor/ueditor.component';
         TrimDirective,
         WangEditorComponent,
         NgIfDirective,
-        UeditorComponent
+        UeditorComponent,
+        LoadingComponent
     ],
     providers: [
         {

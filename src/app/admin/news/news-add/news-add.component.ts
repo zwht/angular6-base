@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
-import { RegExpService } from '../../../share/services/reg-exp.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -26,11 +25,12 @@ export class NewsAddComponent implements OnInit, OnDestroy {
   @ViewChild('article')
   article: ElementRef;
 
+  markChangTime;
   isMarkdown = true;
   changeSum = 0;
   isFocus = false;
   saveSetTime;
-  converter = new Showdown.Converter();
+  converter = new Showdown.Converter({ tables: true, strikethrough: true });
   validateForm: FormGroup;
   loading = false;
   id;
@@ -57,6 +57,7 @@ export class NewsAddComponent implements OnInit, OnDestroy {
     { value: 'html5', label: 'html5' },
   ];
   actTitle;
+  createTime;
   artInnerHtml;
   contentMarkdown;
   content;
@@ -79,11 +80,7 @@ export class NewsAddComponent implements OnInit, OnDestroy {
       labels: [[], [Validators.required]],
       source: ['原创', [Validators.required]],
       urlEn: [null, [Validators.required]],
-      title: [null, [Validators.required]],
       state: [null, []]
-    });
-    this.validateForm.get('title').valueChanges.subscribe((data) => {
-      this.actTitle = data;
     });
   }
   submitForm(type?): void {
@@ -95,6 +92,10 @@ export class NewsAddComponent implements OnInit, OnDestroy {
     }
     if (!this.artInnerHtml) {
       this._message.create('error', `请输入文章内容！`);
+      return;
+    }
+    if (!this.actTitle) {
+      this._message.create('error', `请输入标题！`);
       return;
     }
     if (this.validateForm.valid) {
@@ -119,6 +120,7 @@ export class NewsAddComponent implements OnInit, OnDestroy {
         d.content = this.artInnerHtml;
         d.contentMarkdown = this.contentMarkdown;
         d.markdown = this.isMarkdown ? 1402 : 1401;
+        d.title = this.actTitle;
         if (this.id) {
           this.edit(d);
         } else {
@@ -155,6 +157,7 @@ export class NewsAddComponent implements OnInit, OnDestroy {
       });
   }
   getDetail() {
+    this.loading = true;
     this.newsService.getById({
       params: { params2: this.id }
     })
@@ -167,18 +170,20 @@ export class NewsAddComponent implements OnInit, OnDestroy {
           if (this.isMarkdown && !this.contentMarkdown && this.artInnerHtml) {
             this.contentMarkdown = this.converter.makeHtml(this.artInnerHtml);
           }
+          this.actTitle = response.data.title;
+          this.createTime = response.data.createTime;
 
           this.validateForm.get('typeId').setValue(response.data.typeId);
           this.validateForm.get('abstract').setValue(response.data.abstract);
           this.validateForm.get('labels').setValue(response.data.labels.split(','));
           this.validateForm.get('source').setValue(response.data.source);
-          this.validateForm.get('title').setValue(response.data.title);
           this.validateForm.get('urlEn').setValue(response.data.urlEn);
           this.validateForm.get('state').setValue(response.data.state);
           this.state = response.data.state;
           setTimeout(() => {
             this.setBoxHeight();
-          }, 1000);
+            this.loading = false;
+          }, 500);
         }
       });
   }
@@ -213,7 +218,12 @@ export class NewsAddComponent implements OnInit, OnDestroy {
   }
   contentMarkdownChange(e) {
     this.setBoxHeight();
-    this.artInnerHtml = this.converter.makeHtml(e);
+    if (!this.markChangTime) {
+      this.markChangTime = setTimeout(() => {
+        this.artInnerHtml = this.converter.makeHtml(e);
+        this.markChangTime = 0;
+      }, 2000);
+    }
   }
   setBoxHeight() {
     setTimeout(() => {
@@ -276,6 +286,8 @@ export class NewsAddComponent implements OnInit, OnDestroy {
         doc_pre[i].innerHTML = pre_content;
         doc_pre[i].className = lan_class;
       }
+      doc_pre[i].className = 'line-numbers ' + doc_pre[i].className;
+      // doc_pre[i].style['white-space'] = 'pre-wrap';
     }
     Prism.highlightAll();
   }

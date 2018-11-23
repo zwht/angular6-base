@@ -1,9 +1,9 @@
 {
-  "/v1": {
+  "/v2": {
     "target": "http://localhost:9876",
     "secure": false
   },
-  "/v2": {
+  "/v1": {
     "target": "http://120.79.171.251:9876",
     "secure": false
   }
