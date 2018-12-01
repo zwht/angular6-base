@@ -136,7 +136,7 @@ export class NewsAddComponent implements OnInit, OnDestroy {
       .subscribe(response => {
         this.loading = false;
         if (response.code === 200) {
-          this.router.navigate(['/admin/news/markdown'], { queryParams: { id: response.data } });
+          this.router.navigate(['/admin/news/add'], { queryParams: { id: response.data } });
           this._message.create('success', '保存成功', { nzDuration: 4000 });
         } else {
           this._message.create('error', response.msg, { nzDuration: 4000 });
